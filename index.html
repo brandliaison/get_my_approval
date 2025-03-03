@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div class="nav-last">
+        <div class="nav-last uk-box-shadow-medium uk-padding-small uk-padding-remove-horizontal">
             <div class="custom-container uk-flex uk-flex-between uk-flex-middle">
                 <div class="nav-last-left">
                     <img src="./images/notifications/solutions.png" />
@@ -48,11 +48,29 @@
                 </div>
                 <div class="nav-last-right">
                     <ul>
-                        <li><i data-lucide="user-plus"></i> <h5 class="uk-margin-remove"> Us</h5></li>
-                        <li><i data-lucide="user"></i> <h5 class="uk-margin-remove">Login</h5></li>
-                        <li><i data-lucide="database"></i> <h5 class="uk-margin-remove">Query</h5></li>
-                        <li><i data-lucide="search"></i> <h5 class="uk-margin-remove">Search</h5></li>
-                        <li>Lang</li>
+                        <li class="uk-padding-small uk-padding-remove-vertical"><i data-lucide="user-plus" class="main-color"></i> <h5 class="uk-margin-small uk-margin-remove-bottom uk-text-bold main-color">Join Us</h5></li>
+                        <li class="uk-padding-small uk-padding-remove-vertical"><i data-lucide="user" class="main-color"></i> <h5 class="uk-margin-small uk-margin-remove-bottom uk-text-bold main-color">Login</h5></li>
+                        <li class="uk-padding-small uk-padding-remove-vertical"><i data-lucide="database" class="main-color"></i> <h5 class="uk-margin-small uk-margin-remove-bottom uk-text-bold main-color">Query</h5></li>
+                        <li class="uk-padding-small uk-padding-remove-vertical"><i data-lucide="search" class="main-color"></i> <h5 class="uk-margin-small uk-margin-remove-bottom uk-text-bold main-color">Search</h5></li>
+                        <li class="uk-padding-small uk-padding-remove-vertical uk-border-remove">
+                            <form>
+                                <div class="uk-margin">
+                                    <div uk-form-custom="target: > * > span:first-child">
+                                        <select aria-label="Custom controls">
+                                            <option value="">Please select...</option>
+                                            <option value="1">Option 01</option>
+                                            <option value="2">Option 02</option>
+                                            <option value="3">Option 03</option>
+                                            <option value="4">Option 04</option>
+                                        </select>
+                                        <button class="uk-button uk-button-default" type="button" tabindex="-1">
+                                            <span></span>
+                                            <span uk-icon="icon: chevron-down"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>

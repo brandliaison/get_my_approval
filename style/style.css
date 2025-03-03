@@ -18,6 +18,10 @@ p {
     color: var(--white);
 }
 
+.main-color {
+    color: var(--maincolor);
+}
+
 .icons {
     width: 20px;
     height: 20px;
@@ -37,8 +41,8 @@ p {
     max-width: 200px;
 }
 
-.navbar .nav-last .nav-last-left i {
-    color: var(--maincolor);
+.navbar .nav-last {
+    border-top: 1px solid lightgray;
 }
 
 .navbar .nav-last .nav-last-left img {
@@ -55,4 +59,10 @@ p {
     display: inline-flex;
     align-items: center;
     flex-direction: column;
+    border-right: 2px solid var(--maincolor);
+    min-width: 50px;
+}
+
+.navbar .nav-last .nav-last-right ul li:last-child {
+    border: none;
 }
