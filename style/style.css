@@ -26,6 +26,16 @@ p {
     color: var(--maincolor);
 }
 
+.solid-button {
+    color: var(--white);
+    background: var(--maincolor);
+    border: none;
+    padding: 15px 20px;
+    font-size: 17px;
+    border-radius: 5px;
+    box-shadow: 4px 4px 7px 1px #00000047;
+}
+
 .icons {
     width: 20px;
     height: 20px;
