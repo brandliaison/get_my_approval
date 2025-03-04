@@ -2,7 +2,7 @@
 :root {
     --maincolor: #FF9142;
     --mainsecond: #FFF1E8;
-    --mainthird: #F94C30;
+    --mainthird: #F15A29;
     --white: #FFFFFF;
 }
 
@@ -12,6 +12,10 @@ p {
 
 .main-background {
     background-color: var(--maincolor);
+}
+
+.background-second {
+    background-color: var(--mainsecond);
 }
 
 .color-white {
@@ -38,7 +42,7 @@ p {
 }
 
 .navbar .nav-midile img {
-    max-width: 200px;
+    max-width: 250px;
 }
 
 .navbar .nav-last {
@@ -63,6 +67,48 @@ p {
     min-width: 50px;
 }
 
+.navbar .nav-last .nav-last-right ul li button {
+    border: none;
+    font-weight: 700;
+    color: var(--maincolor);
+}
+
 .navbar .nav-last .nav-last-right ul li:last-child {
     border: none;
+}
+
+.homebanner {
+    background-image: url('../images/homebanner.png');
+    background-size: cover;
+    min-height: 70vh;
+    position: relative;
+}
+
+.homebanner .homebanner-text-div {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #00000058;
+    padding: 10px;
+}
+
+.homebanner .homebanner-text-div h1 {
+    color: var(--white);
+    font-size: 4rem;
+    font-weight: 700;
+}
+
+.homebanner .homebanner-text-div h2 {
+    color: var(--mainthird);
+    font-size: 3rem;
+    font-weight: 500;
+    margin-top: 0px;
+}
+
+.home-about-main li {
+    display: flex;
+    margin-bottom: 15px;
 }
