@@ -42,7 +42,7 @@ class ServiceCategoryController extends Controller
         if ($category) {
             EntityRevision::create([
                 'entity_type' => 'ServiceCategory',
-                'entity_id' => $category->id,
+                'entity_id' => $category->_id,
                 'old_data' => null,
                 'new_data' => $request->all(),
                 'revised_by' => Auth::user()->_id ?? 'System', // Track the reviser
@@ -67,7 +67,8 @@ class ServiceCategoryController extends Controller
     // Update a Service Category
     public function update(Request $request, $id)
     {
-        $oldcategory = ServiceCategory::select('_id', 'name', 'slug', 'description', 'title', 'created_at')->find($id);
+        $category = ServiceCategory::select('_id', 'name', 'slug', 'description', 'title', 'created_at')->find($id);
+        $oldcategory = clone $category;
 
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
@@ -76,34 +77,31 @@ class ServiceCategoryController extends Controller
             'slug' => 'nullable|string',
         ]);
 
-        if (!$oldcategory) {
+        if (!$category) {
             return response()->json(['error' => 'Service Category Not Found'], 404);
         }
 
         $validated['slug'] = isset($request->slug) ? $request->slug : Str::slug($request->name);
         // Update category
-        $category = $oldcategory->update([
+        $category->update([
             'name' => $request->name ?? $oldcategory->name,
             'slug' => $request->slug ? $request->slug : $oldcategory->slug,
             'description' => $request->description ?? $oldcategory->description,
             'title' => $request->title ?? $oldcategory->title,
         ]);
 
-        unset($validated['_method']);
-
         if ($category) {
             EntityRevision::create([
                 'entity_type' => 'ServiceCategory',
-                'entity_id' => $category->id,
+                'entity_id' => $category->_id,
                 'old_data' => $oldcategory,
-                'new_data' => $validated,
+                'new_data' => $category,
                 'revised_by' => Auth::user()->_id ?? 'System', // Track the reviser
                 'from_platform' => 'operations',
             ]);
         }
 
-
-        return response()->json($category, 200);
+        return response()->json($oldcategory = ServiceCategory::find($id), 200);
     }
 
     // Delete a Service Category
@@ -118,101 +116,5 @@ class ServiceCategoryController extends Controller
         $category->delete();
 
         return response()->json(['message' => 'Service Category Deleted Successfully'], 200);
-    }
-
-    // Fetch all Revisions for a category
-    public function getRevisions($categoryId)
-    {
-        $serviceCategory = ServiceCategory::find($categoryId);
-
-        if (!$serviceCategory) {
-            return response()->json(['message' => 'Service Category not found'], 404);
-        }
-
-        return response()->json($serviceCategory->revisions()->get());
-    }
-
-    // Fetch all Revisions Single for a category
-    public function getRevision($categoryId, $revisionId)
-    {
-        $review = ServiceCategoryRevision::where('service_category_id', $categoryId)
-            ->where('_id', $revisionId)
-            ->first();
-
-        if (!$review) {
-            return response()->json(['message' => 'Review not found'], 404);
-        }
-
-        return response()->json($review);
-    }
-
-    public function addReview(Request $request)
-    {
-        $serviceCategoryRevision = ServiceCategoryRevision::find($request->revision_id);
-        $serviceCategory = ServiceCategory::find($serviceCategoryRevision->serviceCategory->_id);
-
-        if (!$serviceCategoryRevision) {
-            return response()->json(['message' => 'Service Category Revision not found'], 404);
-        }
-
-        $validated = $request->validate([
-            'review_status' => 'required|in:approved,rejected,changes_required',
-            'review_comment' => 'nullable|string',
-        ]);
-
-        // Save the review in `service_category_reviews` table
-        $review = ServiceCategoryReview::create([
-            'reviewed_by' => Auth::id(),
-            'service_category_id' => $serviceCategoryRevision->serviceCategory->_id,
-            'service_category_revision_id' => $request->revision_id,
-            'review_status' => $validated['review_status'],
-            'review_comment' => $validated['review_comment'],
-            'from_platform' => 'operations',
-        ]);
-
-        if ($request->review_status == 'rejected') {
-            $serviceCategory->update(['approval_status' => 'rejected', 'first_approver' => Auth::id(), 'first_approved_date' => Carbon::now()->toDateTimeString()]);
-            $serviceCategoryRevision->update(['status' => 'rejected']);
-        }
-
-        if ($request->review_status == 'approved') {
-            if ($serviceCategory->approval_status  === 'partially_approved') {
-                $serviceCategory->update(['approval_status' => 'Approved', 'status' => 'active', 'final_approver' => Auth::id(), 'final_approved_date' => Carbon::now()->toDateTimeString()]);
-                $serviceCategoryRevision->update(['status' => 'Approved']);
-            } else {
-                $serviceCategory->update(['approval_status' => 'partially_approved', 'first_approver' => Auth::id(), 'first_approved_date' => Carbon::now()->toDateTimeString()]);
-                $serviceCategoryRevision->update(['status' => 'Approved']);
-            }
-        }
-
-        return response()->json([
-            'message' => 'Review added successfully',
-            'review' => $review,
-        ]);
-    }
-
-    // Fetch all reviews for a category
-    public function getReviews(string $categoryId)
-    {
-        $serviceCategory = ServiceCategory::find($categoryId);
-
-        if (!$serviceCategory) {
-            return response()->json(['message' => 'Service Category not found'], 404);
-        }
-
-        return response()->json($serviceCategory->reviews()->get());
-    }
-
-    // Fetch all reviews for a category
-    public function getReview($reviewId)
-    {
-        $review = ServiceCategoryReview::where('_id', $reviewId)
-            ->first();
-
-        if (!$review) {
-            return response()->json(['message' => 'Review not found'], 404);
-        }
-
-        return response()->json($review);
     }
 }

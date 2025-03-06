@@ -8,6 +8,7 @@ use App\Http\Controllers\Operations\EntityReviewController;
 use App\Http\Controllers\Operations\OpStaffController;
 use App\Http\Controllers\Operations\ServiceCategoryController;
 use App\Http\Controllers\Operations\ServiceController;
+use App\Http\Controllers\Operations\ServiceSectionsController;
 use App\Http\Middleware\MultiAuthMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,8 @@ Route::prefix('v1/op-admin')->group(function () {
 
         // Services Data
         Route::apiResource('services', ServiceController::class);
+        // Service Section
+        Route::apiResource('services-sections', ServiceSectionsController::class);
 
         // Get entity revisions
         Route::post('entity-revisions', [EntityReviewController::class, 'getRevisions']);
