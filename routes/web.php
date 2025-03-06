@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Site Routes
+Route::get('/{any?}', function () {
+    return view('site'); // Your main site React view file
+})->where('any', '.*');
