@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Operations;
 use App\Http\Controllers\Controller;
 use App\Models\OP\EntityRevision;
 use App\Models\OP\Service;
+use App\Models\OP\ServiceCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class ServiceController extends Controller
 {
@@ -21,6 +23,12 @@ class ServiceController extends Controller
     // Store a new service
     public function store(Request $request)
     {
+        $serviceCat = ServiceCategory::find($request->service_category_id);
+
+        if ($serviceCat->status !== 'active') {
+            return response()->json(['error' => 'Service Category Not Found'], 404);
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'service_category_id' => 'required|exists:service_categories,_id',
@@ -40,13 +48,12 @@ class ServiceController extends Controller
         $validated['status'] = 'inactive';
 
         $service = Service::create($validated);
-
         if ($service) {
             EntityRevision::create([
                 'entity_type' => 'Service',
-                'entity_id' => $service->id,
+                'entity_id' => $service->_id,
                 'old_data' => null,
-                'new_data' => $validated,
+                'new_data' => $service->with('category')->find($service->_id),
                 'revised_by' => Auth::user()->_id ?? 'System', // Track the reviser
                 'from_platform' => 'operations',
             ]);
@@ -66,18 +73,29 @@ class ServiceController extends Controller
     }
 
     // Update service
-    public function update(Request $request, Service $service)
+    public function update(Request $request, string $id)
     {
-        $oldservice = $service;
+        $serviceCat = ServiceCategory::find($request->service_category_id);
+
+        if ($serviceCat->status !== 'active') {
+            return response()->json(['error' => 'Service Category Not Found'], 404);
+        }
+
+        $service = Service::with('category')->find($id);
+        $oldservice = clone $service;
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
-            'service_category_id' => 'sometimes|exists:service_categories,_id',
+            'service_category_id' => 'required|exists:service_categories,_id',
             'image_url' => 'sometimes|url',
             'image_alt' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'compliance_header' => 'nullable|string',
             'status' => 'nullable|string',
         ]);
+
+        if (!$service) {
+            return response()->json(['error' => 'Service Not Found'], 404);
+        }
 
         $validated['slug'] = isset($request->slug) ? $request->slug : Str::slug($request->name);
 
@@ -89,14 +107,12 @@ class ServiceController extends Controller
 
         $service->update($validated);
 
-        unset($validated['_method']);
-
         if ($service) {
             EntityRevision::create([
                 'entity_type' => 'Service',
-                'entity_id' => $service->id,
+                'entity_id' => $service->_id,
                 'old_data' => $oldservice,
-                'new_data' => $validated,
+                'new_data' => Service::with('category')->find($service->_id),
                 'revised_by' => Auth::user()->_id ?? 'System', // Track the reviser
                 'from_platform' => 'operations',
             ]);
