@@ -1,9 +1,14 @@
 
+/* google font livvik */
+
+@import url('https://fonts.googleapis.com/css2?family=Livvic:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 :root {
     --maincolor: #FF9142;
     --mainsecond: #FFF1E8;
     --mainthird: #F15A29;
     --mainfourth: #4A1F00;
+    --darkgray: #808080;
     --white: #FFFFFF;
     --gray: #F5F5F5;
 }
@@ -81,6 +86,18 @@ p {
     width: 95%;
     margin-left: auto;
     margin-right: auto;
+}
+
+.fontlivvic {
+    font-family: "Livvic", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.fontlivvic-bold {
+    font-family: "Livvic", sans-serif;
+    font-weight: 700;
+    font-style: normal;
 }
 
 .navbar .nav-top p{
@@ -359,4 +376,99 @@ p {
     height: 200px;
     background-image: url('../images/footercircle.png');
     background-size: contain;
+}
+
+/* service page */
+
+.inner-page-banner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 25vw;
+    background-color: #0000006b;
+    min-height: 8vw;
+    border-radius: 10px;
+    padding: 10px 40px;
+}
+
+.inner-page-banner h2 {
+    color: var(--white);
+    font-size: 4rem;
+    font-weight: 700;
+    margin: 0px;
+}
+
+.services-main {
+    position: relative;
+}
+
+.services-main::after {
+    position: absolute;
+    content: "";
+    width: 100px;
+    height: 100px;
+    top: 0px;
+    left: 0px;
+    background-image: url(../images/dotbackground.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.services-main .left-filters h3 {
+    position: relative;
+    padding-bottom: 10px;
+    color: var(--darkgray);
+}
+
+.services-main .left-filters h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 20%;
+    height: 3px;
+    background-color: var(--darkgray);
+}
+
+.services-main .left-filters ul {
+    margin-bottom: 0px;
+}
+
+.services-main .left-filters ul li {
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.services-main .left-filters ul li.active-filter {
+    color: var(--mainthird);
+}
+
+.servicecard{
+    border: 1px solid rgba(211, 211, 211, 0.524);
+    border-radius: 10px;
+    position: relative;
+}
+
+.servicecard::after {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 10px;
+    background-image: linear-gradient(to right, #FF4B00 0%, #FF9D5E 24%);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.servicecard p {
+    line-height: 3ch;
+}
+
+.left-filters {
+    background-color: var(--mainsecond);
 }
