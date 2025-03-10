@@ -48,7 +48,7 @@ export default function Sidebar() {
                             </li>
 
                             <li title="Task Board">
-                                <Link to="/cms/notifictaions">
+                                <Link to="/cms/notifications">
                                     <span className="uk-nav-icon">
                                         <i className="mdi mdi-bell"></i>
                                     </span>
