@@ -19,7 +19,7 @@ class ServiceCategory extends Model
 
     public function revisions()
     {
-        return $this->hasMany(ServiceCategoryRevision::class, 'service_category_id', '_id');
+        return $this->hasMany(EntityRevision::class, 'entity_id', '_id')->where('entity_type', 'ServiceCategory');
     }
 
     public function reviews()

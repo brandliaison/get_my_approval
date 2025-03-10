@@ -24,7 +24,7 @@ class ServiceSectionsController extends Controller
     {
         $service = Service::find($request->service_id);
 
-        if ($service->status !== 'active') {
+        if (!$service || $service->status !== 'active') {
             return response()->json(['error' => 'Service Not Found'], 404);
         }
 
@@ -39,18 +39,78 @@ class ServiceSectionsController extends Controller
         $validated['slug'] = isset($request->slug) ? $request->slug : Str::slug($request->name);
         $validated['status'] = 'inactive';
 
-        $service = ServiceSection::create($validated);
-        if ($service) {
+        $serviceSection = ServiceSection::create($validated);
+        if ($serviceSection) {
             EntityRevision::create([
                 'entity_type' => 'ServiceSection',
-                'entity_id' => $service->_id,
+                'entity_id' => $serviceSection->_id,
                 'old_data' => null,
-                'new_data' => $service->with('category')->find($service->_id),
+                'new_data' => $serviceSection->with('service')->find($serviceSection->_id),
                 'revised_by' => Auth::user()->_id ?? 'System', // Track the reviser
                 'from_platform' => 'operations',
             ]);
         }
 
-        return response()->json($service, 201);
+        return response()->json($serviceSection, 201);
+    }
+
+    // Get a single data
+    public function show($id)
+    {
+        $service = ServiceSection::find($id);
+        if (!$service) {
+            return response()->json(['error' => 'Service Section Not Found'], 404);
+        }
+        return response()->json($service->load('service', 'revisions'));
+    }
+
+    // Update service
+    public function update(Request $request, string $id)
+    {
+        $service = Service::find($request->service_id);
+
+        if (!$service || $service->status !== 'active') {
+            return response()->json(['error' => 'Service Not Found'], 404);
+        }
+
+        $serviceSection = ServiceSection::with('service')->find($id);
+        $oldservicesection = clone $serviceSection;
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'service_id' => 'required|exists:services,_id',
+            'image_url' => 'nullable',
+            'image_alt' => 'nullable|string|max:255',
+            'content' => 'nullable|string',
+        ]);
+
+        if (!$serviceSection) {
+            return response()->json(['error' => 'Service Section Not Found'], 404);
+        }
+
+        $validated['slug'] = isset($request->slug) ? $request->slug : Str::slug($request->name);
+
+        $serviceSection->update($validated);
+
+        if ($serviceSection) {
+            EntityRevision::create([
+                'entity_type' => 'ServiceSection',
+                'entity_id' => $serviceSection->_id,
+                'old_data' => $oldservicesection,
+                'new_data' => ServiceSection::with('service')->find($serviceSection->_id),
+                'revised_by' => Auth::user()->_id ?? 'System', // Track the reviser
+                'from_platform' => 'operations',
+            ]);
+        }
+
+        return response()->json($service);
+    }
+
+    // Delete service
+    public function destroy($id)
+    {
+        $serviceSection = ServiceSection::find($id);
+        $serviceSection->delete();
+
+        return response()->json(['message' => 'Service Section deleted successfully']);
     }
 }
