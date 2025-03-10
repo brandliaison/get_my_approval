@@ -25,7 +25,7 @@ class ServiceController extends Controller
     {
         $serviceCat = ServiceCategory::find($request->service_category_id);
 
-        if ($serviceCat->status !== 'active') {
+        if (!$serviceCat || $serviceCat->status !== 'active') {
             return response()->json(['error' => 'Service Category Not Found'], 404);
         }
 
@@ -77,7 +77,7 @@ class ServiceController extends Controller
     {
         $serviceCat = ServiceCategory::find($request->service_category_id);
 
-        if ($serviceCat->status !== 'active') {
+        if (!$serviceCat || $serviceCat->status !== 'active') {
             return response()->json(['error' => 'Service Category Not Found'], 404);
         }
 

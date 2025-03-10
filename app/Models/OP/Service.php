@@ -45,7 +45,7 @@ class Service extends Model
 
     public function revisions()
     {
-        return $this->hasMany(EntityRevision::class, 'entity_id', '_id')->where('entity_type', 'service');
+        return $this->hasMany(EntityRevision::class, 'entity_id', '_id')->where('entity_type', 'Service');
     }
 
     public static function revisionRejected($id)
