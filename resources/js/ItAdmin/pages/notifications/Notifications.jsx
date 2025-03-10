@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 
-export default function Services() {
-    return (
-        <>
-            <div id="sc-page-wrapper">
+export default function Notifications() {
+  return (
+    <>
+                <div id="sc-page-wrapper">
                 <div id="sc-page-content">
                     <div class="uk-child-width-1-2@l" data-uk-grid>
                         <div>
@@ -351,6 +351,6 @@ export default function Services() {
                     </div>
                 </div>
             </div>
-        </>
-    );
+    </>
+  )
 }
