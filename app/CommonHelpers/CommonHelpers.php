@@ -16,6 +16,14 @@ class CommonHelpers
             return \App\Models\OP\ServiceCategory::find($entity_id);
         }
 
+        if ($entity_type === "ServiceSection") {
+            return \App\Models\OP\ServiceSection::find($entity_id);
+        }
+
+        if ($entity_type === "NotificationCategory") {
+            return \App\Models\OP\NotificationCategory::find($entity_id);
+        }
+
         return null;
     }
 }
