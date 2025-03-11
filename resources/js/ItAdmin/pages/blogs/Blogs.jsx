@@ -1,56 +1,105 @@
 import axios from "axios";
+import UIkit from "uikit";
 import React, { useEffect, useState } from "react";
+import { apiurl } from "../../apiurls/apiurls";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Blogs() {
 
-    const [blogs, setblogs] = useState('')
+    const navigate = useNavigate();
 
-    useEffect(() => {
-        const getblogs = () => {
-            axios.get(`http://192.168.1.13:8000/api/v1/op-admin/blog-categories/`)
+    const [blogs, setblogs] = useState();
+
+    const deleteblog = (id) => {
+        axios
+            .delete(`${apiurl}/blogs/${id}`)
             .then((res) => {
-                console.log(res.data)
-                setblogs(res.data)
+                UIkit.notification({
+                    message: res.data.message || "Blog deleted successfully!",
+                    status: "success",
+                    timeout: 1000,
+                    pos: "top-center",
+                });
+                getblogs();
             })
             .catch((err) => {
-                console.log(err)
-            })
-        }
-        getblogs();
-    }, [])
+                console.log(err);
 
-    console.log(blogs)
+                UIkit.notification({
+                    message: "Failed to delete blog!",
+                    status: "danger",
+                    timeout: 1000,
+                    pos: "top-center",
+                });
+            });
+    };
+    
+    const getblogs = () => {
+        axios.get(`${apiurl}/blogs`)
+            .then((res) => {
+                setblogs(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    useEffect(() => {
+        getblogs();
+    }, []);
+
+
+    const handleViewBlog = (id) => {
+        navigate(`/cms/editblog/${id}`); // Redirect to second page with blog ID in URL
+    };
+
+    console.log(blogs);
 
     return (
         <>
             <div id="sc-page-wrapper">
                 <div id="sc-page-content">
                     <div className="uk-flex uk-flex-right">
+                    <Link to="/cms/addblog">
                         <button
-                            class="sc-fab sc-fab-text sc-fab-success solid-button"
-                            uk-toggle="target: #modal-overflow"
+                            className="sc-fab sc-fab-text sc-fab-success solid-button"
                         >
-                            <i class="mdi mdi-plus"></i>Create  
+                            <i className="mdi mdi-plus"></i>Create
                         </button>
+                    </Link>
                     </div>
 
-                    <form class="uk-search uk-search-default uk-width-1-1 uk-background-default uk-border-rounded uk-flex uk-flex-middle uk-margin-top" style={{padding: '10px 15px'}}>
-                        <span style={{color: 'gray', fontSize: '24px', padding: '5px',}}>
-                            <i class="mdi mdi-magnify"></i>
+                    <form
+                        className="uk-search uk-search-default uk-width-1-1 uk-background-default uk-border-rounded uk-flex uk-flex-middle uk-margin-top"
+                        style={{ padding: "10px 15px" }}
+                    >
+                        <span
+                            style={{
+                                color: "gray",
+                                fontSize: "24px",
+                                padding: "5px",
+                            }}
+                        >
+                            <i className="mdi mdi-magnify"></i>
                         </span>
-                        <input class="uk-search-input uk-width-1-1 uk-background-default uk-border-none" type="search" placeholder="Search..." style={{border: 'none'}} />
+                        <input
+                            className="uk-search-input uk-width-1-1 uk-background-default uk-border-none"
+                            type="search"
+                            placeholder="Search..."
+                            style={{ border: "none" }}
+                        />
                     </form>
 
-                    <div class="uk-card uk-margin">
-                        <h3 class="uk-card-title">Blogs</h3>
-                        <div class="uk-card-body">
-                            <div class="uk-overflow-auto">
-                                <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
+                    <div className="uk-card uk-margin">
+                        <h3 className="uk-card-title">Blogs</h3>
+                        <div className="uk-card-body">
+                            <div className="uk-overflow-auto">
+                                <table className="uk-table uk-table-hover uk-table-middle uk-table-divider">
                                     <thead>
                                         <tr>
                                             <th>
                                                 <input
-                                                    class="uk-checkbox sc-main-checkbox"
+                                                    className="uk-checkbox sc-main-checkbox"
                                                     type="checkbox"
                                                     data-sc-icheck
                                                     data-group=".sc-js-table-checkbox"
@@ -64,98 +113,62 @@ export default function Blogs() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <input class="uk-checkbox sc-js-table-checkbox" type="checkbox" data-sc-icheck/>
-                                            </td>
-                                            <td>
-                                                <img
-                                                    src="https://scutum-universal.tzdthemes.com/_nuxt/img/avatar_03_md.1ecd497.png"
-                                                    class="sc-avatar uk-preserve-width"
-                                                    alt="pagac.twila" />
-                                            </td>
-                                            <td>
-                                                <a class="uk-link-reset" href="#" >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</a>
-                                            </td>
-                                            <td>Lorem ipsum</td>
-                                            <td>Lorem ipsum</td>
-                                            <td>
-                                                <div>
-                                                    <a class="sc-button sc-button-secondary sc-js-button-wave-light" href="#">
-                                                        <i class="mdi mdi-trash-can-outline"></i>{" "} Delete
-                                                    </a>
-                                                </div>
-                                                <div className="uk-margin-top">
-                                                    <a class="sc-button sc-button-primary sc-js-button-wave-light" href="#">
-                                                        <i class="mdi mdi-file-edit">
-                                                            {" "}
-                                                        </i>
-                                                        Edit
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        {blogs?.length > 0 ? (
+                                            blogs?.map((value, index) => (
+                                                <tr key={index}>
+                                                    <td>
+                                                        <input
+                                                            className="uk-checkbox sc-js-table-checkbox"
+                                                            type="checkbox"
+                                                            data-sc-icheck
+                                                        />
+                                                    </td>
+                                                    <td>
+                                                        <img
+                                                            src={`http://192.168.1.13:8000//${value.image_url}`}
+                                                            className="sc-avatar uk-preserve-width"
+                                                            alt={value.image_alt}
+                                                            style={{borderRadius: '5px', maxWidth: '150px'}}
+                                                        />
+                                                    </td>
+                                                    <td>{value.description}</td>
+                                                    <td>{value.name}</td>
+                                                    <td>{value.content}</td>
+                                                    <td>
+                                                        <div onClick={e => deleteblog(value._id)}>
+                                                            <a
+                                                                className="sc-button sc-button-secondary sc-js-button-wave-light"
+                                                                href="#"
+                                                            >
+                                                                <i className="mdi mdi-trash-can-outline"></i>{" "}
+                                                                Delete
+                                                            </a>
+                                                        </div>
+                                                        <div className="uk-margin-top" onClick={() => handleViewBlog(value._id)}>
+                                                            <a
+                                                                className="sc-button sc-button-primary sc-js-button-wave-light"
+                                                                href="#"
+                                                            >
+                                                                <i className="mdi mdi-file-edit">
+                                                                    {" "}
+                                                                </i>
+                                                                Edit
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td>
+                                                    <p>No blogs available.</p>
+                                                </td>
+                                            </tr>
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* form on modal  */}
-            <div id="modal-overflow" data-uk-modal>
-                <div class="uk-modal-dialog">
-                    <button
-                        class="uk-modal-close-default"
-                        type="button"
-                        data-uk-close
-                    ></button>
-                    <div class="uk-modal-header">
-                        <h2 class="uk-modal-title uk-text-bold">Edit Blog Category</h2>
-                    </div>
-                    <div class="uk-modal-body" data-uk-overflow-auto>
-                        <p class="uk-modal-title uk-text-medium">Edit the details of the blog category.</p>
-                        <form class="uk-form-stacked">
-                            {/* <!-- Name --> */}
-                            <div class="uk-margin-small-bottom">
-                                <label class="uk-form-label" for="name">Name*</label>
-                                <input class="uk-input" id="name" type="text" placeholder="Enter your name" required />
-                            </div>
-
-                            {/* <!-- Title --> */}
-                            <div class="uk-margin-small-bottom">
-                                <label class="uk-form-label" for="title">Title*</label>
-                                <input class="uk-input" id="title" type="text" placeholder="Enter title" required />
-                            </div>
-
-                            {/* <!-- Slug --> */}
-                            <div class="uk-margin-small-bottom">
-                                <label class="uk-form-label" for="slug">Slug*</label>
-                                <input class="uk-input" id="slug" type="text" placeholder="Enter slug" required />
-                            </div>
-
-                            {/* <!-- File Upload --> */}
-                            <div class="uk-margin-small-bottom">
-                                <label class="uk-form-label" for="file">Upload File</label>
-                                <div class="uk-form-controls">
-                                    <input class="uk-input" id="file" type="file" />
-                                </div>
-                            </div>
-
-                            {/* <!-- Description (Textarea) --> */}
-                            <div class="uk-margin-small-bottom">
-                                <label class="uk-form-label" for="description">Description*</label>
-                                <textarea class="uk-textarea" id="description" placeholder="Enter description" rows="4"></textarea>
-                            </div>
-                        </form>
-
-                    </div>
-                    <hr class="uk-margin-remove" />
-                    <div class="uk-modal-footer">
-                        <button class="sc-button sc-button-success" type="button">
-                            Save
-                        </button>
                     </div>
                 </div>
             </div>

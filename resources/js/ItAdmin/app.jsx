@@ -17,6 +17,8 @@ import Products from './pages/products/Products';
 import Notifications from './pages/notifications/Notifications';
 import Tutorials from './pages/tutorials/Tutorials';
 import Blogs from './pages/blogs/Blogs';
+import AddBlogs from './pages/blogs/AddBlogs';
+import EditBlogs from './pages/blogs/EditBlogs';
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -37,6 +39,8 @@ export default function App() {
             <Route path="/cms/notifications" element={<Notifications />} />
             <Route path="/cms/tutorials" element={<Tutorials />} />
             <Route path="/cms/blogs" element={<Blogs />} />
+            <Route path="/cms/addblog" element={<AddBlogs />} />
+            <Route path="/cms/editblog/:id" element={<EditBlogs />} />
         </Routes>
         </Router>
     </React.Fragment>
