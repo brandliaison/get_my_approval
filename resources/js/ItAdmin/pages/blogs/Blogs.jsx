@@ -7,7 +7,7 @@ export default function Blogs() {
 
     useEffect(() => {
         const getblogs = () => {
-            axios.get('http://localhost:8000/api/v1/op-admin/blog-categories/')
+            axios.get(`http://192.168.1.13:8000/api/v1/op-admin/blog-categories/`)
             .then((res) => {
                 console.log(res.data)
                 setblogs(res.data)
@@ -30,9 +30,16 @@ export default function Blogs() {
                             class="sc-fab sc-fab-text sc-fab-success solid-button"
                             uk-toggle="target: #modal-overflow"
                         >
-                            <i class="mdi mdi-plus"></i>Create
+                            <i class="mdi mdi-plus"></i>Create  
                         </button>
                     </div>
+
+                    <form class="uk-search uk-search-default uk-width-1-1 uk-background-default uk-border-rounded uk-flex uk-flex-middle uk-margin-top" style={{padding: '10px 15px'}}>
+                        <span style={{color: 'gray', fontSize: '24px', padding: '5px',}}>
+                            <i class="mdi mdi-magnify"></i>
+                        </span>
+                        <input class="uk-search-input uk-width-1-1 uk-background-default uk-border-none" type="search" placeholder="Search..." style={{border: 'none'}} />
+                    </form>
 
                     <div class="uk-card uk-margin">
                         <h3 class="uk-card-title">Blogs</h3>
@@ -59,46 +66,27 @@ export default function Blogs() {
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <input
-                                                    class="uk-checkbox sc-js-table-checkbox"
-                                                    type="checkbox"
-                                                    data-sc-icheck
-                                                />
+                                                <input class="uk-checkbox sc-js-table-checkbox" type="checkbox" data-sc-icheck/>
                                             </td>
                                             <td>
                                                 <img
                                                     src="https://scutum-universal.tzdthemes.com/_nuxt/img/avatar_03_md.1ecd497.png"
                                                     class="sc-avatar uk-preserve-width"
-                                                    alt="pagac.twila"
-                                                />
+                                                    alt="pagac.twila" />
                                             </td>
                                             <td>
-                                                <a
-                                                    class="uk-link-reset"
-                                                    href="#"
-                                                >
-                                                    Lorem ipsum dolor sit amet,
-                                                    consectetur adipiscing elit,
-                                                    sed do eiusmod tempor.
-                                                </a>
+                                                <a class="uk-link-reset" href="#" >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</a>
                                             </td>
                                             <td>Lorem ipsum</td>
                                             <td>Lorem ipsum</td>
                                             <td>
                                                 <div>
-                                                    <a
-                                                        class="sc-button sc-button-secondary sc-js-button-wave-light"
-                                                        href="#"
-                                                    >
-                                                        <i class="mdi mdi-trash-can-outline"></i>{" "}
-                                                        Delete
+                                                    <a class="sc-button sc-button-secondary sc-js-button-wave-light" href="#">
+                                                        <i class="mdi mdi-trash-can-outline"></i>{" "} Delete
                                                     </a>
                                                 </div>
                                                 <div className="uk-margin-top">
-                                                    <a
-                                                        class="sc-button sc-button-primary sc-js-button-wave-light"
-                                                        href="#"
-                                                    >
+                                                    <a class="sc-button sc-button-primary sc-js-button-wave-light" href="#">
                                                         <i class="mdi mdi-file-edit">
                                                             {" "}
                                                         </i>
