@@ -34,7 +34,7 @@ Route::prefix('v1/op-admin')->group(function () {
         Route::post('/change-staff-status', [StaffController::class, 'changeStaffStatus']);
     });
 
-    Route::middleware(['auth:opstaff'])->group(function () {
+    // Route::middleware(['auth:opstaff'])->group(function () {
         // Services
         Route::apiResource('service-categories', ServiceCategoryController::class);
         Route::apiResource('services', ServiceController::class);
@@ -72,5 +72,5 @@ Route::prefix('v1/op-admin')->group(function () {
         Route::apiResource('tickets-categories', TicketsCategoryController::class);
         Route::apiResource('tickets', TicketController::class);
 
-    });
+    // });
 });
