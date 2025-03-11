@@ -24,6 +24,15 @@ class CommonHelpers
             return \App\Models\OP\NotificationCategory::find($entity_id);
         }
 
+
+        if ($entity_type === "Blog") {
+            return \App\Models\OP\Blog::find($entity_id);
+        }
+
+        if ($entity_type === "BlogCategory") {
+            return \App\Models\OP\BlogCategory::find($entity_id);
+        }
+
         return null;
     }
 }
