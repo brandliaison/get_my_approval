@@ -19,6 +19,9 @@ import Tutorials from './pages/tutorials/Tutorials';
 import Blogs from './pages/blogs/Blogs';
 import AddBlogs from './pages/blogs/AddBlogs';
 import EditBlogs from './pages/blogs/EditBlogs';
+import BlogCategories from './pages/blogs/blogcategories/BlogCategories';
+import AddBlogCategories from './pages/blogs/blogcategories/AddBlogCategories';
+import EditBlogCategory from './pages/blogs/blogcategories/EditBlogCategory';
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -38,6 +41,9 @@ export default function App() {
             <Route path="/cms/products" element={<Products />} />
             <Route path="/cms/notifications" element={<Notifications />} />
             <Route path="/cms/tutorials" element={<Tutorials />} />
+            <Route path="/cms/blog-categories" element={<BlogCategories />} />
+            <Route path="/cms/addblog-categories" element={<AddBlogCategories />} />
+            <Route path="/cms/editblogcategory" element={<EditBlogCategory />} />
             <Route path="/cms/blogs" element={<Blogs />} />
             <Route path="/cms/addblog" element={<AddBlogs />} />
             <Route path="/cms/editblog/:id" element={<EditBlogs />} />

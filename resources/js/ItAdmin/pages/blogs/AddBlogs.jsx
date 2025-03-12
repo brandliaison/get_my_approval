@@ -98,7 +98,7 @@ export default function AddBlogs() {
                     <div>
                         <div className="uk-card">
                             <div className="uk-card-body">
-                                <h5 className="uk-heading-line"><span>Edit Blog Category</span></h5>
+                                <h5 className="uk-heading-line"><span>Add Blog</span></h5>
                                 <form onSubmit={handleSubmit}>
                                     <fieldset className="uk-fieldset">
                                     <div className="uk-grid uk-grid-small uk-child-width-1-2@l" uk-grid="true">
