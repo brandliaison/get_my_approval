@@ -70,7 +70,7 @@ export default function EditBlogs() {
             // Create FormData object
             const data = new FormData();
             data.append("name", formData.name);
-            data.append("blog_category_id", formData.category._id);
+            data.append("blog_category_id", formData.category?._id);
             data.append("image_url", formData.blogimage);
             data.append("image_alt", formData.image_alt);
             data.append("description", formData.description);
@@ -126,7 +126,7 @@ export default function EditBlogs() {
                                                 <input className="uk-input uk-margin-bottom" type="text" name='technical_name' onChange={handleChange} value={formData?.technical_name} placeholder="Technical Name" data-sc-input />
                                             </div>
                                             <div>
-                                                <select className="uk-select uk-margin-bottom" name='category' onChange={handleChange} value={formData.category._id} style={{borderTop: 'none', borderLeft: 'none', borderRight: 'none', borderRadius: '0px'}}>
+                                                <select className="uk-select uk-margin-bottom" name='category' onChange={handleChange} value={formData?.category?._id} style={{borderTop: 'none', borderLeft: 'none', borderRight: 'none', borderRadius: '0px'}}>
                                                     <option value="">Select a category</option>
                                                     {Array.isArray(blogcategrydata) && blogcategrydata.length > 0 ? (
                                                         blogcategrydata.map((value, index) => (

@@ -3,7 +3,14 @@ import { Link } from "react-router-dom";
 
 export default function Sidebar() {
 
-    const [isOpen, setIsOpen] = useState(false);
+    const [openDropdowns, setOpenDropdowns] = useState({});
+
+    const toggleDropdown = (menu) => {
+        setOpenDropdowns((prev) => ({
+            ...prev,
+            [menu]: !prev[menu],
+        }));
+    };
 
     return (
         <>
@@ -60,19 +67,8 @@ export default function Sidebar() {
                                 </Link>
                             </li>
 
-                            <li title="Notes">
-                                <Link to="/cms/tutorials">
-                                    <span className="uk-nav-icon">
-                                        <i className="mdi mdi-video-account"></i>
-                                    </span>
-                                    <span className="uk-nav-title">
-                                        Tutorials
-                                    </span>
-                                </Link>
-                            </li>
-
-                            <li className={`sc-has-submenu ${isOpen ? "uk-open" : ""}`}>
-                                <a href="#" onClick={() => setIsOpen(!isOpen)}>
+                            <li className={`sc-has-submenu ${openDropdowns.blogs ? "uk-open" : ""}`}>
+                                <a href="#" onClick={() => toggleDropdown("blogs")}>
                                     <div className="uk-flex uk-flex-middle uk-width-1-1">
                                         <div className="uk-flex uk-flex-middle uk-width-1-1">
                                             <span className="uk-nav-icon">
@@ -80,11 +76,11 @@ export default function Sidebar() {
                                             </span>
                                             <span className="uk-nav-title">Blogs</span>
                                         </div>
-                                        <i className={`mdi ${isOpen ? "mdi-chevron-up" : "mdi-chevron-down"}`}></i>
+                                        <i className={`mdi ${openDropdowns.blogs ? "mdi-chevron-up" : "mdi-chevron-down"}`}></i>
                                     </div>
                                 </a>
 
-                                <ul className="sc-sidebar-menu-sub" style={{ display: isOpen ? "block" : "none" }}>
+                                <ul className="sc-sidebar-menu-sub" style={{ display: openDropdowns.blogs ? "block" : "none" }}>
                                     <li>
                                         <Link to="/cms/blogs">
                                             <span className="uk-nav-title">Blogs</span>
@@ -93,6 +89,60 @@ export default function Sidebar() {
                                     <li>
                                         <Link to="/cms/blog-categories">
                                             <span className="uk-nav-title">Blog Categories</span>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li className={`sc-has-submenu ${openDropdowns.revision ? "uk-open" : ""}`}>
+                                <a href="#" onClick={() => toggleDropdown("revision")}>
+                                    <div className="uk-flex uk-flex-middle uk-width-1-1">
+                                        <div className="uk-flex uk-flex-middle uk-width-1-1">
+                                            <span className="uk-nav-icon">
+                                                <i class="mdi mdi-code-tags-check"></i>
+                                            </span>
+                                            <span className="uk-nav-title">Review section</span>
+                                        </div>
+                                        <i className={`mdi ${openDropdowns.revision ? "mdi-chevron-up" : "mdi-chevron-down"}`}></i>
+                                    </div>
+                                </a>
+
+                                <ul className="sc-sidebar-menu-sub" style={{ display: openDropdowns.revision ? "block" : "none" }}>
+                                    <li>
+                                        <Link to="/cms/review">
+                                            <span className="uk-nav-title">Review</span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/cms/blog-categories">
+                                            <span className="uk-nav-title">Blog Categories</span>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li className={`sc-has-submenu ${openDropdowns.tutorial ? "uk-open" : ""}`}>
+                                <a href="#" onClick={() => toggleDropdown("tutorial")}>
+                                    <div className="uk-flex uk-flex-middle uk-width-1-1">
+                                        <div className="uk-flex uk-flex-middle uk-width-1-1">
+                                            <span className="uk-nav-icon">
+                                                <i className="mdi mdi-video-account"></i>
+                                            </span>
+                                            <span className="uk-nav-title">Tutorials</span>
+                                        </div>
+                                        <i className={`mdi ${openDropdowns.tutorial ? "mdi-chevron-up" : "mdi-chevron-down"}`}></i>
+                                    </div>
+                                </a>
+
+                                <ul className="sc-sidebar-menu-sub" style={{ display: openDropdowns.tutorial ? "block" : "none" }}>
+                                    <li>
+                                        <Link to="/cms/tutorials-categories">
+                                            <span className="uk-nav-title">Tutorial Categories</span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/cms/tutorials">
+                                            <span className="uk-nav-title">Tutorial</span>
                                         </Link>
                                     </li>
                                 </ul>

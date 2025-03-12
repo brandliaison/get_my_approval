@@ -1,29 +1,82 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { apiurl } from "../../apiurls/apiurls";
+import axios from "axios";
+import UIkit from "uikit";
 
 export default function Tutorials() {
+
+    const navigate = useNavigate();
+
+    const [tutorials, settutorials] = useState();
+
+    const deletetutorial = (id) => {
+        axios
+            .delete(`${apiurl}/tutorial-videos/${id}`)
+            .then((res) => {
+                UIkit.notification({
+                    message: res.data.message || "Blog deleted successfully!",
+                    status: "success",
+                    timeout: 1000,
+                    pos: "top-center",
+                });
+                gettutorial();
+            })
+            .catch((err) => {
+                console.log(err);
+
+                UIkit.notification({
+                    message: "Failed to delete blog!",
+                    status: "danger",
+                    timeout: 1000,
+                    pos: "top-center",
+                });
+            });
+    };
+    
+    const gettutorial = () => {
+        axios.get(`${apiurl}/tutorial-videos`)
+            .then((res) => {
+                settutorials(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    useEffect(() => {
+        gettutorial();
+    }, []);
+
+
+    const handleViewBlog = (id) => {
+        navigate(`/cms/editblogcategory/${id}`); // Redirect to second page with blog ID in URL
+    };
+
     return (
         <>
             <div id="sc-page-wrapper">
                 <div id="sc-page-content">
                     <div className="uk-flex uk-flex-right">
-                        <button
-                            class="sc-fab sc-fab-text sc-fab-success solid-button"
-                            uk-toggle="target: #modal-overflow"
-                        >
-                            <i class="mdi mdi-plus"></i>Create
-                        </button>
+                        <Link to="/cms/addblog">
+                            <button
+                                className="sc-fab sc-fab-text sc-fab-success solid-button"
+                            >
+                                <i className="mdi mdi-plus"></i>Create
+                            </button>
+                        </Link>
                     </div>
 
-                    <div class="uk-card uk-margin">
-                        <h3 class="uk-card-title">Tutorials</h3>
-                        <div class="uk-card-body">
-                            <div class="uk-overflow-auto">
-                                <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
+                    <div className="uk-card uk-margin">
+                        <h3 className="uk-card-title">Tutorials</h3>
+                        <div className="uk-card-body">
+                            <div className="uk-overflow-auto">
+                                <table className="uk-table uk-table-hover uk-table-middle uk-table-divider">
                                     <thead>
                                         <tr>
                                             <th>
                                                 <input
-                                                    class="uk-checkbox sc-main-checkbox"
+                                                    className="uk-checkbox sc-main-checkbox"
                                                     type="checkbox"
                                                     data-sc-icheck
                                                     data-group=".sc-js-table-checkbox"
@@ -37,51 +90,55 @@ export default function Tutorials() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td className="td">
-                                                <input
-                                                    class="uk-checkbox sc-js-table-checkbox"
-                                                    type="checkbox"
-                                                    data-sc-icheck
-                                                />
-                                            </td>
-                                            <td>
-                                                <img src="https://www.bl-india.com//storage/blog_images/67cae235d0947.webp" class="sc-avatar uk-preserve-width"
-                                                    alt="pagac.twila"
-                                                    style={{maxWidth: '10vw', borderRadius: 0}} />
-                                            </td>
-                                            <td>
-                                                <a class="uk-link-reset" href="#">
-                                                    Lorem ipsum dolor sit amet,
-                                                    consectetur adipiscing elit,
-                                                    sed do eiusmod tempor.
-                                                </a>
-                                            </td>
-                                            <td>Lorem ipsum</td>
-                                            <td>Lorem ipsum</td>
-                                            <td>
-                                                <div>
-                                                    <a
-                                                        class="sc-button sc-button-secondary sc-js-button-wave-light"
-                                                        href="#"
-                                                    >
-                                                        <i class="mdi mdi-trash-can-outline"></i>{" "}
-                                                        Delete
-                                                    </a>
-                                                </div>
-                                                <div className="uk-margin-top">
-                                                    <a
-                                                        class="sc-button sc-button-primary sc-js-button-wave-light"
-                                                        href="#"
-                                                    >
-                                                        <i class="mdi mdi-file-edit">
-                                                            {" "}
-                                                        </i>
-                                                        Edit
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        {tutorials?.length > 0 ? (
+                                                tutorials?.map((value, index) => (
+                                                <tr key={index}>
+                                                    <td className="td">
+                                                        <input
+                                                            className="uk-checkbox sc-js-table-checkbox"
+                                                            type="checkbox"
+                                                            data-sc-icheck
+                                                        />
+                                                    </td>
+                                                    <td>
+                                                        <img src={`http://192.168.1.13:8000//${value.thumbnail_url}`} className="sc-avatar uk-preserve-width"
+                                                            alt="pagac.twila"
+                                                            style={{maxWidth: '10vw', borderRadius: 0}}/>
+                                                    </td>
+                                                    <td>{value.description}</td>
+                                                    <td>{value.name}</td>
+                                                    <td>{value.content}</td>
+                                                    <td>
+                                                        <div onClick={e => deletetutorial(value._id)}>
+                                                            <a
+                                                                className="sc-button sc-button-secondary sc-js-button-wave-light"
+                                                                href="#"
+                                                            >
+                                                                <i className="mdi mdi-trash-can-outline"></i>{" "}
+                                                                Delete
+                                                            </a>
+                                                        </div>
+                                                        <div className="uk-margin-top">
+                                                            <a
+                                                                className="sc-button sc-button-primary sc-js-button-wave-light"
+                                                                href="#"
+                                                            >
+                                                                <i className="mdi mdi-file-edit">
+                                                                    {" "}
+                                                                </i>
+                                                                Edit
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                ))
+                                             ) : (
+                                                    <tr>
+                                                        <td>
+                                                            <p>No blogs available.</p>
+                                                        </td>
+                                                    </tr>
+                                                )}
                                     </tbody>
                                 </table>
                             </div>
@@ -92,29 +149,29 @@ export default function Tutorials() {
 
             {/* form on modal  */}
             <div id="modal-overflow" data-uk-modal>
-                <div class="uk-modal-dialog">
+                <div className="uk-modal-dialog">
                     <button
-                        class="uk-modal-close-default"
+                        className="uk-modal-close-default"
                         type="button"
                         data-uk-close
                     ></button>
-                    <div class="uk-modal-header">
-                        <h2 class="uk-modal-title uk-text-bold">
+                    <div className="uk-modal-header">
+                        <h2 className="uk-modal-title uk-text-bold">
                             Edit Blog Category
                         </h2>
                     </div>
-                    <div class="uk-modal-body" data-uk-overflow-auto>
-                        <p class="uk-modal-title uk-text-medium">
+                    <div className="uk-modal-body" data-uk-overflow-auto>
+                        <p className="uk-modal-title uk-text-medium">
                             Edit the details of the blog category.
                         </p>
-                        <form class="uk-form-stacked">
+                        <form className="uk-form-stacked">
                             {/* <!-- Name --> */}
-                            <div class="uk-margin-small-bottom">
-                                <label class="uk-form-label" for="name">
+                            <div className="uk-margin-small-bottom">
+                                <label className="uk-form-label" for="name">
                                     Name*
                                 </label>
                                 <input
-                                    class="uk-input"
+                                    className="uk-input"
                                     id="name"
                                     type="text"
                                     placeholder="Enter your name"
@@ -123,12 +180,12 @@ export default function Tutorials() {
                             </div>
 
                             {/* <!-- Title --> */}
-                            <div class="uk-margin-small-bottom">
-                                <label class="uk-form-label" for="title">
+                            <div className="uk-margin-small-bottom">
+                                <label className="uk-form-label" for="title">
                                     Title*
                                 </label>
                                 <input
-                                    class="uk-input"
+                                    className="uk-input"
                                     id="title"
                                     type="text"
                                     placeholder="Enter title"
@@ -137,12 +194,12 @@ export default function Tutorials() {
                             </div>
 
                             {/* <!-- Slug --> */}
-                            <div class="uk-margin-small-bottom">
-                                <label class="uk-form-label" for="slug">
+                            <div className="uk-margin-small-bottom">
+                                <label className="uk-form-label" for="slug">
                                     Slug*
                                 </label>
                                 <input
-                                    class="uk-input"
+                                    className="uk-input"
                                     id="slug"
                                     type="text"
                                     placeholder="Enter slug"
@@ -151,13 +208,13 @@ export default function Tutorials() {
                             </div>
 
                             {/* <!-- File Upload --> */}
-                            <div class="uk-margin-small-bottom">
-                                <label class="uk-form-label" for="file">
+                            <div className="uk-margin-small-bottom">
+                                <label className="uk-form-label" for="file">
                                     Upload File
                                 </label>
-                                <div class="uk-form-controls">
+                                <div className="uk-form-controls">
                                     <input
-                                        class="uk-input"
+                                        className="uk-input"
                                         id="file"
                                         type="file"
                                     />
@@ -165,12 +222,12 @@ export default function Tutorials() {
                             </div>
 
                             {/* <!-- Description (Textarea) --> */}
-                            <div class="uk-margin-small-bottom">
-                                <label class="uk-form-label" for="description">
+                            <div className="uk-margin-small-bottom">
+                                <label className="uk-form-label" for="description">
                                     Description*
                                 </label>
                                 <textarea
-                                    class="uk-textarea"
+                                    className="uk-textarea"
                                     id="description"
                                     placeholder="Enter description"
                                     rows="4"
@@ -178,10 +235,10 @@ export default function Tutorials() {
                             </div>
                         </form>
                     </div>
-                    <hr class="uk-margin-remove" />
-                    <div class="uk-modal-footer">
+                    <hr className="uk-margin-remove" />
+                    <div className="uk-modal-footer">
                         <button
-                            class="sc-button sc-button-success"
+                            className="sc-button sc-button-success"
                             type="button"
                         >
                             Save

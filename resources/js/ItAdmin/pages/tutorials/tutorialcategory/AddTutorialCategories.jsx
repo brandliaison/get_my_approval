@@ -1,12 +1,10 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { apiurl } from '../../../apiurls/apiurls';
-import UIkit from 'uikit';
+import axios from "axios";
+import React, { useState } from "react";
+import { apiurl } from "../../../apiurls/apiurls";
+import UIkit from "uikit";
 
-export default function EditBlogCategory() {
-    const navigate = useNavigate();
-    const { id } = useParams();
+export default function AddTutorialCategories() {
+
     const [formData, setformData] = useState({
         name: '',
         description: '',
@@ -14,27 +12,13 @@ export default function EditBlogCategory() {
         slug: '',
     });
 
-        // Handle text input changes
+    // Handle text input changes
     const handleChange = (e) => {
         setformData({
             ...formData,
             [e.target.name]: e.target.value,
         });
     };
-
-    useEffect(() => {
-        editblogcategory()
-    }, [])
-
-    const editblogcategory = () => {
-        axios.get(`${apiurl}/blog-categories/${id}`)
-        .then((res) => {
-            setformData(res.data)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -45,13 +29,12 @@ export default function EditBlogCategory() {
         data.append("description", formData.description);
         data.append("title", formData.title);
         data.append("slug", formData.slug);
-        data.append("_method", 'PUT');
     
         // Log to console (for debugging)
         console.log("Form Data:", Object.fromEntries(data));
     
         // API Call
-        axios.post(`${apiurl}/blog-categories/${id}`, data, {
+        axios.post(`${apiurl}/tutorial-videos-categories`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         })
         .then(response => {
@@ -65,8 +48,13 @@ export default function EditBlogCategory() {
                 pos: "top-center",
             });
     
-            // navigate to blog categories
-            navigate('/cms/blog-categories')
+            // Reset form data after success
+            setformData({
+                name: '',
+                description: '',
+                title: '',
+                slug: '',
+            });
         })
         .catch(error => {
             console.error("Error:", error);
@@ -89,19 +77,19 @@ export default function EditBlogCategory() {
                     <div>
                         <div className="uk-card">
                             <div className="uk-card-body">
-                                <h5 className="uk-heading-line"><span>Add Blog Category</span></h5>
+                                <h5 className="uk-heading-line"><span>Add Tutorial Category</span></h5>
                                 <form onSubmit={handleSubmit}>
                                     <fieldset className="uk-fieldset">
                                     <div className="uk-grid uk-grid-small uk-child-width-1-2@l" uk-grid="true">
                                             <div>
-                                                <input className="uk-input uk-margin-bottom" type="text" name="name" onChange={handleChange} value={formData.name} placeholder="Blog Category Name" data-sc-input />
+                                                <input className="uk-input uk-margin-bottom" type="text" name="name" onChange={handleChange} value={formData.name} placeholder="Tutorial Category Name" data-sc-input />
                                             </div>
                                             <div>
-                                                <input className="uk-input uk-margin-bottom" type="text" name='title' onChange={handleChange} value={formData.title} placeholder="Blog Category Title" data-sc-input />
+                                                <input className="uk-input uk-margin-bottom" type="text" name='title' onChange={handleChange} value={formData.title} placeholder="Tutorial Category Title" data-sc-input />
                                             </div>
                                         </div>
                                         <div className="uk-margin">
-                                                <input className="uk-input uk-margin-bottom" type="text" name='slug' onChange={handleChange} value={formData.slug} placeholder="Blog Category Slug" data-sc-input />
+                                                <input className="uk-input uk-margin-bottom" type="text" name='slug' onChange={handleChange} value={formData.slug} placeholder="Tutorial Category Slug" data-sc-input />
                                                 <textarea className="uk-textarea" rows="5" name='description' onChange={handleChange} value={formData.description} placeholder="Discription" data-sc-input></textarea>
                                         </div>
                                         <div className="uk-margin">

@@ -76,6 +76,15 @@ export default function AddBlogs() {
                 timeout: 2000,
                 pos: "top-center",
             });
+            setformData({
+                blogname: '',
+                blogcategory: '',
+                blogimage: null,
+                blogimagealt: '',
+                blogtechnicalname: '',
+                blogcontent: '',
+                blogdiscription: ''
+            })
         })
         .catch(error => {
             console.error("Error:", error);
@@ -103,12 +112,12 @@ export default function AddBlogs() {
                                     <fieldset className="uk-fieldset">
                                     <div className="uk-grid uk-grid-small uk-child-width-1-2@l" uk-grid="true">
                                             <div>
-                                                <input className="uk-input uk-margin-bottom" type="text" name="blogname" onChange={handleChange} placeholder="Blog Name" data-sc-input />
+                                                <input className="uk-input uk-margin-bottom" type="text" name="blogname" onChange={handleChange} value={formData.blogname} placeholder="Blog Name" data-sc-input />
                                                 <input className="uk-input uk-margin-bottom" type="file" name='blogimage' onChange={handleFileChange} placeholder="Blog Name" data-sc-input />
-                                                <input className="uk-input uk-margin-bottom" type="text" name='blogtechnicalname' onChange={handleChange} placeholder="Technical Name" data-sc-input />
+                                                <input className="uk-input uk-margin-bottom" type="text" name='blogtechnicalname' onChange={handleChange} value={formData.blogtechnicalname} placeholder="Technical Name" data-sc-input />
                                             </div>
                                             <div>
-                                                <select className="uk-select uk-margin-bottom" name='blogcategory' onChange={handleChange} style={{borderTop: 'none', borderLeft: 'none', borderRight: 'none', borderRadius: '0px'}}>
+                                                <select className="uk-select uk-margin-bottom" name='blogcategory' onChange={handleChange} value={formData.blogcategory} style={{borderTop: 'none', borderLeft: 'none', borderRight: 'none', borderRadius: '0px'}}>
                                                     <option value="">Select a category</option>
                                                     {Array.isArray(blogcategrydata) && blogcategrydata.length > 0 ? (
                                                         blogcategrydata.map((value, index) => (
@@ -120,12 +129,12 @@ export default function AddBlogs() {
                                                         <option disabled>No categories available</option>
                                                     )}
                                                 </select>
-                                                <input className="uk-input uk-margin-bottom" type="text" name='blogimagealt' onChange={handleChange} placeholder="Image Alt" data-sc-input />
-                                                <input className="uk-input uk-margin-bottom" type="text" name='blogcontent' onChange={handleChange} placeholder="Content" data-sc-input />
+                                                <input className="uk-input uk-margin-bottom" type="text" name='blogimagealt' onChange={handleChange} value={formData.blogimagealt} placeholder="Image Alt" data-sc-input />
+                                                <input className="uk-input uk-margin-bottom" type="text" name='blogcontent' onChange={handleChange} value={formData.blogcontent} placeholder="Content" data-sc-input />
                                             </div>
                                         </div>
                                         <div className="uk-margin">
-                                                <textarea className="uk-textarea" rows="5" name='blogdiscription' onChange={handleChange} placeholder="Discription" data-sc-input></textarea>
+                                                <textarea className="uk-textarea" rows="5" name='blogdiscription' onChange={handleChange} value={formData.blogdiscription} placeholder="Discription" data-sc-input></textarea>
                                         </div>
                                         <div className="uk-margin">
                                             <input type='submit' className='sc-button waves-effect waves-button solid-button' value='Submit'></input>

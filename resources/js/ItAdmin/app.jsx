@@ -22,6 +22,10 @@ import EditBlogs from './pages/blogs/EditBlogs';
 import BlogCategories from './pages/blogs/blogcategories/BlogCategories';
 import AddBlogCategories from './pages/blogs/blogcategories/AddBlogCategories';
 import EditBlogCategory from './pages/blogs/blogcategories/EditBlogCategory';
+import Revision from './pages/revision/Revision';
+import TutorialCategories from './pages/tutorials/tutorialcategory/TutorialCategories';
+import AddTutorialCategories from './pages/tutorials/tutorialcategory/AddTutorialCategories';
+import EditTutorialCategories from './pages/tutorials/tutorialcategory/EditTutorialCategories';
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -43,10 +47,14 @@ export default function App() {
             <Route path="/cms/tutorials" element={<Tutorials />} />
             <Route path="/cms/blog-categories" element={<BlogCategories />} />
             <Route path="/cms/addblog-categories" element={<AddBlogCategories />} />
-            <Route path="/cms/editblogcategory" element={<EditBlogCategory />} />
+            <Route path="/cms/editblogcategory/:id" element={<EditBlogCategory />} />
             <Route path="/cms/blogs" element={<Blogs />} />
             <Route path="/cms/addblog" element={<AddBlogs />} />
             <Route path="/cms/editblog/:id" element={<EditBlogs />} />
+            <Route path="/cms/tutorials-categories" element={<TutorialCategories />} />
+            <Route path="/cms/addtutorials-categories" element={<AddTutorialCategories />} />
+            <Route path="/cms/edittutorials-categories/:id" element={<EditTutorialCategories />} />
+            <Route path="/cms/tutorials" element={<Tutorials />} />
         </Routes>
         </Router>
     </React.Fragment>
