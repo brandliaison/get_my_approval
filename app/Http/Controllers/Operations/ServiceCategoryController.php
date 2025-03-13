@@ -31,7 +31,7 @@ class ServiceCategoryController extends Controller
 
         $category = ServiceCategory::create([
             'name' => $request->name,
-            'slug' => isset($request->slug) ? $request->slug : Str::slug($request->name), // Generate slug automatically
+            'slug' => isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name), // Generate slug automatically
             'description' => $request->description,
             'title' => $request->title,
             'from_platform' => 'operations',
@@ -55,7 +55,7 @@ class ServiceCategoryController extends Controller
     // Show a Single Service Category
     public function show($id)
     {
-        $category = ServiceCategory::with('firstAppoveruser', 'finalAppoveruser')->where('slug', $id)->first();
+        $category = ServiceCategory::with('firstAppoveruser', 'finalAppoveruser')->find($id);
 
         if (!$category) {
             return response()->json(['error' => 'Service Category Not Found'], 404);
@@ -81,11 +81,11 @@ class ServiceCategoryController extends Controller
             return response()->json(['error' => 'Service Category Not Found'], 404);
         }
 
-        $validated['slug'] = isset($request->slug) ? $request->slug : Str::slug($request->name);
+        $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
         // Update category
         $category->update([
             'name' => $request->name ?? $oldcategory->name,
-            'slug' => $request->slug ? $request->slug : $oldcategory->slug,
+            'slug' => $request->slug ? Str::slug($request->slug) : $oldcategory->slug,
             'description' => $request->description ?? $oldcategory->description,
             'title' => $request->title ?? $oldcategory->title,
         ]);

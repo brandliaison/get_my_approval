@@ -40,9 +40,9 @@ class BlogController extends Controller
             'open_comment' => 'nullable|string',
         ]);
 
-        if ($category->status !== 'active') {
-            return response()->json(['error' => 'Blog Category Not Found'], 404);
-        }
+        // if ($category->status !== 'active') {
+        //     return response()->json(['error' => 'Blog Category Not Found'], 404);
+        // }
 
         $validated = $request->except('image_url');
         if ($request->hasFile('image_url')) {
@@ -50,7 +50,7 @@ class BlogController extends Controller
             $validated['image_url'] = Storage::url($filePath);
         }
 
-        $validated['slug'] = isset($request->slug) ? $request->slug : Str::slug($request->name);
+        $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
         $validated['status'] = 'inactive';
 
         $data = Blog::create($validated);
@@ -102,15 +102,15 @@ class BlogController extends Controller
             'open_comment' => 'nullable|string',
         ]);
 
-        if ($category->status !== 'active') {
-            return response()->json(['error' => 'Blog Category Not Found'], 404);
-        }
+        // if ($category->status !== 'active') {
+        //     return response()->json(['error' => 'Blog Category Not Found'], 404);
+        // }
 
         if (!$data) {
             return response()->json(['error' => 'Blog Not Found'], 404);
         }
 
-        $validated['slug'] = isset($request->slug) ? $request->slug : Str::slug($request->name);
+        $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
 
         $validated = $request->except('image_url');
         if ($request->hasFile('image_url')) {

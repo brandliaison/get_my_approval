@@ -30,7 +30,7 @@ class BlogCategoryController extends Controller
 
         $category = BlogCategory::create([
             'name' => $request->name,
-            'slug' => isset($request->slug) ? $request->slug : Str::slug($request->name), // Generate slug automatically
+            'slug' => isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name), // Generate slug automatically
             'description' => $request->description,
             'title' => $request->title,
             'from_platform' => 'operations',
@@ -56,7 +56,7 @@ class BlogCategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = BlogCategory::where('slug', $id)->first();
+        $category = BlogCategory::find($id);
 
         if (!$category) {
             return response()->json(['error' => 'Blog Category Not Found'], 404);
@@ -84,11 +84,12 @@ class BlogCategoryController extends Controller
             return response()->json(['error' => 'Blog Category Not Found'], 404);
         }
 
-        $validated['slug'] = isset($request->slug) ? $request->slug : Str::slug($request->name);
+        $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
+
         // Update category
         $category->update([
             'name' => $request->name ?? $oldcategory->name,
-            'slug' => $request->slug ? $request->slug : $oldcategory->slug,
+            'slug' => $request->slug ? Str::slug($request->slug) : $oldcategory->slug,
             'description' => $request->description ?? $oldcategory->description,
             'title' => $request->title ?? $oldcategory->title,
         ]);

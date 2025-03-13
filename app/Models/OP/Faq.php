@@ -6,21 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Eloquent\Model;
 use MongoDB\Laravel\Eloquent\SoftDeletes;
 
-class TutorialVideo extends Model
+class Faq extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name',
-        'slug',
-        'tutorial_video_category_id',
-        'video_url',
-        'thumbnail_url',
-        'image_alt',
-        'description',
-        'content',
-        'is_downloadable',
-        'open_comment',
+        'faq_category_id',
+        'question',
+        'answer',
         'revised_by',
         'first_approver',
         'first_approved_date',
@@ -34,7 +27,7 @@ class TutorialVideo extends Model
     // Relationships
     public function category()
     {
-        return $this->belongsTo(TutorialVideoCategory::class, 'tutorial_video_category_id')->select('_id', 'name', 'slug', 'description');
+        return $this->belongsTo(FaqCategory::class, 'faq_category_id')->select('_id', 'name', 'slug', 'description');
     }
 
     public function revisedBy()
@@ -44,6 +37,6 @@ class TutorialVideo extends Model
 
     public function revisions()
     {
-        return $this->hasMany(EntityRevision::class, 'entity_id', '_id')->where('entity_type', 'TutorialVideo');
+        return $this->hasMany(EntityRevision::class, 'entity_id', '_id')->where('entity_type', 'Faq');
     }
 }
