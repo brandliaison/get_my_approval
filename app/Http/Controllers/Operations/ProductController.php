@@ -50,7 +50,7 @@ class ProductController extends Controller
             $validated['image_url'] = Storage::url($filePath);
         }
 
-        $validated['slug'] = isset($request->slug) ? $request->slug : Str::slug($request->name);
+        $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
         $validated['status'] = 'inactive';
 
         $data = Product::create($validated);
@@ -110,7 +110,7 @@ class ProductController extends Controller
             return response()->json(['error' => 'Product Not Found'], 404);
         }
 
-        $validated['slug'] = isset($request->slug) ? $request->slug : Str::slug($request->name);
+        $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
 
         $validated = $request->except('image_url');
         if ($request->hasFile('image_url')) {

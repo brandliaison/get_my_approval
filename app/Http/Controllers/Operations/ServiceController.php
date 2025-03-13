@@ -44,7 +44,7 @@ class ServiceController extends Controller
             $validated['image_url'] = Storage::url($filePath);
         }
 
-        $validated['slug'] = isset($request->slug) ? $request->slug : Str::slug($request->name);
+        $validated['slug'] = isset($request->slug) ? Str::slug($request->slug): Str::slug($request->name);
         $validated['status'] = 'inactive';
 
         $service = Service::create($validated);
@@ -97,7 +97,7 @@ class ServiceController extends Controller
             return response()->json(['error' => 'Service Not Found'], 404);
         }
 
-        $validated['slug'] = isset($request->slug) ? $request->slug : Str::slug($request->name);
+        $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
 
         $validated = $request->except('image_url');
         if ($request->hasFile('image_url')) {

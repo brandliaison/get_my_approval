@@ -18,7 +18,11 @@ class TutorialVideoController extends Controller
      */
     public function index()
     {
-        return response()->json(TutorialVideo::with('category', 'revisions')->get());
+        $data = TutorialVideo::with('category', 'revisions')->get();
+        if (!$data) {
+            return response()->json(['error' => 'Tutorial Video  Not Found'], 404);
+        }
+        return response()->json($data);
     }
 
     /**
@@ -39,28 +43,28 @@ class TutorialVideoController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'tutorial_video_category_id' => 'required|exists:tutorial_video_categories,_id',
-            'video_url' => 'nullable|mimes:mp4,3gp,webm',
+            'video_url' => 'required',
             'thumbnail_url' => 'nullable|mimes:png,jpg,jpeg',
             'image_alt' => 'nullable|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        if ($category->status !== 'active') {
-            return response()->json(['error' => 'Tutorial Category Not Found'], 404);
-        }
+        // if ($category->status !== 'active') {
+        //     return response()->json(['error' => 'Tutorial Category Not Found'], 404);
+        // }
 
-        $validated = $request->except('video_url');
+        // $validated = $request->except('video_url');
         $validated = $request->except('thumbnail_url');
         if ($request->hasFile('thumbnail_url')) {
             $filePath = $request->file('thumbnail_url')->store('tutorial-video-thumbnail', 'public');
             $validated['thumbnail_url'] = Storage::url($filePath);
         }
-        if ($request->hasFile('video_url')) {
-            $filePath = $request->file('video_url')->store('tutorial-video', 'public');
-            $validated['video_url'] = Storage::url($filePath);
-        }
+        // if ($request->hasFile('video_url')) {
+        //     $filePath = $request->file('video_url')->store('tutorial-video', 'public');
+        //     $validated['video_url'] = Storage::url($filePath);
+        // }
 
-        $validated['slug'] = isset($request->slug) ? $request->slug : Str::slug($request->name);
+        $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
         $validated['status'] = 'inactive';
 
         $data = TutorialVideo::create($validated);
@@ -111,32 +115,32 @@ class TutorialVideoController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'tutorial_video_category_id' => 'required|exists:tutorial_video_categories,_id',
-            'video_url' => 'nullable|mimes:mp4,3gp,webm',
+            'video_url' => 'required',
             'thumbnail_url' => 'nullable|mimes:png,jpg,jpeg',
             'image_alt' => 'nullable|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        if ($category->status !== 'active') {
-            return response()->json(['error' => 'Tutorial Video Category Not Found'], 404);
-        }
+        // if ($category->status !== 'active') {
+        //     return response()->json(['error' => 'Tutorial Video Category Not Found'], 404);
+        // }
 
         if (!$data) {
             return response()->json(['error' => 'Tutorial Video Not Found'], 404);
         }
 
-        $validated['slug'] = isset($request->slug) ? $request->slug : Str::slug($request->name);
+        $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
 
-        $validated = $request->except('video_url');
+        // $validated = $request->except('video_url');
         $validated = $request->except('thumbnail_url');
         if ($request->hasFile('thumbnail_url')) {
             $filePath = $request->file('thumbnail_url')->store('tutorial-video-thumbnail', 'public');
             $validated['thumbnail_url'] = Storage::url($filePath);
         }
-        if ($request->hasFile('video_url')) {
-            $filePath = $request->file('video_url')->store('tutorial-video', 'public');
-            $validated['video_url'] = Storage::url($filePath);
-        }
+        // if ($request->hasFile('video_url')) {
+        //     $filePath = $request->file('video_url')->store('tutorial-video', 'public');
+        //     $validated['video_url'] = Storage::url($filePath);
+        // }
 
         $data->update($validated);
 
