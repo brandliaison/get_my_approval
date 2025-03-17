@@ -53,11 +53,9 @@ export default function ServiceCategories() {
         getCategories();
     }, []);
 
-    const handleViewBlog = (id) => {
-        navigate(`/cms/editblogcategory/${id}`); // Redirect to second page with blog ID in URL
+    const handleViewService = (id) => {
+        navigate(`/op-admin/edit-service-category/${id}`); // Redirect to second page with blog ID in URL
     };
-
-    console.log(categories);
 
     return (
         <>
@@ -65,7 +63,7 @@ export default function ServiceCategories() {
                 <div id="sc-page-content">
                     <div className="uk-flex uk-flex-between uk-flex-middle">
                         <h3>Service Categories</h3>
-                        <Link to="/cms/add-service-categories">
+                        <Link to="/op-admin/add-service-categories">
                             <button className="sc-fab sc-fab-text sc-fab-success solid-button">
                                 <i className="mdi mdi-plus"></i>Create
                             </button>
@@ -137,6 +135,24 @@ export default function ServiceCategories() {
                                                     </td>
                                                     <td>
                                                         <div className="uk-flex gap-2">
+
+                                                            <div
+                                                                onClick={() =>
+                                                                    handleViewService(
+                                                                        value._id
+                                                                    )
+                                                                }
+                                                            >
+                                                                <a
+                                                                    className="sc-button sc-button-primary sc-js-button-wave-light"
+                                                                    href="#"
+                                                                >
+                                                                    <i className="mdi mdi-file-edit">
+                                                                        {" "}
+                                                                    </i>
+                                                                </a>
+                                                            </div>
+
                                                             <div
                                                                 onClick={(e) =>
                                                                     deleteCategory(
@@ -149,22 +165,6 @@ export default function ServiceCategories() {
                                                                     href="#"
                                                                 >
                                                                     <i className="mdi mdi-trash-can-outline"></i>{" "}
-                                                                </a>
-                                                            </div>
-                                                            <div
-                                                                onClick={() =>
-                                                                    handleViewBlog(
-                                                                        value._id
-                                                                    )
-                                                                }
-                                                            >
-                                                                <a
-                                                                    className="sc-button sc-button-primary sc-js-button-wave-light"
-                                                                    href="#"
-                                                                >
-                                                                    <i className="mdi mdi-file-edit">
-                                                                        {" "}
-                                                                    </i>
                                                                 </a>
                                                             </div>
                                                         </div>
