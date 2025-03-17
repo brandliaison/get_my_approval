@@ -6,12 +6,18 @@ import UIkit from 'uikit'; // Import UIkit JS
 import Icons from 'uikit/dist/js/uikit-icons'; // Import UIkit icons
 import About from './pages/About';
 import Home from './pages/Home';
+import Header from './layout/Header';
+import './../../../resources/css/style.css'; // my default styles of fornt end
+
+// Load UIkit icons (optional)
+UIkit.use(Icons);
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <Router>
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="about" element={<About />} />
