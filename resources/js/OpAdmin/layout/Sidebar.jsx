@@ -26,7 +26,7 @@ export default function Sidebar() {
                             </li>
 
                             <li title="Chat">
-                                <Link to="/cms/">
+                                <Link to="/op-admin/">
                                     <span className="uk-nav-icon">
                                         <i className="mdi mdi-home"></i>
                                     </span>
@@ -49,12 +49,12 @@ export default function Sidebar() {
 
                                 <ul className="sc-sidebar-menu-sub" style={{ display: openDropdowns.services ? "block" : "none" }}>
                                     <li>
-                                        <Link to="/cms/services">
+                                        <Link to="/op-admin/services">
                                             <span className="uk-nav-title">Services</span>
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="/cms/service-categories">
+                                        <Link to="/op-admin/service-categories">
                                             <span className="uk-nav-title">Service Categories</span>
                                         </Link>
                                     </li>
@@ -62,7 +62,7 @@ export default function Sidebar() {
                             </li>
 
                             <li title="Mailbox">
-                                <Link to="/cms/products">
+                                <Link to="/op-admin/products">
                                     <span className="uk-nav-icon">
                                         <i className="mdi mdi-package-variant-remove"></i>
                                     </span>
@@ -73,7 +73,7 @@ export default function Sidebar() {
                             </li>
 
                             <li title="Task Board">
-                                <Link to="/cms/notifications">
+                                <Link to="/op-admin/notifications">
                                     <span className="uk-nav-icon">
                                         <i className="mdi mdi-bell"></i>
                                     </span>
@@ -98,12 +98,12 @@ export default function Sidebar() {
 
                                 <ul className="sc-sidebar-menu-sub" style={{ display: openDropdowns.blogs ? "block" : "none" }}>
                                     <li>
-                                        <Link to="/cms/blogs">
+                                        <Link to="/op-admin/blogs">
                                             <span className="uk-nav-title">Blogs</span>
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="/cms/blog-categories">
+                                        <Link to="/op-admin/blog-categories">
                                             <span className="uk-nav-title">Blog Categories</span>
                                         </Link>
                                     </li>
@@ -125,12 +125,12 @@ export default function Sidebar() {
 
                                 <ul className="sc-sidebar-menu-sub" style={{ display: openDropdowns.revision ? "block" : "none" }}>
                                     <li>
-                                        <Link to="/cms/new-submitted-posts">
+                                        <Link to="/op-admin/new-submitted-posts">
                                             <span className="uk-nav-title">New Submitted Post</span>
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="/cms/blog-categories">
+                                        <Link to="/op-admin/blog-categories">
                                             <span className="uk-nav-title">Blog Categories</span>
                                         </Link>
                                     </li>
@@ -152,12 +152,12 @@ export default function Sidebar() {
 
                                 <ul className="sc-sidebar-menu-sub" style={{ display: openDropdowns.tutorial ? "block" : "none" }}>
                                     <li>
-                                        <Link to="/cms/tutorials-categories">
+                                        <Link to="/op-admin/tutorials-categories">
                                             <span className="uk-nav-title">Tutorial Categories</span>
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="/cms/tutorials">
+                                        <Link to="/op-admin/tutorials">
                                             <span className="uk-nav-title">Tutorial</span>
                                         </Link>
                                     </li>

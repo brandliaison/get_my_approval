@@ -50,7 +50,7 @@ export default function Tutorials() {
 
 
     const handleViewBlog = (id) => {
-        navigate(`/cms/editblogcategory/${id}`); // Redirect to second page with blog ID in URL
+        navigate(`/op-admin/editblogcategory/${id}`); // Redirect to second page with blog ID in URL
     };
 
     return (
@@ -58,7 +58,7 @@ export default function Tutorials() {
             <div id="sc-page-wrapper">
                 <div id="sc-page-content">
                     <div className="uk-flex uk-flex-right">
-                        <Link to="/cms/addblog">
+                        <Link to="/op-admin/addblog">
                             <button
                                 className="sc-fab sc-fab-text sc-fab-success solid-button"
                             >

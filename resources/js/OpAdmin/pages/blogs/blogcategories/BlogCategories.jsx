@@ -1,18 +1,18 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import UIkit from 'uikit';
-import { apiurl } from '../../../apiurls/apiurls';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { apiurl } from "../../../apiurls/apiurls";
+import UIkit from "uikit";
 
-export default function TutorialCategories() {
+export default function BlogCategories() {
 
     const navigate = useNavigate();
 
-    const [tutorialcategories, settutorialcategories] = useState();
+    const [blogcategories, setblogcategories] = useState();
 
-    const deletetutorialcategory = (id) => {
+    const deleteblogcategory = (id) => {
         axios
-            .delete(`${apiurl}/tutorial-videos-categories/${id}`)
+            .delete(`${apiurl}/blog-categories/${id}`)
             .then((res) => {
                 UIkit.notification({
                     message: res.data.message || "Blog deleted successfully!",
@@ -20,7 +20,7 @@ export default function TutorialCategories() {
                     timeout: 1000,
                     pos: "top-center",
                 });
-                gettutorialcategories();
+                getblogcategories();
             })
             .catch((err) => {
                 console.log(err);
@@ -33,12 +33,11 @@ export default function TutorialCategories() {
                 });
             });
     };
-    
-    const gettutorialcategories = () => {
-        axios.get(`${apiurl}/tutorial-videos-categories/`)
+
+    const getblogcategories = () => {
+        axios.get(`${apiurl}/blog-categories`)
             .then((res) => {
-                console.log(res)
-                settutorialcategories(res.data);
+                setblogcategories(res.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -46,22 +45,22 @@ export default function TutorialCategories() {
     };
 
     useEffect(() => {
-        gettutorialcategories();
+        getblogcategories();
     }, []);
 
 
     const handleViewBlog = (id) => {
-        navigate(`/cms/edittutorials-categories/${id}`); // Redirect to second page with blog ID in URL
+        navigate(`/op-admin/editblogcategory/${id}`); // Redirect to second page with blog ID in URL
     };
 
-    console.log(tutorialcategories);
+    console.log(blogcategories);
 
-  return (
-    <>
+    return (
+        <>
             <div id="sc-page-wrapper">
                 <div id="sc-page-content">
                     <div className="uk-flex uk-flex-right">
-                        <Link to="/cms/addtutorials-categories">
+                        <Link to="/op-admin/addblog-categories">
                             <button className="sc-fab sc-fab-text sc-fab-success solid-button">
                                 <i className="mdi mdi-plus"></i>Create
                             </button>
@@ -90,7 +89,7 @@ export default function TutorialCategories() {
                     </form>
 
                     <div className="uk-card uk-margin">
-                        <h3 className="uk-card-title">Tutorial Categories</h3>
+                        <h3 className="uk-card-title">Blog Categories</h3>
                         <div className="uk-card-body">
                             <div className="uk-overflow-auto">
                                 <table className="uk-table uk-table-hover uk-table-middle uk-table-divider">
@@ -104,15 +103,15 @@ export default function TutorialCategories() {
                                                     data-group=".sc-js-table-checkbox"
                                                 />
                                             </th>
-                                            <th>Tutorial Categories Discription</th>
-                                            <th>Tutorial Categories Name</th>
-                                            <th>Tutorial Categories Title</th>
-                                            <th>Edit Tutorial</th>
+                                            <th>Blog Categories Discription</th>
+                                            <th>Blog Categories Name</th>
+                                            <th>Blog Categories Title</th>
+                                            <th>Edit Blog</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {tutorialcategories?.length > 0 ? (
-                                            tutorialcategories?.map((value, index) => (
+                                        {blogcategories?.length > 0 ? (
+                                            blogcategories?.map((value, index) => (
                                                 <tr key={index}>
                                                     <td>
                                                         <input
@@ -127,7 +126,7 @@ export default function TutorialCategories() {
                                                     <td>
                                                         <div
                                                             onClick={(e) =>
-                                                                deletetutorialcategory(
+                                                                deleteblogcategory(
                                                                     value._id
                                                                 )
                                                             }
@@ -175,6 +174,6 @@ export default function TutorialCategories() {
                     </div>
                 </div>
             </div>
-    </>
-  )
+        </>
+    );
 }

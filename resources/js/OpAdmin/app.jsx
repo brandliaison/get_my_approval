@@ -29,6 +29,7 @@ import EditTutorialCategories from './pages/tutorials/tutorialcategory/EditTutor
 import NewSubmittedPosts from './pages/revision/NewSubmittedPosts';
 import ServiceCategories from './pages/services/ServiceCategories/ServiceCategories';
 import AddServiceCategories from './pages/services/ServiceCategories/AddServiceCategories';
+import EditServiceCategory from './pages/services/ServiceCategories/EditServiceCategory';
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -41,29 +42,30 @@ export default function App() {
             <Header />
             <Sidebar />
         <Routes>
-            <Route path="/cms/" element={<Home />} />
-            <Route path="/cms/about" element={<About />} />
-            <Route path="/cms/login" element={<Login />} />
+            <Route path="/op-admin/" element={<Home />} />
+            <Route path="/op-admin/about" element={<About />} />
+            <Route path="/op-admin/login" element={<Login />} />
 
-            <Route path="/cms/services" element={<Services />} />
-            <Route path="/cms/service-categories" element={<ServiceCategories />} />
-            <Route path="/cms/add-service-categories" element={<AddServiceCategories />} />
+            <Route path="/op-admin/services" element={<Services />} />
+            <Route path="/op-admin/service-categories" element={<ServiceCategories />} />
+            <Route path="/op-admin/add-service-categories" element={<AddServiceCategories />} />
+            <Route path="/op-admin/edit-service-category/:id" element={<EditServiceCategory />} />
 
-            <Route path="/cms/products" element={<Products />} />
-            <Route path="/cms/notifications" element={<Notifications />} />
-            <Route path="/cms/tutorials" element={<Tutorials />} />
-            <Route path="/cms/blog-categories" element={<BlogCategories />} />
-            <Route path="/cms/addblog-categories" element={<AddBlogCategories />} />
-            <Route path="/cms/editblogcategory/:id" element={<EditBlogCategory />} />
-            <Route path="/cms/blogs" element={<Blogs />} />
-            <Route path="/cms/addblog" element={<AddBlogs />} />
-            <Route path="/cms/editblog/:id" element={<EditBlogs />} />
-            <Route path="/cms/tutorials-categories" element={<TutorialCategories />} />
-            <Route path="/cms/addtutorials-categories" element={<AddTutorialCategories />} />
-            <Route path="/cms/edittutorials-categories/:id" element={<EditTutorialCategories />} />
-            <Route path="/cms/tutorials" element={<Tutorials />} />
+            <Route path="/op-admin/products" element={<Products />} />
+            <Route path="/op-admin/notifications" element={<Notifications />} />
+            <Route path="/op-admin/tutorials" element={<Tutorials />} />
+            <Route path="/op-admin/blog-categories" element={<BlogCategories />} />
+            <Route path="/op-admin/addblog-categories" element={<AddBlogCategories />} />
+            <Route path="/op-admin/editblogcategory/:id" element={<EditBlogCategory />} />
+            <Route path="/op-admin/blogs" element={<Blogs />} />
+            <Route path="/op-admin/addblog" element={<AddBlogs />} />
+            <Route path="/op-admin/editblog/:id" element={<EditBlogs />} />
+            <Route path="/op-admin/tutorials-categories" element={<TutorialCategories />} />
+            <Route path="/op-admin/addtutorials-categories" element={<AddTutorialCategories />} />
+            <Route path="/op-admin/edittutorials-categories/:id" element={<EditTutorialCategories />} />
+            <Route path="/op-admin/tutorials" element={<Tutorials />} />
 
-            <Route path="/cms/new-submitted-posts" element={<NewSubmittedPosts />} />
+            <Route path="/op-admin/new-submitted-posts" element={<NewSubmittedPosts />} />
         </Routes>
         </Router>
     </React.Fragment>

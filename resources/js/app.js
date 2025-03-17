@@ -1,5 +1,5 @@
 import './bootstrap';
 import './Site/app.jsx';
-import './ItAdmin/app.jsx';
+import './OpAdmin/app.jsx';
 
 
