@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { apiurl } from '../../../apiurls/apiurls';
+import apiClient from '../../../services/api';
 import UIkit from 'uikit';
 
 export default function EditBlogCategory() {
@@ -27,7 +27,7 @@ export default function EditBlogCategory() {
     }, [])
 
     const editblogcategory = () => {
-        axios.get(`${apiurl}/blog-categories/${id}`)
+        axios.get(`${apiClient}/blog-categories/${id}`)
         .then((res) => {
             setformData(res.data)
         })
@@ -51,7 +51,7 @@ export default function EditBlogCategory() {
         console.log("Form Data:", Object.fromEntries(data));
 
         // API Call
-        axios.post(`${apiurl}/blog-categories/${id}`, data, {
+        axios.post(`${apiClient}/blog-categories/${id}`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         })
         .then(response => {

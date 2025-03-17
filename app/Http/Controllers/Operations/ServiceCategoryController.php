@@ -19,7 +19,8 @@ class ServiceCategoryController extends Controller
      */
     public function index()
     {
-        return response()->json(ServiceCategory::with('firstAppoveruser', 'finalAppoveruser')->get(), 200);
+
+        return response()->json(ServiceCategory::where('status', 'active')->orWhere()->with('firstAppoveruser', 'finalAppoveruser')->get(), 200);
     }
 
     // Store (Create) a New Service Category
@@ -35,6 +36,7 @@ class ServiceCategoryController extends Controller
             'description' => $request->description,
             'title' => $request->title,
             'from_platform' => 'operations',
+            'created_by' => Auth::user()->_id,
             'approval_status' => 'submitted',
             'status' => 'inactive',
         ]);

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { apiurl } from '../../../apiurls/apiurls';
+import apiClient from '../../../services/api';
 import UIkit from 'uikit';
 
 
@@ -29,7 +29,7 @@ export default function EditTutorialCategories() {
     }, [])
 
     const edittutorialcategory = () => {
-        axios.get(`${apiurl}/tutorial-videos-categories/${id}`)
+        axios.get(`${apiClient}/tutorial-videos-categories/${id}`)
         .then((res) => {
             setformData(res.data)
         })
@@ -53,7 +53,7 @@ export default function EditTutorialCategories() {
         console.log("Form Data:", Object.fromEntries(data));
 
         // API Call
-        axios.post(`${apiurl}/tutorial-videos-categories/${id}`, data, {
+        axios.post(`${apiClient}/tutorial-videos-categories/${id}`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         })
         .then(response => {

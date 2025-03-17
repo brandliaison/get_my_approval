@@ -27,21 +27,6 @@ export default function Login() {
                                 </div>
                                 <div className="uk-margin-large-top">
                                     <a href="dashboard-v1.html" className="sc-button sc-button-large sc-button-block sc-button-danger">Sign In</a>
-                                    <div className="uk-child-width-1-3 uk-grid-medium uk-margin-medium-top" data-uk-grid>
-                                        <div>
-                                            <a href="#" className="sc-button sc-button-social sc-button-facebook uk-width-1-1 uk-flex-center"><i className="mdi mdi-facebook"></i></a>
-                                        </div>
-                                        <div>
-                                            <a href="#" className="sc-button sc-button-social sc-button-twitter uk-width-1-1 uk-flex-center"><i className="mdi mdi-twitter"></i></a>
-                                        </div>
-                                        <div>
-                                            <a href="#" className="sc-button sc-button-social sc-button-linkedin uk-width-1-1 uk-flex-center"><i className="mdi mdi-linkedin"></i></a>
-                                        </div>
-                                    </div>
-                                    <div className="uk-margin-large-top uk-text-center">
-                                        <span className="sc-color-secondary">Don't have an account?</span>
-                                        <div><a href="#" className="sc-text-semibold" data-uk-toggle="target: .sc-toggle-login-register; animation: uk-animation-scale-up">Sign Up</a></div>
-                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { apiurl } from "../../apiurls/apiurls";
+import apiClient from "../../services/api";
 import axios from "axios";
 import UIkit from "uikit";
 
@@ -12,7 +12,7 @@ export default function Tutorials() {
 
     const deletetutorial = (id) => {
         axios
-            .delete(`${apiurl}/tutorial-videos/${id}`)
+            .delete(`${apiClient}/tutorial-videos/${id}`)
             .then((res) => {
                 UIkit.notification({
                     message: res.data.message || "Blog deleted successfully!",
@@ -35,7 +35,7 @@ export default function Tutorials() {
     };
 
     const gettutorial = () => {
-        axios.get(`${apiurl}/tutorial-videos`)
+        axios.get(`${apiClient}/tutorial-videos`)
             .then((res) => {
                 settutorials(res.data);
             })
