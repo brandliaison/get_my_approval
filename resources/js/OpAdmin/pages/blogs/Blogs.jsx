@@ -1,7 +1,7 @@
 import axios from "axios";
 import UIkit from "uikit";
 import React, { useEffect, useState } from "react";
-import { apiurl } from "../../apiurls/apiurls";
+import apiClient from "../../services/api";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Blogs() {
@@ -12,7 +12,7 @@ export default function Blogs() {
 
     const deleteblog = (id) => {
         axios
-            .delete(`${apiurl}/blogs/${id}`)
+            .delete(`${apiClient}/blogs/${id}`)
             .then((res) => {
                 UIkit.notification({
                     message: res.data.message || "Blog deleted successfully!",
@@ -35,7 +35,7 @@ export default function Blogs() {
     };
 
     const getblogs = () => {
-        axios.get(`${apiurl}/blogs`)
+        axios.get(`${apiClient}/blogs`)
             .then((res) => {
                 setblogs(res.data);
             })

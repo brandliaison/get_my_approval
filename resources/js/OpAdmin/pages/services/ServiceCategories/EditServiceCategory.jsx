@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { apiurl } from '../../../apiurls/apiurls';
+import apiClient from '../../../services/api';
 import UIkit from 'uikit';
 
 export default function EditServiceCategory() {
@@ -27,7 +27,7 @@ export default function EditServiceCategory() {
     }, [])
 
     const editblogcategory = () => {
-        axios.get(`${apiurl}/service-categories/${id}`)
+        axios.get(`${apiClient}/service-categories/${id}`)
         .then((res) => {
             setformData(res.data)
         })
@@ -51,7 +51,7 @@ export default function EditServiceCategory() {
         console.log("Form Data:", Object.fromEntries(data));
 
         // API Call
-        axios.post(`${apiurl}/blog-categories/${id}`, data, {
+        axios.post(`${apiClient}/service-categories/${id}`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         })
         .then(response => {
@@ -59,14 +59,14 @@ export default function EditServiceCategory() {
 
             // Show success notification
             UIkit.notification({
-                message: "Blog Category created successfully!",
+                message: "Category updated successfully!",
                 status: "success",
                 timeout: 2000,
                 pos: "top-center",
             });
 
-            // navigate to blog categories
-            navigate('/op-admin/blog-categories')
+            // navigate to categories
+            navigate('/op-admin/service-categories')
         })
         .catch(error => {
             console.error("Error:", error);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { apiurl } from '../../../apiurls/apiurls';
+import apiClient from '../../../services/api';
 import axios from 'axios';
 import UIkit from 'uikit';
 
@@ -34,7 +34,7 @@ export default function AddServiceCategories() {
         console.log("Form Data:", Object.fromEntries(data));
 
         // API Call
-        axios.post(`${apiurl}/service-categories`, data, {
+        axios.post(`${apiClient}/service-categories`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         })
         .then(response => {
