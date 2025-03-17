@@ -3,9 +3,15 @@ import Header from "../layout/Header";
 import Sidebar from "../layout/Sidebar";
 
 export default function AdminLayout() {
-    <>
-        <Header />
-        <Sidebar />
-        <Outlet />
-    </>
+    return (
+        <>
+            <Header />
+            <div className="admin-layout">
+                <Sidebar />
+                <div className="content">
+                    <Outlet /> {/* This renders child pages */}
+                </div>
+            </div>
+        </>
+    );
 }
