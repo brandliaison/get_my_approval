@@ -34,15 +34,31 @@ export default function Sidebar() {
                                 </Link>
                             </li>
 
-                            <li title="Invoices">
-                                <Link to="/cms/services">
-                                    <span className="uk-nav-icon">
-                                        <i className="mdi mdi-toolbox-outline"></i>
-                                    </span>
-                                    <span className="uk-nav-title">
-                                        Services
-                                    </span>
-                                </Link>
+                            <li className={`sc-has-submenu ${openDropdowns.services ? "uk-open" : ""}`}>
+                                <a href="#" onClick={() => toggleDropdown("services")}>
+                                    <div className="uk-flex uk-flex-middle uk-width-1-1">
+                                        <div className="uk-flex uk-flex-middle uk-width-1-1">
+                                            <span className="uk-nav-icon">
+                                                <i class="mdi mdi-file-certificate"></i>
+                                            </span>
+                                            <span className="uk-nav-title">Services</span>
+                                        </div>
+                                        <i className={`mdi ${openDropdowns.services ? "mdi-chevron-up" : "mdi-chevron-down"}`}></i>
+                                    </div>
+                                </a>
+
+                                <ul className="sc-sidebar-menu-sub" style={{ display: openDropdowns.services ? "block" : "none" }}>
+                                    <li>
+                                        <Link to="/cms/services">
+                                            <span className="uk-nav-title">Services</span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/cms/service-categories">
+                                            <span className="uk-nav-title">Service Categories</span>
+                                        </Link>
+                                    </li>
+                                </ul>
                             </li>
 
                             <li title="Mailbox">
@@ -109,8 +125,8 @@ export default function Sidebar() {
 
                                 <ul className="sc-sidebar-menu-sub" style={{ display: openDropdowns.revision ? "block" : "none" }}>
                                     <li>
-                                        <Link to="/cms/review">
-                                            <span className="uk-nav-title">Review</span>
+                                        <Link to="/cms/new-submitted-posts">
+                                            <span className="uk-nav-title">New Submitted Post</span>
                                         </Link>
                                     </li>
                                     <li>

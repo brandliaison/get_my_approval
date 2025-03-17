@@ -33,7 +33,7 @@ export default function Tutorials() {
                 });
             });
     };
-    
+
     const gettutorial = () => {
         axios.get(`${apiurl}/tutorial-videos`)
             .then((res) => {
