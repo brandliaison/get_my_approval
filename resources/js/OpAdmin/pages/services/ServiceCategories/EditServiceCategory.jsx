@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { apiurl } from '../../../apiurls/apiurls';
 import UIkit from 'uikit';
 
-export default function EditBlogCategory() {
+export default function EditServiceCategory() {
     const navigate = useNavigate();
     const { id } = useParams();
     const [formData, setformData] = useState({
@@ -27,7 +27,7 @@ export default function EditBlogCategory() {
     }, [])
 
     const editblogcategory = () => {
-        axios.get(`${apiurl}/blog-categories/${id}`)
+        axios.get(`${apiurl}/service-categories/${id}`)
         .then((res) => {
             setformData(res.data)
         })
@@ -66,7 +66,7 @@ export default function EditBlogCategory() {
             });
 
             // navigate to blog categories
-            navigate('/cms/blog-categories')
+            navigate('/op-admin/blog-categories')
         })
         .catch(error => {
             console.error("Error:", error);

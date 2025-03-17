@@ -1,18 +1,18 @@
-import axios from "axios";
-import UIkit from "uikit";
-import React, { useEffect, useState } from "react";
-import { apiurl } from "../../apiurls/apiurls";
-import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import UIkit from 'uikit';
+import { apiurl } from '../../../apiurls/apiurls';
 
-export default function Blogs() {
+export default function TutorialCategories() {
 
     const navigate = useNavigate();
 
-    const [blogs, setblogs] = useState();
+    const [tutorialcategories, settutorialcategories] = useState();
 
-    const deleteblog = (id) => {
+    const deletetutorialcategory = (id) => {
         axios
-            .delete(`${apiurl}/blogs/${id}`)
+            .delete(`${apiurl}/tutorial-videos-categories/${id}`)
             .then((res) => {
                 UIkit.notification({
                     message: res.data.message || "Blog deleted successfully!",
@@ -20,7 +20,7 @@ export default function Blogs() {
                     timeout: 1000,
                     pos: "top-center",
                 });
-                getblogs();
+                gettutorialcategories();
             })
             .catch((err) => {
                 console.log(err);
@@ -33,11 +33,12 @@ export default function Blogs() {
                 });
             });
     };
-    
-    const getblogs = () => {
-        axios.get(`${apiurl}/blogs`)
+
+    const gettutorialcategories = () => {
+        axios.get(`${apiurl}/tutorial-videos-categories/`)
             .then((res) => {
-                setblogs(res.data);
+                console.log(res)
+                settutorialcategories(res.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -45,28 +46,26 @@ export default function Blogs() {
     };
 
     useEffect(() => {
-        getblogs();
+        gettutorialcategories();
     }, []);
 
 
     const handleViewBlog = (id) => {
-        navigate(`/cms/editblog/${id}`); // Redirect to second page with blog ID in URL
+        navigate(`/op-admin/edittutorials-categories/${id}`); // Redirect to second page with blog ID in URL
     };
 
-    console.log(blogs);
+    console.log(tutorialcategories);
 
-    return (
-        <>
+  return (
+    <>
             <div id="sc-page-wrapper">
                 <div id="sc-page-content">
                     <div className="uk-flex uk-flex-right">
-                    <Link to="/cms/addblog">
-                        <button
-                            className="sc-fab sc-fab-text sc-fab-success solid-button"
-                        >
-                            <i className="mdi mdi-plus"></i>Create
-                        </button>
-                    </Link>
+                        <Link to="/op-admin/addtutorials-categories">
+                            <button className="sc-fab sc-fab-text sc-fab-success solid-button">
+                                <i className="mdi mdi-plus"></i>Create
+                            </button>
+                        </Link>
                     </div>
 
                     <form
@@ -91,7 +90,7 @@ export default function Blogs() {
                     </form>
 
                     <div className="uk-card uk-margin">
-                        <h3 className="uk-card-title">Blogs</h3>
+                        <h3 className="uk-card-title">Tutorial Categories</h3>
                         <div className="uk-card-body">
                             <div className="uk-overflow-auto">
                                 <table className="uk-table uk-table-hover uk-table-middle uk-table-divider">
@@ -105,16 +104,15 @@ export default function Blogs() {
                                                     data-group=".sc-js-table-checkbox"
                                                 />
                                             </th>
-                                            <th>Blog Image</th>
-                                            <th>Blog Discription</th>
-                                            <th>Blog Name</th>
-                                            <th>Blog Title</th>
-                                            <th>Edit Blog</th>
+                                            <th>Tutorial Categories Discription</th>
+                                            <th>Tutorial Categories Name</th>
+                                            <th>Tutorial Categories Title</th>
+                                            <th>Edit Tutorial</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {blogs?.length > 0 ? (
-                                            blogs?.map((value, index) => (
+                                        {tutorialcategories?.length > 0 ? (
+                                            tutorialcategories?.map((value, index) => (
                                                 <tr key={index}>
                                                     <td>
                                                         <input
@@ -123,19 +121,17 @@ export default function Blogs() {
                                                             data-sc-icheck
                                                         />
                                                     </td>
-                                                    <td>
-                                                        <img
-                                                            src={`http://192.168.1.13:8000//${value.image_url}`}
-                                                            className="sc-avatar uk-preserve-width"
-                                                            alt={value.image_alt}
-                                                            style={{borderRadius: '5px', maxWidth: '150px'}}
-                                                        />
-                                                    </td>
                                                     <td>{value.description}</td>
                                                     <td>{value.name}</td>
-                                                    <td>{value.content}</td>
+                                                    <td>{value.title}</td>
                                                     <td>
-                                                        <div onClick={e => deleteblog(value._id)}>
+                                                        <div
+                                                            onClick={(e) =>
+                                                                deletetutorialcategory(
+                                                                    value._id
+                                                                )
+                                                            }
+                                                        >
                                                             <a
                                                                 className="sc-button sc-button-secondary sc-js-button-wave-light"
                                                                 href="#"
@@ -144,7 +140,14 @@ export default function Blogs() {
                                                                 Delete
                                                             </a>
                                                         </div>
-                                                        <div className="uk-margin-top" onClick={() => handleViewBlog(value._id)}>
+                                                        <div
+                                                            className="uk-margin-top"
+                                                            onClick={() =>
+                                                                handleViewBlog(
+                                                                    value._id
+                                                                )
+                                                            }
+                                                        >
                                                             <a
                                                                 className="sc-button sc-button-primary sc-js-button-wave-light"
                                                                 href="#"
@@ -172,6 +175,6 @@ export default function Blogs() {
                     </div>
                 </div>
             </div>
-        </>
-    );
+    </>
+  )
 }

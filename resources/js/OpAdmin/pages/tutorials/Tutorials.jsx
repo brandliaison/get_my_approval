@@ -50,7 +50,7 @@ export default function Tutorials() {
 
 
     const handleViewBlog = (id) => {
-        navigate(`/cms/editblogcategory/${id}`); // Redirect to second page with blog ID in URL
+        navigate(`/op-admin/editblogcategory/${id}`); // Redirect to second page with blog ID in URL
     };
 
     return (
@@ -58,7 +58,7 @@ export default function Tutorials() {
             <div id="sc-page-wrapper">
                 <div id="sc-page-content">
                     <div className="uk-flex uk-flex-right">
-                        <Link to="/cms/addtutorials">
+                        <Link to="/op-admin/addblog">
                             <button
                                 className="sc-fab sc-fab-text sc-fab-success solid-button"
                             >
@@ -103,7 +103,7 @@ export default function Tutorials() {
                                                     <td>
                                                         <img src={`http://192.168.1.13:8000//${value.thumbnail_url}`} className="sc-avatar uk-preserve-width"
                                                             alt="pagac.twila"
-                                                            style={{maxWidth: '10vw', borderRadius: 0}} uk-toggle="target: #my-modal"/>
+                                                            style={{maxWidth: '10vw', borderRadius: 0}}/>
                                                     </td>
                                                     <td>{value.description}</td>
                                                     <td>{value.name}</td>
@@ -147,10 +147,103 @@ export default function Tutorials() {
                 </div>
             </div>
 
-            {/* The Modal */}
-            <div id="my-modal" uk-modal="true">
-                <div className="uk-modal-dialog uk-modal-body uk-padding-remove uk-margin-auto-vertical">
-                    <iframe src="https://www.youtube.com/embed/ksl54_tstJE?si=SkTmwV65MohaGMqo" width='100%' height='400px'></iframe>
+            {/* form on modal  */}
+            <div id="modal-overflow" data-uk-modal>
+                <div className="uk-modal-dialog">
+                    <button
+                        className="uk-modal-close-default"
+                        type="button"
+                        data-uk-close
+                    ></button>
+                    <div className="uk-modal-header">
+                        <h2 className="uk-modal-title uk-text-bold">
+                            Edit Blog Category
+                        </h2>
+                    </div>
+                    <div className="uk-modal-body" data-uk-overflow-auto>
+                        <p className="uk-modal-title uk-text-medium">
+                            Edit the details of the blog category.
+                        </p>
+                        <form className="uk-form-stacked">
+                            {/* <!-- Name --> */}
+                            <div className="uk-margin-small-bottom">
+                                <label className="uk-form-label" for="name">
+                                    Name*
+                                </label>
+                                <input
+                                    className="uk-input"
+                                    id="name"
+                                    type="text"
+                                    placeholder="Enter your name"
+                                    required
+                                />
+                            </div>
+
+                            {/* <!-- Title --> */}
+                            <div className="uk-margin-small-bottom">
+                                <label className="uk-form-label" for="title">
+                                    Title*
+                                </label>
+                                <input
+                                    className="uk-input"
+                                    id="title"
+                                    type="text"
+                                    placeholder="Enter title"
+                                    required
+                                />
+                            </div>
+
+                            {/* <!-- Slug --> */}
+                            <div className="uk-margin-small-bottom">
+                                <label className="uk-form-label" for="slug">
+                                    Slug*
+                                </label>
+                                <input
+                                    className="uk-input"
+                                    id="slug"
+                                    type="text"
+                                    placeholder="Enter slug"
+                                    required
+                                />
+                            </div>
+
+                            {/* <!-- File Upload --> */}
+                            <div className="uk-margin-small-bottom">
+                                <label className="uk-form-label" for="file">
+                                    Upload File
+                                </label>
+                                <div className="uk-form-controls">
+                                    <input
+                                        className="uk-input"
+                                        id="file"
+                                        type="file"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* <!-- Description (Textarea) --> */}
+                            <div className="uk-margin-small-bottom">
+                                <label className="uk-form-label" for="description">
+                                    Description*
+                                </label>
+                                <textarea
+                                    className="uk-textarea"
+                                    id="description"
+                                    placeholder="Enter description"
+                                    rows="4"
+                                ></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <hr className="uk-margin-remove" />
+                    <div className="uk-modal-footer">
+                        <button
+                            className="sc-button sc-button-success"
+                            type="button"
+                        >
+                            Save
+                        </button>
+                    </div>
                 </div>
             </div>
         </>

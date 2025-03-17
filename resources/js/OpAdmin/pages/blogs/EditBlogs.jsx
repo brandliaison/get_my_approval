@@ -54,7 +54,7 @@ export default function EditBlogs() {
                 [e.target.name]: e.target.value,
             });
         };
-    
+
         // Handle file input change
         const handleFileChange = (e) => {
             setformData({
@@ -62,11 +62,11 @@ export default function EditBlogs() {
                 blogimage: e.target.files[0], // Store the first selected file
             });
         }
-    
+
         // Handle form submission
         const handleSubmit = (e) => {
             e.preventDefault();
-            
+
             // Create FormData object
             const data = new FormData();
             data.append("name", formData.name);
@@ -75,19 +75,19 @@ export default function EditBlogs() {
             data.append("image_alt", formData.image_alt);
             data.append("description", formData.description);
             data.append("content", formData.content);
-            data.append("technical_name", formData.technical_name); 
+            data.append("technical_name", formData.technical_name);
             data.append("_method", 'PUT');
-    
+
             // Log to console (for debugging)
             console.log("Form Data:", Object.fromEntries(data));
-    
+
             // API Call (Optional)
             axios.post(`${apiurl}/blogs/${id}`, data, {
                 headers: { "Content-Type": "multipart/form-data" },
             })
             .then(response => {
                 console.log("Success:", response.data);
-                navigate(`/cms/blogs/`)
+                navigate(`/op-admin/blogs/`)
                 UIkit.notification({
                     message: "Blog created successfully!",
                     status: "success",
