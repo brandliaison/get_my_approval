@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom/client';    
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import 'uikit/dist/css/uikit.min.css'; // Import UIkit CSS
 import './assets/css/themes/themes_combined.min.css';
@@ -26,9 +26,7 @@ import Revision from './pages/revision/Revision';
 import TutorialCategories from './pages/tutorials/tutorialcategory/TutorialCategories';
 import AddTutorialCategories from './pages/tutorials/tutorialcategory/AddTutorialCategories';
 import EditTutorialCategories from './pages/tutorials/tutorialcategory/EditTutorialCategories';
-import NewSubmittedPosts from './pages/revision/NewSubmittedPosts';
-import ServiceCategories from './pages/services/ServiceCategories/ServiceCategories';
-import AddServiceCategories from './pages/services/ServiceCategories/AddServiceCategories';
+import AddTutorial from './pages/tutorials/AddTutorial';
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -44,14 +42,9 @@ export default function App() {
             <Route path="/cms/" element={<Home />} />
             <Route path="/cms/about" element={<About />} />
             <Route path="/cms/login" element={<Login />} />
-
             <Route path="/cms/services" element={<Services />} />
-            <Route path="/cms/service-categories" element={<ServiceCategories />} />
-            <Route path="/cms/add-service-categories" element={<AddServiceCategories />} />
-
             <Route path="/cms/products" element={<Products />} />
             <Route path="/cms/notifications" element={<Notifications />} />
-            <Route path="/cms/tutorials" element={<Tutorials />} />
             <Route path="/cms/blog-categories" element={<BlogCategories />} />
             <Route path="/cms/addblog-categories" element={<AddBlogCategories />} />
             <Route path="/cms/editblogcategory/:id" element={<EditBlogCategory />} />
@@ -62,8 +55,7 @@ export default function App() {
             <Route path="/cms/addtutorials-categories" element={<AddTutorialCategories />} />
             <Route path="/cms/edittutorials-categories/:id" element={<EditTutorialCategories />} />
             <Route path="/cms/tutorials" element={<Tutorials />} />
-
-            <Route path="/cms/new-submitted-posts" element={<NewSubmittedPosts />} />
+            <Route path="/cms/addtutorials" element={<AddTutorial />} />
         </Routes>
         </Router>
     </React.Fragment>
