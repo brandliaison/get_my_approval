@@ -27,9 +27,9 @@ class AuthController extends Controller
         }
 
         // Generate token
-        $token = $user->createToken('itstaff_token')->plainTextToken;
+        $token = $user->createToken('opstaff_token')->plainTextToken;
 
-        return response()->json(['token' => $token, 'user' => $user]);
+        return response()->json(['token' => $token, 'user' => $user, 'message' => 'Login Successful']);
     }
 
     public function logout(Request $request)

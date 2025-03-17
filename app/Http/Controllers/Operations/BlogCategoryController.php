@@ -16,7 +16,17 @@ class BlogCategoryController extends Controller
      */
     public function index()
     {
-        return response()->json(BlogCategory::get(), 200);
+        $data = BlogCategory::where(function ($query) {
+            $query->where('status', 'active')
+                ->orWhere('created_by', Auth::id());
+        })
+            ->get();
+
+        if (!count($data) > 0) {
+            return response()->json('Data Not Found', 400);
+        }
+
+        return response()->json($data, 200);
     }
 
     /**
@@ -35,6 +45,7 @@ class BlogCategoryController extends Controller
             'title' => $request->title,
             'from_platform' => 'operations',
             'approval_status' => 'submitted',
+            'created_by' => Auth::user()->_id,
             'status' => 'inactive',
         ]);
 

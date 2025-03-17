@@ -16,7 +16,18 @@ class ServiceSectionsController extends Controller
     // Get all services
     public function index()
     {
-        return response()->json(ServiceSection::get());
+        $data = ServiceSection::where(function ($query) {
+            $query->where('status', 'active')
+                ->orWhere('created_by', Auth::id());
+            })
+            ->with('service')
+            ->get();
+
+        if (!count($data) > 0) {
+            return response()->json('Data Not Found', 400);
+        }
+
+        return response()->json($data, 200);
     }
 
     // Store a new service
@@ -38,6 +49,8 @@ class ServiceSectionsController extends Controller
 
         $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
         $validated['status'] = 'inactive';
+        $validated['approval_status'] = 'submitted';
+        $validated['created_by'] = Auth::user()->_id;
 
         $serviceSection = ServiceSection::create($validated);
         if ($serviceSection) {

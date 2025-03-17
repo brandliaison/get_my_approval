@@ -16,16 +16,22 @@ class NotificationCategoryController extends Controller
      */
     public function index()
     {
-        return response()->json(NotificationCategory::get(), 200);
+        $data = NotificationCategory::where(function ($query) {
+            $query->where('status', 'active')
+                ->orWhere('created_by', Auth::id());
+        })->get();
+
+        if (!count($data) > 0) {
+            return response()->json('Data Not Found', 400);
+        }
+
+        return response()->json($data, 200);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
@@ -43,6 +49,7 @@ class NotificationCategoryController extends Controller
             'title' => $request->title,
             'from_platform' => 'operations',
             'approval_status' => 'submitted',
+            'created_by' => Auth::user()->_id,
             'status' => 'inactive',
         ]);
 

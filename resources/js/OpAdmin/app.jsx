@@ -33,6 +33,7 @@ import EditServiceCategory from "./pages/services/ServiceCategories/EditServiceC
 import PublicRoute from "./components/PublicRoute";
 import AdminLayout from "./components/AdminLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedComponent from "./components/ProtectedComponent";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -55,7 +56,7 @@ export default function App() {
                                 }
                             >
                                 <Route path="dashboard" element={<Home />}/>
-                                <Route path="services" element={<Services />} />
+                                <Route path="services" element={<ProtectedComponent element={<Services />} allowedUserTypes={['admin']} />} />
                                 <Route path="service-categories" element={<ServiceCategories />}/>
                                 <Route path="add-service-categories" element={<AddServiceCategories />}/>
                                 <Route path="edit-service-category/:id" element={<EditServiceCategory />}/>

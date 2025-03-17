@@ -20,6 +20,7 @@ class Faq extends Model
         'final_approver',
         'final_approved_date',
         'from_platform',
+        'created_by',
         'approval_status',
         'status',
     ];

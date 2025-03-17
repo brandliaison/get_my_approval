@@ -17,7 +17,16 @@ class FaqController extends Controller
      */
     public function index()
     {
-        return response()->json(Faq::with('category', 'revisions')->get());
+        $data = Faq::where(function ($query) {
+            $query->where('status', 'active')
+                ->orWhere('created_by', Auth::id());
+        })->with('category')->get();
+
+        if (!count($data) > 0) {
+            return response()->json('Data Not Found', 400);
+        }
+
+        return response()->json($data, 200);
     }
 
     /**
@@ -39,6 +48,7 @@ class FaqController extends Controller
 
         $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
         $validated['status'] = 'inactive';
+        $validated['created_by'] = Auth::user()->_id;
 
         $data = Faq::create($validated);
         if ($data) {
