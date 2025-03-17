@@ -6,8 +6,10 @@ import UIkit from 'uikit'; // Import UIkit JS
 import Icons from 'uikit/dist/js/uikit-icons'; // Import UIkit icons
 import About from './pages/About';
 import Home from './pages/Home';
-import Header from './layout/Header';
+import Header from './layout/header/Header';
 import './../../../resources/css/style.css'; // my default styles of fornt end
+import Footer from './layout/footer/Footer';
+import Services from './pages/Services';
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -20,8 +22,10 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="about" element={<About />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/services" element={<Services />} />
       </Routes>
+      <Footer />
     </Router>
   )
 }

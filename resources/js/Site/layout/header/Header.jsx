@@ -11,17 +11,17 @@ export default function Header() {
             >
                 <div className="custom-container">
                 <div className="uk-flex uk-flex-center uk-flex-between uk-flex-middle">
-                    <p className="color-white">
-                    <i data-lucide="phone" className="icons uk-margin-small-right"></i
-                    >Helpline No : 91-9810363988
+                    <p className="color-white uk-flex uk-flex-midile">
+                        <span uk-icon="receiver" className="icons uk-margin-small-right"></span>
+                        Helpline No : 91-9810363988
                     </p>
-                    <p className="color-white">
-                    <i data-lucide="mail" className="icons uk-margin-small-right"></i
-                    >E-Mail:info@exportapproval.com
+                    <p className="color-white uk-flex uk-flex-midile">
+                        <span uk-icon="mail" className="icons uk-margin-small-right"></span>
+                        E-Mail:info@exportapproval.com
                     </p>
-                    <p className="color-white">
-                    <i data-lucide="map-pin" className="icons uk-margin-small-right"></i
-                    >Laxmi Nagar Delhi - 110092, India
+                    <p className="color-white uk-flex uk-flex-midile">
+                        <span uk-icon="location" className="icons uk-margin-small-right"></span>
+                        Laxmi Nagar Delhi - 110092, India
                     </p>
                 </div>
                 </div>
@@ -81,7 +81,7 @@ export default function Header() {
                 <div className="nav-last-right">
                     <ul>
                     <li className="uk-padding-small uk-padding-remove-vertical">
-                        <i data-lucide="user-plus" className="main-color"></i>
+                        <span uk-icon="user" className="main-color"></span>
                         <h5
                         className="uk-margin-small uk-margin-remove-bottom uk-text-bold main-color"
                         >
@@ -89,7 +89,7 @@ export default function Header() {
                         </h5>
                     </li>
                     <li className="uk-padding-small uk-padding-remove-vertical">
-                        <i data-lucide="user" className="main-color"></i>
+                        <span uk-icon="lock" className="main-color"></span>
                         <h5
                         className="uk-margin-small uk-margin-remove-bottom uk-text-bold main-color"
                         >
@@ -97,7 +97,7 @@ export default function Header() {
                         </h5>
                     </li>
                     <li className="uk-padding-small uk-padding-remove-vertical">
-                        <i data-lucide="database" className="main-color"></i>
+                        <span uk-icon="database" className="main-color"></span>
                         <h5
                         className="uk-margin-small uk-margin-remove-bottom uk-text-bold main-color"
                         >
@@ -105,7 +105,7 @@ export default function Header() {
                         </h5>
                     </li>
                     <li className="uk-padding-small uk-padding-remove-vertical">
-                        <i data-lucide="search" className="main-color"></i>
+                        <span uk-icon="search" className="main-color"></span>
                         <h5
                         className="uk-margin-small uk-margin-remove-bottom uk-text-bold main-color"
                         >
