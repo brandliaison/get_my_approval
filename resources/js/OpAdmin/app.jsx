@@ -45,91 +45,34 @@ export default function App() {
                     <Router>
                         <Routes>
                             {/* Logins */}
-
-                            <Route
-                                path="/op-admin/login"
+                            <Route path="/op-admin/login"
                                 element={<PublicRoute element={<Login />} />}
                             />
 
-                            <Route
-                                path="/op-admin/dashboard"
-                                element={<Home />}
-                            />
                             <Route path="/op-admin/about" element={<About />} />
-                            <Route
-                                path="/op-admin/*"
-                                element={
+                            <Route path="/op-admin/*" element={
                                     <ProtectedRoute element={<AdminLayout />} />
                                 }
                             >
-                                <Route
-                                    path="services"
-                                    element={<Services />}
-                                />
-                                <Route
-                                    path="service-categories"
-                                    element={<ServiceCategories />}
-                                />
-                                <Route
-                                    path="add-service-categories"
-                                    element={<AddServiceCategories />}
-                                />
-                                <Route
-                                    path="edit-service-category/:id"
-                                    element={<EditServiceCategory />}
-                                />
-
-                                <Route
-                                    path="products"
-                                    element={<Products />}
-                                />
-                                <Route
-                                    path="notifications"
-                                    element={<Notifications />}
-                                />
-                                <Route
-                                    path="tutorials"
-                                    element={<Tutorials />}
-                                />
-                                <Route
-                                    path="blog-categories"
-                                    element={<BlogCategories />}
-                                />
-                                <Route
-                                    path="addblog-categories"
-                                    element={<AddBlogCategories />}
-                                />
-                                <Route
-                                    path="editblogcategory/:id"
-                                    element={<EditBlogCategory />}
-                                />
+                                <Route path="dashboard" element={<Home />}/>
+                                <Route path="services" element={<Services />} />
+                                <Route path="service-categories" element={<ServiceCategories />}/>
+                                <Route path="add-service-categories" element={<AddServiceCategories />}/>
+                                <Route path="edit-service-category/:id" element={<EditServiceCategory />}/>
+                                <Route path="products" element={<Products />} />
+                                <Route path="notifications" element={<Notifications />}/>
+                                <Route path="tutorials" element={<Tutorials />}/>
+                                <Route path="blog-categories" element={<BlogCategories />}/>
+                                <Route path="addblog-categories" element={<AddBlogCategories />}/>
+                                <Route path="editblogcategory/:id" element={<EditBlogCategory />}/>
                                 <Route path="blogs" element={<Blogs />} />
                                 <Route path="addblog" element={<AddBlogs />} />
-                                <Route
-                                    path="editblog/:id"
-                                    element={<EditBlogs />}
-                                />
-                                <Route
-                                    path="tutorials-categories"
-                                    element={<TutorialCategories />}
-                                />
-                                <Route
-                                    path="addtutorials-categories"
-                                    element={<AddTutorialCategories />}
-                                />
-                                <Route
-                                    path="edittutorials-categories/:id"
-                                    element={<EditTutorialCategories />}
-                                />
-                                <Route
-                                    path="tutorials"
-                                    element={<Tutorials />}
-                                />
-
-                                <Route
-                                    path="new-submitted-posts"
-                                    element={<NewSubmittedPosts />}
-                                />
+                                <Route path="editblog/:id" element={<EditBlogs />}/>
+                                <Route path="tutorials-categories" element={<TutorialCategories />}/>
+                                <Route path="addtutorials-categories" element={<AddTutorialCategories />}/>
+                                <Route path="edittutorials-categories/:id" element={<EditTutorialCategories />}/>
+                                <Route path="tutorials" element={<Tutorials />}/>
+                                <Route path="new-submitted-posts" element={<NewSubmittedPosts />}/>
                             </Route>
                         </Routes>
                     </Router>
