@@ -19,8 +19,18 @@ class ServiceCategoryController extends Controller
      */
     public function index()
     {
+        $data = ServiceCategory::where(function ($query) {
+            $query->where('status', 'active')
+                  ->orWhere('created_by', Auth::id());
+        })
+        ->with('firstAppoveruser', 'finalAppoveruser')
+        ->get();
 
-        return response()->json(ServiceCategory::where('status', 'active')->orWhere()->with('firstAppoveruser', 'finalAppoveruser')->get(), 200);
+        if(!count($data) > 0){
+            return response()->json('Data Not Found', 400);
+        }
+
+        return response()->json($data, 200);
     }
 
     // Store (Create) a New Service Category

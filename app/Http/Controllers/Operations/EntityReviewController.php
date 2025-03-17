@@ -92,6 +92,7 @@ class EntityReviewController extends Controller
             'BlogCategory' => 'Blog Category',
             'Service' => 'Service',
             'ServiceCategory' => 'Service Category',
+            'ServiceSection' => 'Service Section',
             'Notification' => 'Notification',
             'NotificationCategory' => 'Notification Category',
             'Product' => 'Product',

@@ -16,7 +16,16 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        return response()->json(ProductCategory::get(), 200);
+        $data = ProductCategory::where(function ($query) {
+            $query->where('status', 'active')
+                ->orWhere('created_by', Auth::id());
+        })->get();
+
+        if (!count($data) > 0) {
+            return response()->json('Data Not Found', 400);
+        }
+
+        return response()->json($data, 200);
     }
 
     /**
@@ -34,6 +43,7 @@ class ProductCategoryController extends Controller
             'description' => $request->description,
             'title' => $request->title,
             'from_platform' => 'operations',
+            'created_by' => Auth::user()->_id,
             'approval_status' => 'submitted',
             'status' => 'inactive',
         ]);

@@ -42,42 +42,43 @@ Route::prefix('v1/op-admin')->group(function () {
     });
 
 
-    // Services
-    Route::apiResource('service-categories', ServiceCategoryController::class);
-    Route::apiResource('services', ServiceController::class);
-    Route::apiResource('services-sections', ServiceSectionsController::class);
-
-    // Notifications
-    Route::apiResource('notification-categories', NotificationCategoryController::class);
-    Route::apiResource('notifications', NotificationController::class);
-
-    // Tutorial Videos
-    Route::apiResource('tutorial-videos-categories', TutorialVideoCategoryController::class);
-    Route::apiResource('tutorial-videos', TutorialVideoController::class);
-
-    // Blogs
-    Route::apiResource('blog-categories', BlogCategoryController::class);
-    Route::apiResource('blogs', BlogController::class);
-
-    // Products
-    Route::apiResource('product-categories', ProductCategoryController::class);
-    Route::apiResource('products', ProductController::class);
-
-    // Posts Comments
-    Route::apiResource('post-comments', PostCommentController::class);
-
-    // Approval Actions
-    Route::post('post-comments/{id}/approve', [PostCommentController::class, 'approve']); // Approve comment
-    Route::post('post-comments/{id}/reject', [PostCommentController::class, 'reject']); // Reject comment
-
-    // Get entity revisions
-    Route::post('entity-revisions', [EntityReviewController::class, 'getRevisions']);
-    Route::get('entity-revision/{id}', [EntityReviewController::class, 'getRevision']);
-    Route::post('add-review', [EntityReviewController::class, 'addReview']);
-    Route::get('entity-list', [EntityReviewController::class, 'entityList']);
-    Route::post('entity-data-list', [EntityReviewController::class, 'entityDataList']);
-
     Route::middleware(['auth:opstaff'])->group(function () {
+
+        // Services
+        Route::apiResource('service-categories', ServiceCategoryController::class);
+        Route::apiResource('services', ServiceController::class);
+        Route::apiResource('services-sections', ServiceSectionsController::class);
+
+        // Notifications
+        Route::apiResource('notification-categories', NotificationCategoryController::class);
+        Route::apiResource('notifications', NotificationController::class);
+
+        // Tutorial Videos
+        Route::apiResource('tutorial-videos-categories', TutorialVideoCategoryController::class);
+        Route::apiResource('tutorial-videos', TutorialVideoController::class);
+
+        // Blogs
+        Route::apiResource('blog-categories', BlogCategoryController::class);
+        Route::apiResource('blogs', BlogController::class);
+
+        // Products
+        Route::apiResource('product-categories', ProductCategoryController::class);
+        Route::apiResource('products', ProductController::class);
+
+        // Posts Comments
+        Route::apiResource('post-comments', PostCommentController::class);
+
+        // Approval Actions
+        Route::post('post-comments/{id}/approve', [PostCommentController::class, 'approve']); // Approve comment
+        Route::post('post-comments/{id}/reject', [PostCommentController::class, 'reject']); // Reject comment
+
+        // Get entity revisions
+        Route::post('entity-revisions', [EntityReviewController::class, 'getRevisions']);
+        Route::get('entity-revision/{id}', [EntityReviewController::class, 'getRevision']);
+        Route::post('add-review', [EntityReviewController::class, 'addReview']);
+        Route::get('entity-list', [EntityReviewController::class, 'entityList']);
+        Route::post('entity-data-list', [EntityReviewController::class, 'entityDataList']);
+
         // Tickets
         Route::apiResource('tickets-categories', TicketsCategoryController::class);
         Route::apiResource('tickets', TicketController::class);

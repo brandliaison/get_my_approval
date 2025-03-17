@@ -22,6 +22,7 @@ class BlogCategory extends Model
         'final_approved_date',
         'from_platform',
         'approval_status',
+        'created_by',
         'status',
     ];
 }
