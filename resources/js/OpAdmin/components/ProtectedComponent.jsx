@@ -1,15 +1,23 @@
-import React from 'react';
-import Unauthorized from './Unauthorized';
+import React from "react";
+import { Navigate } from "react-router-dom";
 
 const ProtectedComponent = ({ element, allowedUserTypes }) => {
-  const user = JSON.parse(localStorage.getItem('user'));
-console.log(allowedUserTypes);
+    const user = JSON.parse(localStorage.getItem("user"));
 
-  if (user && allowedUserTypes.includes(user.user_type)) {
+    console.log("ProtectedComponent: Checking user role...");
+    console.log("User:", user);
+
+    if (!user) {
+        console.warn("User not found - Redirecting to login...");
+        return <Navigate to="/op-admin/login" replace />;
+    }
+
+    if (allowedUserTypes && !allowedUserTypes.includes(user.userType)) {
+        console.warn("Unauthorized user type - Redirecting...");
+        return <Navigate to="/op-admin/login" replace />;
+    }
+
     return element;
-  } else {
-    return <Unauthorized />;
-  }
 };
 
 export default ProtectedComponent;
