@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { apiurl } from '../../../apiurls/apiurls';
+import apiClient from '../../../services/api';
 import axios from 'axios';
 import UIkit from 'uikit';
 
@@ -22,24 +22,24 @@ export default function AddBlogCategories() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
         // Create FormData object
         const data = new FormData();
         data.append("name", formData.name);
         data.append("description", formData.description);
         data.append("title", formData.title);
         data.append("slug", formData.slug);
-    
+
         // Log to console (for debugging)
         console.log("Form Data:", Object.fromEntries(data));
-    
+
         // API Call
-        axios.post(`${apiurl}/blog-categories`, data, {
+        axios.post(`${apiClient}/blog-categories`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         })
         .then(response => {
             console.log("Success:", response.data);
-    
+
             // Show success notification
             UIkit.notification({
                 message: "Blog Category created successfully!",
@@ -47,7 +47,7 @@ export default function AddBlogCategories() {
                 timeout: 2000,
                 pos: "top-center",
             });
-    
+
             // Reset form data after success
             setformData({
                 name: '',
@@ -58,7 +58,7 @@ export default function AddBlogCategories() {
         })
         .catch(error => {
             console.error("Error:", error);
-            
+
             // Show error notification
             UIkit.notification({
                 message: error?.response?.data?.message || "An error occurred",

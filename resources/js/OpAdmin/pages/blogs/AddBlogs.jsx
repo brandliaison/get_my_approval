@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { apiurl } from '../../apiurls/apiurls';
+import apiClient from '../../services/api';
 import axios from 'axios';
 import UIkit from 'uikit';
 
@@ -21,7 +21,7 @@ export default function AddBlogs() {
     }, [])
 
     const getblogcategories = () => {
-        axios.get(`${apiurl}/blog-categories/`)
+        axios.get(`${apiClient}/blog-categories/`)
         .then((res) => {
             console.log(res.data)
             setblogcategrydata(res.data)
@@ -50,7 +50,7 @@ export default function AddBlogs() {
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
         // Create FormData object
         const data = new FormData();
         data.append("name", formData.blogname);
@@ -65,7 +65,7 @@ export default function AddBlogs() {
         console.log("Form Data:", Object.fromEntries(data));
 
         // API Call (Optional)
-        axios.post(`${apiurl}/blogs`, data, {
+        axios.post(`${apiClient}/blogs`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         })
         .then(response => {

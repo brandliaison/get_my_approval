@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { apiurl } from "../../../apiurls/apiurls";
+import apiClient from "../../../services/api";
 import UIkit from "uikit";
 
 export default function BlogCategories() {
@@ -12,7 +12,7 @@ export default function BlogCategories() {
 
     const deleteblogcategory = (id) => {
         axios
-            .delete(`${apiurl}/blog-categories/${id}`)
+            .delete(`${apiClient}/blog-categories/${id}`)
             .then((res) => {
                 UIkit.notification({
                     message: res.data.message || "Blog deleted successfully!",
@@ -35,7 +35,7 @@ export default function BlogCategories() {
     };
 
     const getblogcategories = () => {
-        axios.get(`${apiurl}/blog-categories`)
+        axios.get(`${apiClient}/blog-categories`)
             .then((res) => {
                 setblogcategories(res.data);
             })

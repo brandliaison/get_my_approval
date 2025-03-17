@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { apiurl } from "../../../apiurls/apiurls";
+import apiClient from "../../../services/api";
 import UIkit from "uikit";
 
 export default function ServiceCategories() {
@@ -11,7 +11,7 @@ export default function ServiceCategories() {
 
     const deleteCategory = (id) => {
         axios
-            .delete(`${apiurl}/service-categories/${id}`)
+            .delete(`${apiClient}/service-categories/${id}`)
             .then((res) => {
                 UIkit.notification({
                     message:
@@ -36,7 +36,7 @@ export default function ServiceCategories() {
 
     const getCategories = () => {
         axios
-            .get(`${apiurl}/service-categories`, {
+            .get(`${apiClient}/service-categories`, {
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -105,9 +105,9 @@ export default function ServiceCategories() {
                                                     data-group=".sc-js-table-checkbox"
                                                 />
                                             </th>
-                                            <th>Discription</th>
                                             <th>Name</th>
                                             <th>Title</th>
+                                            <th>Discription</th>
                                             <th>Status</th>
                                             <th>Approval Status</th>
                                             <th>Action</th>
@@ -124,9 +124,9 @@ export default function ServiceCategories() {
                                                             data-sc-icheck
                                                         />
                                                     </td>
-                                                    <td>{value.description}</td>
                                                     <td>{value.name}</td>
                                                     <td>{value.title}</td>
+                                                    <td>{value.description}</td>
                                                     <td className="uk-text-capitalize">
                                                         {value.status}
                                                     </td>
@@ -174,7 +174,7 @@ export default function ServiceCategories() {
                                         ) : (
                                             <tr>
                                                 <td>
-                                                    <p>No blogs available.</p>
+                                                    <p>No data available.</p>
                                                 </td>
                                             </tr>
                                         )}

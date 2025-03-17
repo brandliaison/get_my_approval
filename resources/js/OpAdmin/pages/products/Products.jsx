@@ -322,7 +322,7 @@ export default function Products() {
                                         <div>
                                             <div data-uk-form-custom>
                                                 <input type="file" />
-                                                <button class="uk-button uk-button-default" type="button" tabindex="-1">
+                                                <button class="uk-button uk-button-default" type="button" tabIndex="-1">
                                                     Select
                                                 </button>
                                             </div>
