@@ -36,7 +36,7 @@ class ServiceSectionsController extends Controller
             'content' => 'nullable|string',
         ]);
 
-        $validated['slug'] = isset($request->slug) ? $request->slug : Str::slug($request->name);
+        $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
         $validated['status'] = 'inactive';
 
         $serviceSection = ServiceSection::create($validated);
@@ -87,7 +87,7 @@ class ServiceSectionsController extends Controller
             return response()->json(['error' => 'Service Section Not Found'], 404);
         }
 
-        $validated['slug'] = isset($request->slug) ? $request->slug : Str::slug($request->name);
+        $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
 
         $serviceSection->update($validated);
 

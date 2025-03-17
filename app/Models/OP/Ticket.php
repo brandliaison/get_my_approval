@@ -30,12 +30,27 @@ class Ticket extends Model
     // Relationship with TicketCategory
     public function category()
     {
-        return $this->belongsTo(TicketsCategory::class, 'ticket_category_id', '_id');
+        return $this->belongsTo(TicketsCategory::class, 'ticket_category_id', '_id')->select('_id', 'name');
     }
 
     // Relationship with User
     public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by', '_id');
+        return $this->belongsTo(User::class, 'created_by', '_id')->select('_id', 'name');
+    }
+
+    public function actions()
+    {
+        return $this->hasMany(TicketAction::class, 'ticket_id', '_id');
+    }
+
+    public function latestAction()
+    {
+        return $this->hasOne(TicketAction::class, 'ticket_id', '_id')->latest();
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(TicketReply::class, 'ticket_id', '_id')->latest();
     }
 }

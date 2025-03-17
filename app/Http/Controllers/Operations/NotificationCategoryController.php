@@ -38,7 +38,7 @@ class NotificationCategoryController extends Controller
 
         $category = NotificationCategory::create([
             'name' => $request->name,
-            'slug' => isset($request->slug) ? $request->slug : Str::slug($request->name), // Generate slug automatically
+            'slug' => isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name), // Generate slug automatically
             'description' => $request->description,
             'title' => $request->title,
             'from_platform' => 'operations',
@@ -64,7 +64,7 @@ class NotificationCategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = NotificationCategory::where('slug', $id)->first();
+        $category = NotificationCategory::find($id);
 
         if (!$category) {
             return response()->json(['error' => 'Notification Category Not Found'], 404);
@@ -100,11 +100,11 @@ class NotificationCategoryController extends Controller
             return response()->json(['error' => 'Notification Category Not Found'], 404);
         }
 
-        $validated['slug'] = isset($request->slug) ? $request->slug : Str::slug($request->name);
+        $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
         // Update category
         $category->update([
             'name' => $request->name ?? $oldcategory->name,
-            'slug' => $request->slug ? $request->slug : $oldcategory->slug,
+            'slug' => $request->slug ? Str::slug($request->slug) : $oldcategory->slug,
             'description' => $request->description ?? $oldcategory->description,
             'title' => $request->title ?? $oldcategory->title,
         ]);

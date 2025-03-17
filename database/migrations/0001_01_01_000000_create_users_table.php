@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('district')->nullable();
             $table->string('city')->nullable();
             $table->string('pincode')->nullable();
-            $table->string('website')->nullable();  
+            $table->string('website')->nullable();
             $table->string('company_name')->nullable();
             $table->string('status')->nullable();
             $table->rememberToken();

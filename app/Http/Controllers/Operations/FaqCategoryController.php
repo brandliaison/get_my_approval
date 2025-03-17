@@ -4,19 +4,19 @@ namespace App\Http\Controllers\Operations;
 
 use App\Http\Controllers\Controller;
 use App\Models\OP\EntityRevision;
-use App\Models\OP\ProductCategory;
+use App\Models\OP\FaqCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-class ProductCategoryController extends Controller
+class FaqCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return response()->json(ProductCategory::get(), 200);
+        return response()->json(FaqCategory::get());
     }
 
     /**
@@ -24,15 +24,16 @@ class ProductCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
+        $validated = $request->validate([
+            'name' => 'sometimes|string|max:255|unique:faq_categories,name',
+            'description' => 'nullable',
         ]);
 
-        $category = ProductCategory::create([
+        $category = FaqCategory::create([
             'name' => $request->name,
-            'slug' => isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name), // Generate slug automatically
+            'slug' => isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name),
             'description' => $request->description,
-            'title' => $request->title,
+            'posted_by' => Auth::user()->_id,
             'from_platform' => 'operations',
             'approval_status' => 'submitted',
             'status' => 'inactive',
@@ -40,7 +41,7 @@ class ProductCategoryController extends Controller
 
         if ($category) {
             EntityRevision::create([
-                'entity_type' => 'ProductCategory',
+                'entity_type' => 'FaqCategory',
                 'entity_id' => $category->_id,
                 'old_data' => null,
                 'new_data' => $request->all(),
@@ -48,7 +49,8 @@ class ProductCategoryController extends Controller
                 'from_platform' => 'operations',
             ]);
         }
-        return response()->json($category, 201);
+
+        return response()->json(['message' => 'Category created successfully', 'data' => $category], 200);
     }
 
     /**
@@ -56,13 +58,8 @@ class ProductCategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = ProductCategory::find($id);
-
-        if (!$category) {
-            return response()->json(['error' => 'Product Category Not Found'], 404);
-        }
-
-        return response()->json($category, 200);
+        $category = FaqCategory::findOrFail($id);
+        return response()->json($category);
     }
 
     /**
@@ -70,7 +67,7 @@ class ProductCategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $category = ProductCategory::select('_id', 'name', 'slug', 'description', 'title', 'created_at')->find($id);
+        $category = FaqCategory::find($id);
         $oldcategory = clone $category;
 
         $validated = $request->validate([
@@ -81,10 +78,11 @@ class ProductCategoryController extends Controller
         ]);
 
         if (!$category) {
-            return response()->json(['error' => 'Blog Category Not Found'], 404);
+            return response()->json(['error' => 'Category Not Found'], 404);
         }
 
         $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
+
         // Update category
         $category->update([
             'name' => $request->name ?? $oldcategory->name,
@@ -95,7 +93,7 @@ class ProductCategoryController extends Controller
 
         if ($category) {
             EntityRevision::create([
-                'entity_type' => 'ProductCategory',
+                'entity_type' => 'FaqCategory',
                 'entity_id' => $category->_id,
                 'old_data' => $oldcategory,
                 'new_data' => $category,
@@ -104,7 +102,7 @@ class ProductCategoryController extends Controller
             ]);
         }
 
-        return response()->json($oldcategory = ProductCategory::find($id), 200);
+        return response()->json(['message' => 'Category updated successfully', 'data' => $category], 200);
     }
 
     /**
@@ -112,13 +110,14 @@ class ProductCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $category = ProductCategory::find($id);
+        $category = FaqCategory::findOrFail($id);
 
         if (!$category) {
-            return response()->json(['error' => 'Product Category Not Found'], 404);
+            return response()->json(['error' => 'Category Not Found'], 404);
         }
 
         $category->delete();
-        return response()->json(['message' => 'Product Category Deleted Successfully'], 200);
+
+        return response()->json(['message' => 'Category deleted successfully'], 200);
     }
 }

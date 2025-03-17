@@ -18,7 +18,7 @@ class EntityReviewController extends Controller
     {
         $entity = EntityRevision::where('entity_type', $request->entity_type)->where('entity_id', $request->entity_id)->orderBy('created_at', 'desc')->get();
 
-        if (!count($entity) > 0 ) {
+        if (!count($entity) > 0) {
             return response()->json(['message' => ucfirst($request->entity_type) . ' Revisions not found'], 404);
         }
 
@@ -83,5 +83,35 @@ class EntityReviewController extends Controller
             'message' => 'Review added successfully',
             'review' => $review,
         ]);
+    }
+
+    public function entityList()
+    {
+        $list = [
+            'Blog' => 'Blog',
+            'BlogCategory' => 'Blog Category',
+            'Service' => 'Service',
+            'ServiceCategory' => 'Service Category',
+            'Notification' => 'Notification',
+            'NotificationCategory' => 'Notification Category',
+            'Product' => 'Product',
+            'ProductCategory' => 'Product Category',
+            'Faq' => 'Faq',
+            'FaqCategory' => 'Faq Category',
+        ];
+
+        return response()->json($list);
+    }
+
+    public function entityDataList(Request $request)
+    {
+        $namespace = "App\\Models\\OP\\";
+        $modelClass = $namespace . $request->entity_type;
+
+        if (class_exists($modelClass)) {
+            $data = app($modelClass)->where('approval_status', 'submitted')->orderBy('created_at', 'desc')->get();
+        }
+
+        return response()->json($data);
     }
 }
