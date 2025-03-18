@@ -36,9 +36,9 @@ class ServiceController extends Controller
     {
         $serviceCat = ServiceCategory::find($request->service_category_id);
 
-        if (!$serviceCat || $serviceCat->status !== 'active') {
-            return response()->json(['error' => 'Service Category Not Found'], 404);
-        }
+        // if (!$serviceCat || $serviceCat->status !== 'active') {
+        //     return response()->json(['error' => 'Service Category Not Found'], 404);
+        // }
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
