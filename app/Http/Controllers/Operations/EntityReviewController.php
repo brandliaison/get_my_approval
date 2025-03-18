@@ -16,7 +16,7 @@ class EntityReviewController extends Controller
     // Fetch all Revisions for a category
     public function getRevisions(Request $request)
     {
-        $entity = EntityRevision::where('entity_type', $request->entity_type)->where('entity_id', $request->entity_id)->orderBy('created_at', 'desc')->get();
+        $entity = EntityRevision::where('entity_id', $request->entity_id)->orderBy('created_at', 'desc')->get();
 
         if (!count($entity) > 0) {
             return response()->json(['message' => ucfirst($request->entity_type) . ' Revisions not found'], 404);
