@@ -160,7 +160,7 @@ export default function NewSubmittedPosts() {
                                                                 >
                                                                     <Link
                                                                         to={`/op-admin/submitted-post-view/${value._id}`}
-                                                                        className="sc-button sc-button-primary sc-js-button-wave-light" state={data}>
+                                                                        className="sc-button sc-button-primary sc-js-button-wave-light">
                                                                         <i className="mdi mdi-eye"></i>{" "}
                                                                         View
                                                                     </Link>

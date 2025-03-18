@@ -54,7 +54,7 @@ class EntityRevision extends Model
             "FaqCategory" => FaqCategory::class,
         ];
 
-        return isset($models[$this->entity_type]) ? $models[$this->entity_type]::find($this->entity_id) : null;
+        return isset($models[$this->entity_type]) ? $models[$this->entity_type]::with('createdByUser')->find($this->entity_id) : null;
     }
 
     protected $appends = ['revised_user', 'entity_data'];
