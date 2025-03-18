@@ -9,6 +9,20 @@ export default function Services() {
 
     const [categories, setCategories] = useState();
 
+    const getCategories = () => {
+        apiClient.get(`/services`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            .then((res) => {
+                setCategories(res.data.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+    
     const deleteCategory = (id) => {
         apiClient
             .delete(`/services/${id}`)
@@ -34,20 +48,6 @@ export default function Services() {
             });
     };
 
-    const getCategories = () => {
-        apiClient.get(`/services`, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-            .then((res) => {
-                setCategories(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
-
     useEffect(() => {
         getCategories();
     }, []);
@@ -55,20 +55,21 @@ export default function Services() {
     console.log(categories)
 
     const handleViewService = (id) => {
-        navigate(`/op-admin/edit-service-category/${id}`); // Redirect to second page with blog ID in URL
+        navigate(`/op-admin/editservices/${id}`); // Redirect to second page with blog ID in URL
     };
 
     return (
         <>
             <div id="sc-page-wrapper">
                 <div id="sc-page-content">
-                    <div className="uk-flex uk-flex-between uk-flex-middle">
-                        <h3>Services</h3>
-                        <Link to="/op-admin/addservices">
-                            <button className="sc-fab sc-fab-text sc-fab-success solid-button">
-                                <i className="mdi mdi-plus"></i>Create
-                            </button>
-                        </Link>
+                    <div className="uk-flex uk-flex-right">
+                    <Link to="/op-admin/addservices">
+                        <button
+                            className="sc-fab sc-fab-text sc-fab-success solid-button"
+                        >
+                            <i className="mdi mdi-plus"></i>Create
+                        </button>
+                    </Link>
                     </div>
 
                     <form
@@ -93,6 +94,7 @@ export default function Services() {
                     </form>
 
                     <div className="uk-card uk-margin">
+                        <h3 className="uk-card-title">Blogs</h3>
                         <div className="uk-card-body">
                             <div className="uk-overflow-auto">
                                 <table className="uk-table uk-table-hover uk-table-middle uk-table-divider">
@@ -106,12 +108,11 @@ export default function Services() {
                                                     data-group=".sc-js-table-checkbox"
                                                 />
                                             </th>
-                                            <th>Name</th>
-                                            <th>Title</th>
-                                            <th>Discription</th>
-                                            <th>Status</th>
-                                            <th>Approval Status</th>
-                                            <th>Action</th>
+                                            <th>Blog Image</th>
+                                            <th>Blog Discription</th>
+                                            <th>Blog Name</th>
+                                            <th>Blog Title</th>
+                                            <th>Edit Blog</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -125,51 +126,37 @@ export default function Services() {
                                                             data-sc-icheck
                                                         />
                                                     </td>
-                                                    <td>{value.name}</td>
-                                                    <td>{value.title}</td>
-                                                    <td>{value.description}</td>
-                                                    <td className="uk-text-capitalize">
-                                                        {value.status}
-                                                    </td>
-                                                    <td className="uk-text-capitalize">
-                                                        {value.approval_status}
-                                                    </td>
                                                     <td>
-                                                        <div className="uk-flex gap-2">
-
-                                                            <div
-                                                                onClick={() =>
-                                                                    handleViewService(
-                                                                        value._id
-                                                                    )
-                                                                }
+                                                        <img
+                                                            src={`http://192.168.1.13:8000//${value.image_url}`}
+                                                            className="sc-avatar uk-preserve-width"
+                                                            alt={value.image_alt}
+                                                            style={{borderRadius: '5px', maxWidth: '150px'}}
+                                                        />
+                                                    </td>
+                                                    <td>{value.description}</td>
+                                                    <td>{value.name}</td>
+                                                    <td>{value.compliance_header}</td>
+                                                    <td>
+                                                        <div onClick={e => deleteCategory(value._id)}>
+                                                            <a
+                                                                className="sc-button sc-button-secondary sc-js-button-wave-light"
+                                                                href="#"
                                                             >
-                                                                <a
-                                                                    className="sc-button sc-button-primary sc-js-button-wave-light"
-                                                                    href="#"
-                                                                >
-                                                                    <i className="mdi mdi-file-edit">
-                                                                        {" "}
-                                                                    </i>
-                                                                    Edit
-                                                                </a>
-                                                            </div>
-
-                                                            <div
-                                                                onClick={(e) =>
-                                                                    deleteCategory(
-                                                                        value._id
-                                                                    )
-                                                                }
+                                                                <i className="mdi mdi-trash-can-outline"></i>{" "}
+                                                                Delete
+                                                            </a>
+                                                        </div>
+                                                        <div className="uk-margin-top" onClick={() => handleViewService(value._id)}>
+                                                            <a
+                                                                className="sc-button sc-button-primary sc-js-button-wave-light"
+                                                                href="#"
                                                             >
-                                                                <a
-                                                                    className="sc-button sc-button-secondary sc-js-button-wave-light"
-                                                                    href="#"
-                                                                >
-                                                                    <i className="mdi mdi-trash-can-outline"></i>
-                                                                    Delete
-                                                                </a>
-                                                            </div>
+                                                                <i className="mdi mdi-file-edit">
+                                                                    {" "}
+                                                                </i>
+                                                                Edit
+                                                            </a>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -177,7 +164,7 @@ export default function Services() {
                                         ) : (
                                             <tr>
                                                 <td>
-                                                    <p>No data available.</p>
+                                                    <p>No blogs available.</p>
                                                 </td>
                                             </tr>
                                         )}
