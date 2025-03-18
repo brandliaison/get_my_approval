@@ -10,8 +10,8 @@ export default function ServiceCategories() {
     const [categories, setCategories] = useState();
 
     const deleteCategory = (id) => {
-        axios
-            .delete(`${apiClient}/service-categories/${id}`)
+        apiClient
+            .delete(`/service-categories/${id}`)
             .then((res) => {
                 UIkit.notification({
                     message:
@@ -35,8 +35,7 @@ export default function ServiceCategories() {
     };
 
     const getCategories = () => {
-        axios
-            .get(`${apiClient}/service-categories`, {
+        apiClient.get(`/service-categories`, {
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -150,6 +149,7 @@ export default function ServiceCategories() {
                                                                     <i className="mdi mdi-file-edit">
                                                                         {" "}
                                                                     </i>
+                                                                    Edit
                                                                 </a>
                                                             </div>
 
@@ -164,7 +164,8 @@ export default function ServiceCategories() {
                                                                     className="sc-button sc-button-secondary sc-js-button-wave-light"
                                                                     href="#"
                                                                 >
-                                                                    <i className="mdi mdi-trash-can-outline"></i>{" "}
+                                                                    <i className="mdi mdi-trash-can-outline"></i>
+                                                                    Delete
                                                                 </a>
                                                             </div>
                                                         </div>

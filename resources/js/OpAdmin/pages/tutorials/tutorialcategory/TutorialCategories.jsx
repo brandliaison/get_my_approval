@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import UIkit from 'uikit';
@@ -11,8 +10,8 @@ export default function TutorialCategories() {
     const [tutorialcategories, settutorialcategories] = useState();
 
     const deletetutorialcategory = (id) => {
-        axios
-            .delete(`${apiClient}/tutorial-videos-categories/${id}`)
+        apiClient
+            .delete(`/tutorial-videos-categories/${id}`)
             .then((res) => {
                 UIkit.notification({
                     message: res.data.message || "Blog deleted successfully!",
@@ -35,7 +34,7 @@ export default function TutorialCategories() {
     };
 
     const gettutorialcategories = () => {
-        axios.get(`${apiClient}/tutorial-videos-categories/`)
+        apiClient.get(`/tutorial-videos-categories/`)
             .then((res) => {
                 console.log(res)
                 settutorialcategories(res.data);

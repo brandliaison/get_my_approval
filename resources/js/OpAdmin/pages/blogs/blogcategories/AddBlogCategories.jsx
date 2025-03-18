@@ -34,7 +34,7 @@ export default function AddBlogCategories() {
         console.log("Form Data:", Object.fromEntries(data));
 
         // API Call
-        axios.post(`${apiClient}/blog-categories`, data, {
+        apiClient.post(`/blog-categories`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         })
         .then(response => {

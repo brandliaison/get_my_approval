@@ -27,7 +27,7 @@ export default function EditServiceCategory() {
     }, [])
 
     const editblogcategory = () => {
-        axios.get(`${apiClient}/service-categories/${id}`)
+        apiClient.get(`/service-categories/${id}`)
         .then((res) => {
             setformData(res.data)
         })
@@ -51,7 +51,7 @@ export default function EditServiceCategory() {
         console.log("Form Data:", Object.fromEntries(data));
 
         // API Call
-        axios.post(`${apiClient}/service-categories/${id}`, data, {
+        apiClient.post(`/service-categories/${id}`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         })
         .then(response => {

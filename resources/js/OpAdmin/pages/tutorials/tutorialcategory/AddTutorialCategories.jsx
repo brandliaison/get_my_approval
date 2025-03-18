@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState } from "react";
 import apiClient from "../../../services/api";
 import UIkit from "uikit";
@@ -34,7 +33,7 @@ export default function AddTutorialCategories() {
         console.log("Form Data:", Object.fromEntries(data));
 
         // API Call
-        axios.post(`${apiClient}/tutorial-videos-categories`, data, {
+        apiClient.post(`/tutorial-videos-categories`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         })
         .then(response => {

@@ -5,9 +5,9 @@ const ProtectedRoute = () => {
     const token = localStorage.getItem("authToken");
     const user = JSON.parse(localStorage.getItem("user"));
 
-    console.log("ProtectedRoute: Checking authentication...");
-    console.log("Token:", token);
-    console.log("User:", user);
+    // console.log("ProtectedRoute: Checking authentication...");
+    // console.log("Token:", token);
+    // console.log("User:", user);
 
     if (!token || !user) {
         console.warn("Unauthorized - Redirecting to login...");

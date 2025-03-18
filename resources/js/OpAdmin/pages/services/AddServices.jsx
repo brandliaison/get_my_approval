@@ -1,29 +1,28 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import apiClient from '../../services/api';
 import UIkit from 'uikit';
 
-export default function AddBlogs() {
+export default function AddServices() {
 
-    const [blogcategrydata, setblogcategrydata] = useState([]);
+    const [tutorialcategrydata, settutorialcategrydata] = useState([]);
     const [formData, setformData] = useState({
-        blogname: '',
-        blogcategory: '',
-        blogimage: null,
-        blogimagealt: '',
-        blogtechnicalname: '',
-        blogcontent: '',
-        blogdiscription: ''
+        name: '',
+        service_category_id: '',
+        image_url: null,
+        image_alt: '',
+        description: '',
+        compliance_header: '',
     });
 
     useEffect(() => {
-        getblogcategories();
+        gettutorialcategories();
     }, [])
 
-    const getblogcategories = () => {
-        apiClient.get(`/blog-categories/`)
+    const gettutorialcategories = () => {
+        apiClient.get(`/service-categories/`)
         .then((res) => {
             console.log(res.data)
-            setblogcategrydata(res.data)
+            settutorialcategrydata(res.data)
         })
         .catch((err) => {
             console.log(err)
@@ -40,9 +39,10 @@ export default function AddBlogs() {
 
     // Handle file input change
     const handleFileChange = (e) => {
+        console.log(e.target.files[0])
         setformData({
             ...formData,
-            blogimage: e.target.files[0], // Store the first selected file
+            image_url: e.target.files[0], // Store the first selected file
         });
     }
 
@@ -52,19 +52,18 @@ export default function AddBlogs() {
 
         // Create FormData object
         const data = new FormData();
-        data.append("name", formData.blogname);
-        data.append("blog_category_id", formData.blogcategory);
-        data.append("image_url", formData.blogimage);
-        data.append("image_alt", formData.blogimagealt);
-        data.append("description", formData.blogdiscription);
-        data.append("content", formData.blogcontent);
-        data.append("technical_name", formData.blogtechnicalname);
+        data.append("name", formData.name);
+        data.append("service_category_id", formData.service_category_id);
+        data.append("image_url", formData.image_url);
+        data.append("image_alt", formData.image_alt);
+        data.append("description", formData.description);
+        data.append("compliance_header", formData.compliance_header);
 
         // Log to console (for debugging)
         console.log("Form Data:", Object.fromEntries(data));
 
         // API Call (Optional)
-        apiClient.post(`/blogs`, data, {
+        apiClient.post(`/services`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         })
         .then(response => {
@@ -76,13 +75,12 @@ export default function AddBlogs() {
                 pos: "top-center",
             });
             setformData({
-                blogname: '',
-                blogcategory: '',
-                blogimage: null,
-                blogimagealt: '',
-                blogtechnicalname: '',
-                blogcontent: '',
-                blogdiscription: ''
+                name: '',
+                service_category_id: '',
+                image_url: null,
+                image_alt: '',
+                description: '',
+                compliance_header: '',
             })
         })
         .catch(error => {
@@ -96,30 +94,29 @@ export default function AddBlogs() {
         });
     };
 
-    console.log(formData)
-
+    
   return (
     <>
+    
         <div id="sc-page-wrapper">
             <div id="sc-page-content">
                 <div className="uk-child-width-1-1@l" data-uk-grid>
                     <div>
                         <div className="uk-card">
                             <div className="uk-card-body">
-                                <h5 className="uk-heading-line"><span>Add Blog</span></h5>
+                                <h5 className="uk-heading-line"><span>Add Service</span></h5>
                                 <form onSubmit={handleSubmit}>
                                     <fieldset className="uk-fieldset">
-                                    <div className="uk-grid uk-grid-small uk-child-width-1-2@l" uk-grid="true">
+                                        <div className="uk-grid uk-grid-small uk-child-width-1-2@l" uk-grid="true">
                                             <div>
-                                                <input className="uk-input uk-margin-bottom" type="text" name="blogname" onChange={handleChange} value={formData.blogname} placeholder="Blog Name" data-sc-input />
-                                                <input className="uk-input uk-margin-bottom" type="file" name='blogimage' onChange={handleFileChange} placeholder="Blog Name" data-sc-input />
-                                                <input className="uk-input uk-margin-bottom" type="text" name='blogtechnicalname' onChange={handleChange} value={formData.blogtechnicalname} placeholder="Technical Name" data-sc-input />
+                                                <input className="uk-input uk-margin-bottom" type="text" name="name" onChange={handleChange} value={formData.name} placeholder="Service Name" data-sc-input />
+                                                <input className="uk-input uk-margin-bottom" type="file" name="image_url" onChange={handleFileChange} data-sc-input />
                                             </div>
                                             <div>
-                                                <select className="uk-select uk-margin-bottom" name='blogcategory' onChange={handleChange} value={formData.blogcategory} style={{borderTop: 'none', borderLeft: 'none', borderRight: 'none', borderRadius: '0px'}}>
+                                            <select className="uk-select uk-margin-bottom" name='service_category_id' onChange={handleChange} value={formData.service_category_id} style={{borderTop: 'none', borderLeft: 'none', borderRight: 'none', borderRadius: '0px'}}>
                                                     <option value="">Select a category</option>
-                                                    {Array.isArray(blogcategrydata) && blogcategrydata.length > 0 ? (
-                                                        blogcategrydata.map((value, index) => (
+                                                    {Array.isArray(tutorialcategrydata) && tutorialcategrydata.length > 0 ? (
+                                                        tutorialcategrydata.map((value, index) => (
                                                             <option key={index} value={value._id}>
                                                                 {value.name}
                                                             </option>
@@ -128,12 +125,12 @@ export default function AddBlogs() {
                                                         <option disabled>No categories available</option>
                                                     )}
                                                 </select>
-                                                <input className="uk-input uk-margin-bottom" type="text" name='blogimagealt' onChange={handleChange} value={formData.blogimagealt} placeholder="Image Alt" data-sc-input />
-                                                <input className="uk-input uk-margin-bottom" type="text" name='blogcontent' onChange={handleChange} value={formData.blogcontent} placeholder="Content" data-sc-input />
+                                                <input className="uk-input uk-margin-bottom" type="text" name='image_alt' onChange={handleChange} value={formData.image_alt} placeholder="Service Image Alt" data-sc-input />
                                             </div>
                                         </div>
                                         <div className="uk-margin">
-                                                <textarea className="uk-textarea" rows="5" name='blogdiscription' onChange={handleChange} value={formData.blogdiscription} placeholder="Discription" data-sc-input></textarea>
+                                                <input className="uk-input uk-margin-bottom" type="text" name='compliance_header' onChange={handleChange} value={formData.compliance_header} placeholder="Compliance Header" data-sc-input />
+                                                <textarea className="uk-textarea" rows="5" name='description' onChange={handleChange} value={formData.description} placeholder="Discription" data-sc-input></textarea>
                                         </div>
                                         <div className="uk-margin">
                                             <input type='submit' className='sc-button waves-effect waves-button solid-button' value='Submit'></input>
@@ -146,6 +143,7 @@ export default function AddBlogs() {
                 </div>
             </div>
         </div>
+
     </>
   )
 }

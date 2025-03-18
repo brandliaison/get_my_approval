@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import apiClient from '../../services/api';
-import axios from 'axios';
 import UIkit from 'uikit';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -8,6 +7,7 @@ export default function EditBlogs() {
 
     const navigate = useNavigate();
 
+    const { id } = useParams();
     const [blogcategrydata, setblogcategrydata] = useState([]);
     const [formData, setformData] = useState({
         name: '',
@@ -19,15 +19,13 @@ export default function EditBlogs() {
         description: ''
     });
 
-    const { id } = useParams();
-
     useEffect(() => {
         editblog()
         getblogcategories()
     }, [id])
 
     const editblog = () => {
-        axios.get(`${apiClient}/blogs/${id}`)
+        apiClient.get(`/blogs/${id}`)
         .then((res) => {
             setformData(res.data)
         })
@@ -37,7 +35,7 @@ export default function EditBlogs() {
     }
 
     const getblogcategories = () => {
-        axios.get(`${apiClient}/blog-categories/`)
+        apiClient.get(`/blog-categories/`)
         .then((res) => {
             console.log(res.data)
             setblogcategrydata(res.data)
@@ -82,7 +80,7 @@ export default function EditBlogs() {
             console.log("Form Data:", Object.fromEntries(data));
 
             // API Call (Optional)
-            axios.post(`${apiClient}/blogs/${id}`, data, {
+            apiClient.post(`/blogs/${id}`, data, {
                 headers: { "Content-Type": "multipart/form-data" },
             })
             .then(response => {

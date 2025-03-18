@@ -11,8 +11,8 @@ export default function BlogCategories() {
     const [blogcategories, setblogcategories] = useState();
 
     const deleteblogcategory = (id) => {
-        axios
-            .delete(`${apiClient}/blog-categories/${id}`)
+        apiClient
+            .delete(`/blog-categories/${id}`)
             .then((res) => {
                 UIkit.notification({
                     message: res.data.message || "Blog deleted successfully!",
@@ -35,7 +35,7 @@ export default function BlogCategories() {
     };
 
     const getblogcategories = () => {
-        axios.get(`${apiClient}/blog-categories`)
+        apiClient.get(`/blog-categories`)
             .then((res) => {
                 setblogcategories(res.data);
             })
