@@ -33,6 +33,9 @@ import AddTutorial from "./pages/tutorials/AddTutorial";
 import EditTutorial from "./pages/tutorials/EditTutorial";
 import AddServices from "./pages/services/AddServices";
 import EditServices from "./pages/services/EditServices";
+import ProductCategories from "./pages/products/productcategories.jsx/ProductCategories";
+import AddProductCategories from "./pages/products/productcategories.jsx/AddProductCategories";
+import EditProductCategories from "./pages/products/productcategories.jsx/EditProductCategories";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -59,6 +62,9 @@ export default function App() {
                             <Route path="add-service-categories" element={<AddServiceCategories />} />
                             <Route path="edit-service-category/:id" element={<EditServiceCategory />} />
                             <Route path="products" element={<Products />} />
+                            <Route path="product-categories" element={<ProductCategories />} />
+                            <Route path="addproduct-categories" element={<AddProductCategories />} />
+                            <Route path="editproduct-categories" element={<EditProductCategories />} />
                             <Route path="notifications" element={<Notifications />} />
                             <Route path="tutorials" element={<Tutorials />} />
                             <Route path="blog-categories" element={<BlogCategories />} />
