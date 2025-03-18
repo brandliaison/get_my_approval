@@ -76,12 +76,12 @@ export default function Sidebar() {
 
                                 <ul className="sc-sidebar-menu-sub" style={{ display: openDropdowns.product ? "block" : "none" }}>
                                     <li>
-                                        <Link to="/op-admin/services">
+                                        <Link to="/op-admin/products">
                                             <span className="uk-nav-title">Products</span>
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="/op-admin/service-categories">
+                                        <Link to="/op-admin/products-categories">
                                             <span className="uk-nav-title">Product Categories</span>
                                         </Link>
                                     </li>

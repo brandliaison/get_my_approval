@@ -1,7 +1,16 @@
-import React from 'react'
+import React from 'react';
+
 
 export default function ProductCategories() {
+
+
+
   return (
-    <div>ProductCategories</div>
+    <>
+    
+
+    <h1>working</h1>
+
+    </>
   )
 }
