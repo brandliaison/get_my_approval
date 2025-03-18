@@ -36,6 +36,7 @@ import EditServices from "./pages/services/EditServices";
 import ProductCategories from "./pages/products/productcategories.jsx/ProductCategories";
 import AddProductCategories from "./pages/products/productcategories.jsx/AddProductCategories";
 import EditProductCategories from "./pages/products/productcategories.jsx/EditProductCategories";
+import ViewSubmittedPost from "./pages/revision/ViewSubmittedPost";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);

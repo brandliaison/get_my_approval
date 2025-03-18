@@ -22,7 +22,7 @@ class EntityReviewController extends Controller
             return response()->json(['message' => ucfirst($request->entity_type) . ' Revisions not found'], 404);
         }
 
-        return response()->json($entity);
+        return response()->json(['data' => $entity, 'message' => 'Data Found'], 200);
     }
 
     // Fetch all Revision Single for a category

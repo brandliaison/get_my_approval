@@ -25,10 +25,10 @@ class ServiceController extends Controller
             ->get();
 
         if (!count($data) > 0) {
-            return response()->json('Data Not Found', 400);
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
         }
 
-        return response()->json($data, 200);
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
     }
 
     // Store a new service
@@ -90,16 +90,16 @@ class ServiceController extends Controller
     {
         $serviceCat = ServiceCategory::find($request->service_category_id);
 
-        if (!$serviceCat || $serviceCat->status !== 'active') {
-            return response()->json(['error' => 'Service Category Not Found'], 404);
-        }
+        // if (!$serviceCat || $serviceCat->status !== 'active') {
+        //     return response()->json(['error' => 'Service Category Not Found'], 404);
+        // }
 
         $service = Service::with('category')->find($id);
         $oldservice = clone $service;
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
             'service_category_id' => 'required|exists:service_categories,_id',
-            'image_url' => 'sometimes|url',
+            'image_url' => 'sometimes',
             'image_alt' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'compliance_header' => 'nullable|string',

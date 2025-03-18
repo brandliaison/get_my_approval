@@ -35,6 +35,7 @@ export default function NewSubmittedPosts() {
     const handelEntityChange = async (val) => {
         var valData = val ? val : "Blog";
         const entity_type = { entity_type: valData };
+        setData(valData)
 
         try {
             const response = await apiClient.post(
@@ -43,7 +44,7 @@ export default function NewSubmittedPosts() {
             );
             setEntityData(response.data);
         } catch (error) {
-            console.log(err);
+            console.log(error);
 
             UIkit.notification({
                 message: "Failed to load data!",
@@ -64,7 +65,7 @@ export default function NewSubmittedPosts() {
         navigate(`/op-admin/submitted-post-view/${id}`); // Redirect to second page with blog ID in URL
     };
 
-    console.log(entityData);
+    console.log(data);
 
     return (
         <>
@@ -158,9 +159,8 @@ export default function NewSubmittedPosts() {
                                                                     }
                                                                 >
                                                                     <Link
-                                                                        to={`op-admin/submitted-post-view/${value._id}`}
-                                                                        className="sc-button sc-button-primary sc-js-button-wave-light"
-                                                                        state={{ item }}>
+                                                                        to={`/op-admin/submitted-post-view/${value._id}`}
+                                                                        className="sc-button sc-button-primary sc-js-button-wave-light" state={data}>
                                                                         <i className="mdi mdi-eye"></i>{" "}
                                                                         View
                                                                     </Link>
