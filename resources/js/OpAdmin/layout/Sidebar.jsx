@@ -81,7 +81,7 @@ export default function Sidebar() {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="/op-admin/products-categories">
+                                        <Link to="/op-admin/product-categories">
                                             <span className="uk-nav-title">Product Categories</span>
                                         </Link>
                                     </li>

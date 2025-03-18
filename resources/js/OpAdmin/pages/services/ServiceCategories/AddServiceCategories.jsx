@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import apiClient from '../../../services/api';
-import axios from 'axios';
 import UIkit from 'uikit';
 
 export default function AddServiceCategories() {
