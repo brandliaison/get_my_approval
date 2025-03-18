@@ -61,15 +61,31 @@ export default function Sidebar() {
                                 </ul>
                             </li>
 
-                            <li title="Mailbox">
-                                <Link to="/op-admin/products">
-                                    <span className="uk-nav-icon">
-                                        <i className="mdi mdi-package-variant-remove"></i>
-                                    </span>
-                                    <span className="uk-nav-title">
-                                        Products
-                                    </span>
-                                </Link>
+                            <li className={`sc-has-submenu ${openDropdowns.product ? "uk-open" : ""}`}>
+                                <a href="#" onClick={() => toggleDropdown("product")}>
+                                    <div className="uk-flex uk-flex-middle uk-width-1-1">
+                                        <div className="uk-flex uk-flex-middle uk-width-1-1">
+                                            <span className="uk-nav-icon">
+                                                <i className="mdi mdi-package-variant-remove"></i>
+                                            </span>
+                                            <span className="uk-nav-title">Product</span>
+                                        </div>
+                                        <i className={`mdi ${openDropdowns.product ? "mdi-chevron-up" : "mdi-chevron-down"}`}></i>
+                                    </div>
+                                </a>
+
+                                <ul className="sc-sidebar-menu-sub" style={{ display: openDropdowns.product ? "block" : "none" }}>
+                                    <li>
+                                        <Link to="/op-admin/products">
+                                            <span className="uk-nav-title">Products</span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/op-admin/products-categories">
+                                            <span className="uk-nav-title">Product Categories</span>
+                                        </Link>
+                                    </li>
+                                </ul>
                             </li>
 
                             <li title="Task Board">
