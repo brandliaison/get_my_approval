@@ -31,6 +31,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AdminLayout from "./components/AdminLayout";
 import AddTutorial from "./pages/tutorials/AddTutorial";
 import EditTutorial from "./pages/tutorials/EditTutorial";
+import AddServices from "./pages/services/AddServices";
+import EditServices from "./pages/services/EditServices";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -51,6 +53,8 @@ export default function App() {
                         <Route element={<AdminLayout />}>
                             <Route path="dashboard" element={<Home />} />
                             <Route path="services" element={<Services />} />
+                            <Route path="addservices" element={<AddServices />} />
+                            <Route path="editservices" element={<EditServices />} />
                             <Route path="service-categories" element={<ServiceCategories />} />
                             <Route path="add-service-categories" element={<AddServiceCategories />} />
                             <Route path="edit-service-category/:id" element={<EditServiceCategory />} />

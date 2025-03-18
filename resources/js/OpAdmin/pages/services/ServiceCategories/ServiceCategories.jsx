@@ -149,6 +149,7 @@ export default function ServiceCategories() {
                                                                     <i className="mdi mdi-file-edit">
                                                                         {" "}
                                                                     </i>
+                                                                    Edit
                                                                 </a>
                                                             </div>
 
@@ -163,7 +164,8 @@ export default function ServiceCategories() {
                                                                     className="sc-button sc-button-secondary sc-js-button-wave-light"
                                                                     href="#"
                                                                 >
-                                                                    <i className="mdi mdi-trash-can-outline"></i>{" "}
+                                                                    <i className="mdi mdi-trash-can-outline"></i>
+                                                                    Delete
                                                                 </a>
                                                             </div>
                                                         </div>
