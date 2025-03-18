@@ -101,7 +101,7 @@ class EntityReviewController extends Controller
             'FaqCategory' => 'Faq Category',
         ];
 
-        return response()->json($list);
+        return response()->json(['data' => $list]);
     }
 
     public function entityDataList(Request $request)
@@ -109,8 +109,9 @@ class EntityReviewController extends Controller
         $namespace = "App\\Models\\OP\\";
         $modelClass = $namespace . $request->entity_type;
 
+        $data = [];
         if (class_exists($modelClass)) {
-            $data = app($modelClass)->where('approval_status', 'submitted')->orderBy('created_at', 'desc')->get();
+            $data = app($modelClass)->with('createdByUser')->where('approval_status', 'submitted')->orderBy('created_at', 'desc')->get();
         }
 
         return response()->json($data);
