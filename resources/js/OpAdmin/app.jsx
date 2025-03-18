@@ -33,6 +33,7 @@ import AddTutorial from "./pages/tutorials/AddTutorial";
 import EditTutorial from "./pages/tutorials/EditTutorial";
 import AddServices from "./pages/services/AddServices";
 import EditServices from "./pages/services/EditServices";
+import ViewSubmittedPost from "./pages/revision/ViewSubmittedPost";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);

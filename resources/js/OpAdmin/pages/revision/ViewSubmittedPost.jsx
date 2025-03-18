@@ -2,19 +2,21 @@ import React, { useEffect, useState } from "react";
 import apiClient from "../../services/api";
 import axios from "axios";
 import UIkit from "uikit";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 export default function ViewSubmittedPost() {
     const navigate = useNavigate();
+    const { id } = useParams();
+    const location = useLocation();
+    const item = location.state;
 
     const [data, setData] = useState();
-    const [entityList, setEntityList] = useState();
-    const [entityData, setEntityData] = useState("Blog");
 
     const getEntityList = async () => {
+        const revData = { entity_type: item, entity_id: id };
         try {
-            const response = await apiClient.get("/entity-list");
-            setEntityList(response.data);
+            const response = await apiClient.post("/entity-revisions", revData);
+            setData(response.data);
         } catch (error) {
             console.log(err);
 
@@ -29,43 +31,11 @@ export default function ViewSubmittedPost() {
 
     useEffect(() => {
         getEntityList();
-        handelEntityChange();
     }, []);
 
-    const handelEntityChange = async (val) => {
-        var valData = val ? val : "Blog";
-        const entity_type = { entity_type: valData };
-
-        try {
-            const response = await apiClient.post(
-                "/entity-data-list",
-                entity_type
-            );
-            setEntityData(response.data);
-        } catch (error) {
-            console.log(err);
-
-            UIkit.notification({
-                message: "Failed to load data!",
-                status: "danger",
-                timeout: 1000,
-                pos: "top-center",
-            });
-        }
-    };
-
-    if (entityList == null) {
+    if (!data?.data > 0) {
         return "Loading...";
     }
-
-    const entityArray = Object.entries(entityList?.data);
-
-    const handleView = (id) => {
-        navigate(`/op-admin/submitted-post-view/${id}`); // Redirect to second page with blog ID in URL
-    };
-
-    console.log(entityData);
-
 
     return (
         <>
@@ -74,16 +44,17 @@ export default function ViewSubmittedPost() {
                     <div className="uk-flex uk-flex-right"></div>
 
                     <div className="uk-card uk-margin">
-                        <div className="uk-flex uk-flex-between uk-padding-small">
-                            <h3 className="uk-card-title">
-                                New Submitted Posts
-                            </h3>
-
-                        </div>
+                        <h3 className="uk-card-title">
+                            Post Revision for:{" "}
+                            {data?.data[0]?.entity_data?.name}
+                        </h3>
 
                         <div className="uk-card-body">
                             <div className="uk-overflow-auto">
-
+                                <h2>Post Details</h2>
+                                <div class="uk-padding-small" style={{border:"1px solid #ccc"}}>
+                                    This card has a default border
+                                </div>
                             </div>
                         </div>
                     </div>

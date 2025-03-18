@@ -38,5 +38,24 @@ class EntityRevision extends Model
         return null; // Return null if no matching condition
     }
 
-    protected $appends = ['revised_user'];
+    public function getEntityDataAttribute()
+    {
+        $models = [
+            "Service" => Service::class,
+            "ServiceCategory" => ServiceCategory::class,
+            "ServiceSection" => ServiceSection::class,
+            "Blog" => Blog::class,
+            "BlogCategory" => BlogCategory::class,
+            "Notification" => Notification::class,
+            "NotificationCategory" => NotificationCategory::class,
+            "Product" => Product::class,
+            "ProductCategory" => ProductCategory::class,
+            "Faq" => Faq::class,
+            "FaqCategory" => FaqCategory::class,
+        ];
+
+        return isset($models[$this->entity_type]) ? $models[$this->entity_type]::find($this->entity_id) : null;
+    }
+
+    protected $appends = ['revised_user', 'entity_data'];
 }
