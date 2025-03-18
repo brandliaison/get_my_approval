@@ -54,7 +54,7 @@ export default function App() {
                             <Route path="dashboard" element={<Home />} />
                             <Route path="services" element={<Services />} />
                             <Route path="addservices" element={<AddServices />} />
-                            <Route path="editservices" element={<EditServices />} />
+                            <Route path="editservices/:id" element={<EditServices />} />
                             <Route path="service-categories" element={<ServiceCategories />} />
                             <Route path="add-service-categories" element={<AddServiceCategories />} />
                             <Route path="edit-service-category/:id" element={<EditServiceCategory />} />
