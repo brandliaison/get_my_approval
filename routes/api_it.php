@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ItStaff\AuthController;
 use App\Http\Controllers\ItStaff\DesginationController;
+use App\Http\Controllers\ItStaff\RolesController;
 use App\Http\Controllers\ItStaff\StaffController;
 use App\Http\Controllers\ItStaff\WebsiteSettingsController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,13 @@ Route::prefix('v1/it-admin')->group(function () {
 
         // Website Settings
         Route::apiResource('website-setting', WebsiteSettingsController::class);
+
+        // Roles and Permissions
+        Route::apiResource('roles', RolesController::class);
+        Route::get('permissions', [RolesController::class, 'permissions']);
+        Route::get('permissions-by-role/{id}', [RolesController::class, 'permissionsByRole']);
+        Route::post('create-permissions', [RolesController::class, 'createPermissions']);
+        Route::post('assign-permissions', [RolesController::class, 'assignPermissions']);
     });
 });
 
