@@ -10,8 +10,8 @@ export default function ServiceCategories() {
     const [categories, setCategories] = useState();
 
     const deleteCategory = (id) => {
-        axios
-            .delete(`${apiClient}/service-categories/${id}`)
+        apiClient
+            .delete(`/service-categories/${id}`)
             .then((res) => {
                 UIkit.notification({
                     message:
@@ -35,8 +35,7 @@ export default function ServiceCategories() {
     };
 
     const getCategories = () => {
-        axios
-            .get(`${apiClient}/service-categories`, {
+        apiClient.get(`/service-categories`, {
                 headers: {
                     "Content-Type": "application/json",
                 },

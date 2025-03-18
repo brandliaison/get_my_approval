@@ -11,8 +11,8 @@ export default function Blogs() {
     const [blogs, setblogs] = useState();
 
     const deleteblog = (id) => {
-        axios
-            .delete(`${apiClient}/blogs/${id}`)
+        apiClient
+            .delete(`/blogs/${id}`)
             .then((res) => {
                 UIkit.notification({
                     message: res.data.message || "Blog deleted successfully!",
@@ -35,7 +35,7 @@ export default function Blogs() {
     };
 
     const getblogs = () => {
-        axios.get(`${apiClient}/blogs`)
+        apiClient.get(`/blogs`)
             .then((res) => {
                 setblogs(res.data);
             })

@@ -34,7 +34,7 @@ export default function AddServiceCategories() {
         console.log("Form Data:", Object.fromEntries(data));
 
         // API Call
-        axios.post(`${apiClient}/service-categories`, data, {
+        apiClient.post(`/service-categories`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         })
         .then(response => {

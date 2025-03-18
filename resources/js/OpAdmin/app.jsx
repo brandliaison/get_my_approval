@@ -28,9 +28,9 @@ import ServiceCategories from "./pages/services/ServiceCategories/ServiceCategor
 import AddServiceCategories from "./pages/services/ServiceCategories/AddServiceCategories";
 import EditServiceCategory from "./pages/services/ServiceCategories/EditServiceCategory";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Header from "./layout/Header";
-import Sidebar from "./layout/Sidebar";
 import AdminLayout from "./components/AdminLayout";
+import AddTutorial from "./pages/tutorials/AddTutorial";
+import EditTutorial from "./pages/tutorials/EditTutorial";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -67,6 +67,8 @@ export default function App() {
                             <Route path="addtutorials-categories" element={<AddTutorialCategories />} />
                             <Route path="edittutorials-categories/:id" element={<EditTutorialCategories />} />
                             <Route path="tutorials" element={<Tutorials />} />
+                            <Route path="addtutorials" element={<AddTutorial />} />
+                            <Route path="edittutorials/:id" element={<EditTutorial />} />
                             <Route path="new-submitted-posts" element={<NewSubmittedPosts />} />
                         </Route>
                       </Route>
