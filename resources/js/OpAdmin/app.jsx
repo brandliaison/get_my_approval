@@ -80,6 +80,7 @@ export default function App() {
                             <Route path="addtutorials" element={<AddTutorial />} />
                             <Route path="edittutorials/:id" element={<EditTutorial />} />
                             <Route path="new-submitted-posts" element={<NewSubmittedPosts />} />
+                            <Route path="submitted-post-view/:id" element={<ViewSubmittedPost />} />
                         </Route>
                       </Route>
                   </Routes>

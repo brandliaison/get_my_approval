@@ -46,4 +46,8 @@ class ServiceCategory extends Model
     {
         return $this->belongsTo(OpStaff::class, 'final_approver', '_id')->select('_id', 'name', 'email');
     }
+
+    public function createdByUser(){
+        return $this->belongsTo(OpStaff::class, 'created_by', '_id');
+    }
 }
