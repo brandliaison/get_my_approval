@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import RevisionList from '../../../components/RevisionList';
+import apiClient from '../../../services/api';
 
 export default function ViewTutorialCategories() {
 

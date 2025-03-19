@@ -47,6 +47,7 @@ import EditNotifications from "./pages/notifications/EditNotifications";
 import ViewServiceCategory from "./pages/services/ServiceCategories/ViewServiceCategory";
 import ViewServices from "./pages/services/ViewServices";
 import ViewTutorial from "./pages/tutorials/ViewTutorial";
+import ViewTutorialCategories from "./pages/tutorials/tutorialcategory/ViewTutorialCategories";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -92,13 +93,14 @@ export default function App() {
                             <Route path="blogs" element={<Blogs />} />
                             <Route path="addblog" element={<AddBlogs />} />
                             <Route path="editblog/:id" element={<EditBlogs />} />
-                            <Route path="tutorials-categories" element={<TutorialCategories />} />
-                            <Route path="addtutorials-categories" element={<AddTutorialCategories />} />
-                            <Route path="edittutorials-categories/:id" element={<EditTutorialCategories />} />
                             <Route path="tutorials" element={<Tutorials />} />
                             <Route path="addtutorials" element={<AddTutorial />} />
                             <Route path="edittutorials/:id" element={<EditTutorial />} />
                             <Route path="view-tutorials/:id" element={<ViewTutorial />} />
+                            <Route path="tutorials-categories" element={<TutorialCategories />} />
+                            <Route path="addtutorials-categories" element={<AddTutorialCategories />} />
+                            <Route path="edittutorials-categories/:id" element={<EditTutorialCategories />} />
+                            <Route path="view-tutorials-categories/:id" element={<ViewTutorialCategories />} />
                             <Route path="new-submitted-posts" element={<NewSubmittedPosts />} />
                             <Route path="submitted-post-view/:id" element={<ViewSubmittedPost />} />
                         </Route>
