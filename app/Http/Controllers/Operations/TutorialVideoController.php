@@ -88,7 +88,7 @@ class TutorialVideoController extends Controller
      */
     public function show(string $id)
     {
-        $data = TutorialVideo::find($id);
+        $data = TutorialVideo::with('revisions.reviews')->find($id);
         if (!$data) {
             return response()->json(['error' => 'Tutorial Video Not Found'], 404);
         }

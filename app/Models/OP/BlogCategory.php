@@ -25,4 +25,10 @@ class BlogCategory extends Model
         'created_by',
         'status',
     ];
+
+    public function revisions()
+    {
+        return $this->hasMany(EntityRevision::class, 'entity_id', '_id')->where('entity_type', 'BlogCategory');
+    }
+
 }

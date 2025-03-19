@@ -71,7 +71,7 @@ class NotificationCategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = NotificationCategory::find($id);
+        $category = NotificationCategory::with('revisions.reviews')->find($id);
 
         if (!$category) {
             return response()->json(['error' => 'Notification Category Not Found'], 404);

@@ -46,6 +46,7 @@ Route::prefix('v1/op-admin')->group(function () {
 
         // Services
         Route::apiResource('service-categories', ServiceCategoryController::class);
+        Route::get('active-service-categories', [ServiceCategoryController::class, 'activeServiceCategories']);
         Route::apiResource('services', ServiceController::class);
         Route::apiResource('services-sections', ServiceSectionsController::class);
 

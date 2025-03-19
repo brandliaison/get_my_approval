@@ -25,4 +25,8 @@ class FaqCategory extends Model
     {
         return $this->belongsTo(OpStaff::class, 'posted_by');
     }
+    public function revisions()
+    {
+        return $this->hasMany(EntityRevision::class, 'entity_id', '_id')->where('entity_type', 'FaqCategory');
+    }
 }

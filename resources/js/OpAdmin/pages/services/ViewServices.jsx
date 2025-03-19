@@ -1,35 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import apiClient from "../../../services/api";
+import apiClient from "../../services/api";
 import UIkit from "uikit";
-import FormatText from "../../../components/FormatText";
-import RevisionList from "../../../components/RevisionList";
+import RevisionList from "../../components/RevisionList";
 
-export default function ViewServiceCategory() {
-    const navigate = useNavigate();
+export default function ViewServices() {
     const { id } = useParams();
+    const navigate = useNavigate();
+    const [tutorialcategrydata, settutorialcategrydata] = useState([]);
     const [formData, setformData] = useState({
         name: "",
+        service_category_id: "",
+        image_url: null,
+        image_alt: "",
         description: "",
-        title: "",
-        slug: "",
+        compliance_header: "",
     });
 
-    // Handle text input changes
-    const handleChange = (e) => {
-        setformData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    useEffect(() => {
-        editblogcategory();
-    }, []);
-
-    const editblogcategory = () => {
+    const edittutorial = () => {
         apiClient
-            .get(`/service-categories/${id}`)
+            .get(`/services/${id}`)
             .then((res) => {
                 setformData(res.data);
             })
@@ -37,6 +27,10 @@ export default function ViewServiceCategory() {
                 console.log(err);
             });
     };
+
+    useEffect(() => {
+        edittutorial();
+    }, []);
 
     return (
         <>
@@ -46,37 +40,35 @@ export default function ViewServiceCategory() {
                         <div>
                             <div className="uk-card">
                                 <div className="uk-card-body">
-                                    <h5 className="uk-heading-line">
-                                        <span>Service Category Details</span>
-                                    </h5>
-
+                                    <h2>{formData.name}</h2>
                                     <fieldset className="uk-fieldset">
-                                        <h2>{formData.name}</h2>
-                                        <div>
+                                        <div className="uk-margin">
                                             <div>
-                                                <b>Slug:</b>
+                                                <b>Slug</b>
                                             </div>
-                                            {formData.slug}
+                                            {formData.name}
                                         </div>
                                         <div className="uk-margin">
                                             <div>
-                                                <b>Title:</b>
+                                                <b>Category</b>
                                             </div>
-                                            {formData.title}
+                                            {formData?.category?.name}
                                         </div>
                                         <div className="uk-margin">
                                             <div>
-                                                <b>Description:</b>
+                                                <b>Description</b>
                                             </div>
                                             {formData.description}
                                         </div>
+                                        <div className="uk-margin"></div>
                                     </fieldset>
 
                                     <div className="uk-margin-top">
                                         <h2>Post Revisions</h2>
                                         <div>
-                                            <RevisionList data={formData?.revisions} />
-                                            
+                                            <RevisionList
+                                                data={formData?.revisions}
+                                            />
                                         </div>
                                     </div>
                                 </div>

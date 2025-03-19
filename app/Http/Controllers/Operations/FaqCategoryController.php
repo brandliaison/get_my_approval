@@ -69,7 +69,7 @@ class FaqCategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = FaqCategory::findOrFail($id);
+        $category = FaqCategory::with('revisions.reviews')->findOrFail($id);
         return response()->json($category);
     }
 
