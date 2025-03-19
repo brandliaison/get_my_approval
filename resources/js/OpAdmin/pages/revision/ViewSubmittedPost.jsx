@@ -131,7 +131,7 @@ export default function ViewSubmittedPost() {
                                             </tr>
                                             <tr>
                                                 <td>From Platform</td>
-                                                <td><FormatText text={data?.data[0]?.entity_data?.from_platform} /></td>
+                                                <td><FormatText text={data?.data[0]?.from_platform} /></td>
                                             </tr>
                                             <tr>
                                                 <td>Approval Status</td>
