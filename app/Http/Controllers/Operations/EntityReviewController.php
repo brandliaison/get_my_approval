@@ -16,7 +16,7 @@ class EntityReviewController extends Controller
     // Fetch all Revisions for a category
     public function getRevisions(Request $request)
     {
-        $entity = EntityRevision::where('entity_id', $request->entity_id)->orderBy('created_at', 'desc')->get();
+        $entity = EntityRevision::with('reviews')->where('entity_id', $request->entity_id)->orderBy('created_at', 'desc')->get();
 
         if (!count($entity) > 0) {
             return response()->json(['message' => ucfirst($request->entity_type) . ' Revisions not found'], 404);
@@ -40,6 +40,7 @@ class EntityReviewController extends Controller
     public function addReview(Request $request)
     {
         $entity = EntityRevision::find($request->revision_id);
+
         $entity_type = CommonHelpers::checkEntityType($entity->entity_type, $entity->entity_id);
 
         if (!$entity) {
@@ -111,7 +112,7 @@ class EntityReviewController extends Controller
 
         $data = [];
         if (class_exists($modelClass)) {
-            $data = app($modelClass)->with('createdByUser')->where('approval_status', 'submitted')->orderBy('created_at', 'desc')->get();
+            $data = app($modelClass)->with('createdByUser')->whereIn('approval_status', ['submitted', 'partially_approved'])->orderBy('created_at', 'desc')->get();
         }
 
         return response()->json($data);

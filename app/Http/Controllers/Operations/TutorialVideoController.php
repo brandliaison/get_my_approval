@@ -19,10 +19,11 @@ class TutorialVideoController extends Controller
     public function index()
     {
         $data = TutorialVideo::with('category', 'revisions')->get();
-        if (!$data) {
-            return response()->json(['error' => 'Tutorial Video  Not Found'], 404);
+        if (!count($data) > 0) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
         }
-        return response()->json($data);
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
     }
 
     /**

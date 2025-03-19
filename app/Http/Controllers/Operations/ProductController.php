@@ -24,10 +24,10 @@ class ProductController extends Controller
         })->with('category')->get();
 
         if (!count($data) > 0) {
-            return response()->json('Data Not Found', 400);
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
         }
 
-        return response()->json($data, 200);
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
     }
 
     /**
@@ -49,9 +49,9 @@ class ProductController extends Controller
             'open_comment' => 'nullable|string',
         ]);
 
-        if ($category->status !== 'active') {
-            return response()->json(['error' => 'Product Category Not Found'], 404);
-        }
+        // if ($category->status !== 'active') {
+        //     return response()->json(['error' => 'Product Category Not Found'], 404);
+        // }
 
         $validated = $request->except('image_url');
         if ($request->hasFile('image_url')) {
@@ -112,9 +112,9 @@ class ProductController extends Controller
             'open_comment' => 'nullable|string',
         ]);
 
-        if ($category->status !== 'active') {
-            return response()->json(['error' => 'Product Category Not Found'], 404);
-        }
+        // if ($category->status !== 'active') {
+        //     return response()->json(['error' => 'Product Category Not Found'], 404);
+        // }
 
         if (!$data) {
             return response()->json(['error' => 'Product Not Found'], 404);
