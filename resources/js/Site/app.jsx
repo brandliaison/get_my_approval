@@ -10,6 +10,8 @@ import Header from './layout/header/Header';
 import './../../../resources/css/style.css'; // my default styles of fornt end
 import Footer from './layout/footer/Footer';
 import Services from './pages/Services';
+import Notification from './pages/Notification';
+import Tutorial from './pages/Tutorial';
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -24,6 +26,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/notification" element={<Notification />} />
+        <Route path="/tutorial" element={<Tutorial />} />
       </Routes>
       <Footer />
     </Router>
