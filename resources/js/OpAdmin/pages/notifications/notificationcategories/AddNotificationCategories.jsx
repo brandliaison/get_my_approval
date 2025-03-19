@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import apiClient from '../../../services/api';
 import UIkit from 'uikit';
 
-export default function AddProductCategories() {
+export default function AddNotificationCategories() {
 
     const [formData, setformData] = useState({
         name: '',
         description: '',
-        title: null,
+        title: '',
         slug: '',
     });
 
@@ -34,7 +34,7 @@ export default function AddProductCategories() {
         console.log("Form Data:", Object.fromEntries(data));
 
         // API Call (Optional)
-        apiClient.post(`/product-categories`, data, {
+        apiClient.post(`/notification-categories`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         })
         .then(response => {
@@ -63,29 +63,28 @@ export default function AddProductCategories() {
         });
     };
 
-
   return (
     <>
-    
+
         <div id="sc-page-wrapper">
             <div id="sc-page-content">
                 <div className="uk-child-width-1-1@l" data-uk-grid>
                     <div>
                         <div className="uk-card">
                             <div className="uk-card-body">
-                                <h5 className="uk-heading-line"><span>Add Product Category</span></h5>
+                                <h5 className="uk-heading-line"><span>Add Notification Category</span></h5>
                                 <form onSubmit={handleSubmit}>
                                     <fieldset className="uk-fieldset">
                                     <div className="uk-grid uk-grid-small uk-child-width-1-2@l" uk-grid="true">
                                             <div>
-                                                <input className="uk-input uk-margin-bottom" type="text" name="name" onChange={handleChange} value={formData.name} placeholder="Product Category Name" data-sc-input />
+                                                <input className="uk-input uk-margin-bottom" type="text" name="name" onChange={handleChange} value={formData.name} placeholder="Notification Category Name" data-sc-input />
                                             </div>
                                             <div>
-                                                <input className="uk-input uk-margin-bottom" type="text" name='title' onChange={handleChange} value={formData.title} placeholder="Product Category Title" data-sc-input />
+                                                <input className="uk-input uk-margin-bottom" type="text" name='title' onChange={handleChange} value={formData.title} placeholder="Notification Category Title" data-sc-input />
                                             </div>
                                         </div>
                                         <div className="uk-margin">
-                                                <input className="uk-input uk-margin-bottom" type="text" name='slug' onChange={handleChange} value={formData.slug} placeholder="Category Slug" data-sc-input />
+                                                <input className="uk-input uk-margin-bottom" type="text" name='slug' onChange={handleChange} value={formData.slug} placeholder="Notification Category Slug" data-sc-input />
                                                 <textarea className="uk-textarea" rows="5" name='description' onChange={handleChange} value={formData.description} placeholder="Discription" data-sc-input></textarea>
                                         </div>
                                         <div className="uk-margin">
@@ -99,7 +98,7 @@ export default function AddProductCategories() {
                 </div>
             </div>
         </div>
-
+    
     </>
   )
 }

@@ -37,6 +37,11 @@ import ProductCategories from "./pages/products/productcategories.jsx/ProductCat
 import AddProductCategories from "./pages/products/productcategories.jsx/AddProductCategories";
 import EditProductCategories from "./pages/products/productcategories.jsx/EditProductCategories";
 import ViewSubmittedPost from "./pages/revision/ViewSubmittedPost";
+import AddProducts from "./pages/products/AddProducts";
+import EditProducts from "./pages/products/EditProducts";
+import NotificationCategories from "./pages/notifications/notificationcategories/NotificationCategories";
+import AddNotificationCategories from "./pages/notifications/notificationcategories/AddNotificationCategories";
+import EditNotificationCategories from "./pages/notifications/notificationcategories/EditNotificationCategories";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -63,10 +68,15 @@ export default function App() {
                             <Route path="add-service-categories" element={<AddServiceCategories />} />
                             <Route path="edit-service-category/:id" element={<EditServiceCategory />} />
                             <Route path="products" element={<Products />} />
+                            <Route path="addproducts" element={<AddProducts />} />
+                            <Route path="editproducts/:id" element={<EditProducts />} />
                             <Route path="product-categories" element={<ProductCategories />} />
                             <Route path="addproduct-categories" element={<AddProductCategories />} />
                             <Route path="editproduct-categories/:id" element={<EditProductCategories />} />
                             <Route path="notifications" element={<Notifications />} />
+                            <Route path="notification-categories" element={<NotificationCategories />} />
+                            <Route path="addnotification-categories" element={<AddNotificationCategories />} />
+                            <Route path="editnotification-categories/:id" element={<EditNotificationCategories />} />
                             <Route path="tutorials" element={<Tutorials />} />
                             <Route path="blog-categories" element={<BlogCategories />} />
                             <Route path="addblog-categories" element={<AddBlogCategories />} />

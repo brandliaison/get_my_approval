@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import apiClient from '../../../services/api';
 import UIkit from 'uikit';
 
-export default function AddProductCategories() {
+export default function EditNotificationCategories() {
 
+    const navigate = useNavigate();
+    const { id } = useParams();
     const [formData, setformData] = useState({
         name: '',
         description: '',
-        title: null,
+        title: '',
         slug: '',
     });
 
-    // Handle text input changes
+        // Handle text input changes
     const handleChange = (e) => {
         setformData({
             ...formData,
@@ -19,7 +22,20 @@ export default function AddProductCategories() {
         });
     };
 
-    // Handle form submission
+    useEffect(() => {
+        editblogcategory()
+    }, [])
+
+    const editblogcategory = () => {
+        apiClient.get(`/notification-categories/${id}`)
+        .then((res) => {
+            setformData(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -29,33 +45,35 @@ export default function AddProductCategories() {
         data.append("description", formData.description);
         data.append("title", formData.title);
         data.append("slug", formData.slug);
+        data.append("_method", 'PUT');
 
         // Log to console (for debugging)
         console.log("Form Data:", Object.fromEntries(data));
 
-        // API Call (Optional)
-        apiClient.post(`/product-categories`, data, {
+        // API Call
+        apiClient.post(`/notification-categories/${id}`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         })
         .then(response => {
             console.log("Success:", response.data);
+
+            // Show success notification
             UIkit.notification({
-                message: "Blog created successfully!",
+                message: "Category updated successfully!",
                 status: "success",
                 timeout: 2000,
                 pos: "top-center",
             });
-            setformData({
-                name: '',
-                description: '',
-                title: '',
-                slug: '',
-            })
+
+            // navigate to categories
+            navigate('/op-admin/notification-categories')
         })
         .catch(error => {
             console.error("Error:", error);
+
+            // Show error notification
             UIkit.notification({
-                message: error?.response?.data?.message,
+                message: error?.response?.data?.message || "An error occurred",
                 status: "danger",
                 timeout: 2000,
                 pos: "top-center",
@@ -63,25 +81,25 @@ export default function AddProductCategories() {
         });
     };
 
-
   return (
     <>
     
-        <div id="sc-page-wrapper">
+    <div id="sc-page-wrapper">
             <div id="sc-page-content">
                 <div className="uk-child-width-1-1@l" data-uk-grid>
                     <div>
                         <div className="uk-card">
                             <div className="uk-card-body">
-                                <h5 className="uk-heading-line"><span>Add Product Category</span></h5>
+                                <h5 className="uk-heading-line"><span>Edit Product Category</span></h5>
+
                                 <form onSubmit={handleSubmit}>
                                     <fieldset className="uk-fieldset">
                                     <div className="uk-grid uk-grid-small uk-child-width-1-2@l" uk-grid="true">
                                             <div>
-                                                <input className="uk-input uk-margin-bottom" type="text" name="name" onChange={handleChange} value={formData.name} placeholder="Product Category Name" data-sc-input />
+                                                <input className="uk-input uk-margin-bottom" type="text" name="name" onChange={handleChange} value={formData.name} placeholder="Category Name" data-sc-input />
                                             </div>
                                             <div>
-                                                <input className="uk-input uk-margin-bottom" type="text" name='title' onChange={handleChange} value={formData.title} placeholder="Product Category Title" data-sc-input />
+                                                <input className="uk-input uk-margin-bottom" type="text" name='title' onChange={handleChange} value={formData.title} placeholder="Category Title" data-sc-input />
                                             </div>
                                         </div>
                                         <div className="uk-margin">

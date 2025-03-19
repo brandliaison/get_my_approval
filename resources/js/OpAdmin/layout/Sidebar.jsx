@@ -88,15 +88,31 @@ export default function Sidebar() {
                                 </ul>
                             </li>
 
-                            <li title="Task Board">
-                                <Link to="/op-admin/notifications">
-                                    <span className="uk-nav-icon">
-                                        <i className="mdi mdi-bell"></i>
-                                    </span>
-                                    <span className="uk-nav-title">
-                                        Notifictaions
-                                    </span>
-                                </Link>
+                            <li className={`sc-has-submenu ${openDropdowns.notification ? "uk-open" : ""}`}>
+                                <a href="#" onClick={() => toggleDropdown("notification")}>
+                                    <div className="uk-flex uk-flex-middle uk-width-1-1">
+                                        <div className="uk-flex uk-flex-middle uk-width-1-1">
+                                            <span className="uk-nav-icon">
+                                                <i className="mdi mdi-bell"></i>
+                                            </span>
+                                            <span className="uk-nav-title">Notification</span>
+                                        </div>
+                                        <i className={`mdi ${openDropdowns.notification ? "mdi-chevron-up" : "mdi-chevron-down"}`}></i>
+                                    </div>
+                                </a>
+
+                                <ul className="sc-sidebar-menu-sub" style={{ display: openDropdowns.notification ? "block" : "none" }}>
+                                    <li>
+                                        <Link to="/op-admin/notifications">
+                                            <span className="uk-nav-title">Notifications</span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/op-admin/notification-categories">
+                                            <span className="uk-nav-title">Notification Categories</span>
+                                        </Link>
+                                    </li>
+                                </ul>
                             </li>
 
                             <li className={`sc-has-submenu ${openDropdowns.blogs ? "uk-open" : ""}`}>
