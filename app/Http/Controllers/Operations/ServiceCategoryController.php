@@ -26,11 +26,11 @@ class ServiceCategoryController extends Controller
         ->with('firstAppoveruser', 'finalAppoveruser')
         ->get();
 
-        if(!count($data) > 0){
-            return response()->json('Data Not Found', 400);
+        if (!count($data) > 0) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
         }
 
-        return response()->json($data, 200);
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
     }
 
     // Store (Create) a New Service Category
@@ -67,7 +67,7 @@ class ServiceCategoryController extends Controller
     // Show a Single Service Category
     public function show($id)
     {
-        $category = ServiceCategory::with('firstAppoveruser', 'finalAppoveruser')->find($id);
+        $category = ServiceCategory::with('firstAppoveruser', 'finalAppoveruser', 'revisions.reviews')->find($id);
 
         if (!$category) {
             return response()->json(['error' => 'Service Category Not Found'], 404);

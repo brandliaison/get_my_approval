@@ -44,6 +44,7 @@ import AddNotificationCategories from "./pages/notifications/notificationcategor
 import EditNotificationCategories from "./pages/notifications/notificationcategories/EditNotificationCategories";
 import AddNotifications from "./pages/notifications/AddNotifications";
 import EditNotifications from "./pages/notifications/EditNotifications";
+import ViewServiceCategory from "./pages/services/ServiceCategories/ViewServiceCategory";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -69,6 +70,7 @@ export default function App() {
                             <Route path="service-categories" element={<ServiceCategories />} />
                             <Route path="add-service-categories" element={<AddServiceCategories />} />
                             <Route path="edit-service-category/:id" element={<EditServiceCategory />} />
+                            <Route path="view-service-category/:id" element={<ViewServiceCategory />} />
                             <Route path="products" element={<Products />} />
                             <Route path="addproducts" element={<AddProducts />} />
                             <Route path="editproducts/:id" element={<EditProducts />} />
