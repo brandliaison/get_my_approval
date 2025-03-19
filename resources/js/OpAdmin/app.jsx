@@ -42,6 +42,8 @@ import EditProducts from "./pages/products/EditProducts";
 import NotificationCategories from "./pages/notifications/notificationcategories/NotificationCategories";
 import AddNotificationCategories from "./pages/notifications/notificationcategories/AddNotificationCategories";
 import EditNotificationCategories from "./pages/notifications/notificationcategories/EditNotificationCategories";
+import AddNotifications from "./pages/notifications/AddNotifications";
+import EditNotifications from "./pages/notifications/EditNotifications";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -74,10 +76,11 @@ export default function App() {
                             <Route path="addproduct-categories" element={<AddProductCategories />} />
                             <Route path="editproduct-categories/:id" element={<EditProductCategories />} />
                             <Route path="notifications" element={<Notifications />} />
+                            <Route path="addnotifications" element={<AddNotifications />} />
+                            <Route path="editnotifications/:id" element={<EditNotifications />} />
                             <Route path="notification-categories" element={<NotificationCategories />} />
                             <Route path="addnotification-categories" element={<AddNotificationCategories />} />
                             <Route path="editnotification-categories/:id" element={<EditNotificationCategories />} />
-                            <Route path="tutorials" element={<Tutorials />} />
                             <Route path="blog-categories" element={<BlogCategories />} />
                             <Route path="addblog-categories" element={<AddBlogCategories />} />
                             <Route path="editblogcategory/:id" element={<EditBlogCategory />} />
