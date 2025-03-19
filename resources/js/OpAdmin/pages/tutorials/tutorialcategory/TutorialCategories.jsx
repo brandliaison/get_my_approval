@@ -37,7 +37,7 @@ export default function TutorialCategories() {
         apiClient.get(`/tutorial-videos-categories/`)
             .then((res) => {
                 console.log(res)
-                settutorialcategories(res.data);
+                settutorialcategories(res.data.data);
             })
             .catch((err) => {
                 console.log(err);

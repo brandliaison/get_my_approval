@@ -46,6 +46,7 @@ import AddNotifications from "./pages/notifications/AddNotifications";
 import EditNotifications from "./pages/notifications/EditNotifications";
 import ViewServiceCategory from "./pages/services/ServiceCategories/ViewServiceCategory";
 import ViewServices from "./pages/services/ViewServices";
+import ViewTutorial from "./pages/tutorials/ViewTutorial";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -97,6 +98,7 @@ export default function App() {
                             <Route path="tutorials" element={<Tutorials />} />
                             <Route path="addtutorials" element={<AddTutorial />} />
                             <Route path="edittutorials/:id" element={<EditTutorial />} />
+                            <Route path="view-tutorials/:id" element={<ViewTutorial />} />
                             <Route path="new-submitted-posts" element={<NewSubmittedPosts />} />
                             <Route path="submitted-post-view/:id" element={<ViewSubmittedPost />} />
                         </Route>
