@@ -24,10 +24,10 @@ class NotificationController extends Controller
         })->with('category')->get();
 
         if (!count($data) > 0) {
-            return response()->json('Data Not Found', 400);
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
         }
 
-        return response()->json($data, 200);
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
     }
 
     /**
@@ -45,9 +45,9 @@ class NotificationController extends Controller
     {
         $notificationCat = NotificationCategory::find($request->notification_category_id);
 
-        if (!$notificationCat || $notificationCat->status !== 'active') {
-            return response()->json(['error' => 'Notification Category Not Found'], 404);
-        }
+        // if (!$notificationCat || $notificationCat->status !== 'active') {
+        //     return response()->json(['error' => 'Notification Category Not Found'], 404);
+        // }
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -116,15 +116,15 @@ class NotificationController extends Controller
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
             'notification_category_id' => 'required|exists:notification_categories,_id',
-            'image_url' => 'sometimes|url',
+            'image_url' => 'sometimes',
             'image_alt' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'compliance_header' => 'nullable|string',
         ]);
 
-        if ($notificationCat->status !== 'active') {
-            return response()->json(['error' => 'Notification Category Not Found'], 404);
-        }
+        // if ($notificationCat->status !== 'active') {
+        //     return response()->json(['error' => 'Notification Category Not Found'], 404);
+        // }
 
         if (!$notification) {
             return response()->json(['error' => 'Notification Not Found'], 404);

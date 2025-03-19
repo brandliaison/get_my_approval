@@ -25,4 +25,7 @@ class NotificationCategory extends Model
         'approval_status',
         'status',
     ];
+    public function createdByUser(){
+        return $this->belongsTo(OpStaff::class, 'created_by', '_id');
+    }
 }

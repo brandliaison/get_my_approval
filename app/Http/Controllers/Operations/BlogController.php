@@ -24,10 +24,10 @@ class BlogController extends Controller
         })->with('category')->get();
 
         if (!count($data) > 0) {
-            return response()->json('Data Not Found', 400);
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
         }
 
-        return response()->json($data, 200);
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
     }
 
     /**

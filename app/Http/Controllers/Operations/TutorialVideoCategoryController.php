@@ -16,7 +16,12 @@ class TutorialVideoCategoryController extends Controller
      */
     public function index()
     {
-        return response()->json(TutorialVideoCategory::get(), 200);
+        $data = TutorialVideoCategory::get();
+        if (!count($data) > 0) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
     }
 
     /**

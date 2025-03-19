@@ -39,7 +39,7 @@ export default function Sidebar() {
                                     <div className="uk-flex uk-flex-middle uk-width-1-1">
                                         <div className="uk-flex uk-flex-middle uk-width-1-1">
                                             <span className="uk-nav-icon">
-                                                <i class="mdi mdi-file-certificate"></i>
+                                                <i className="mdi mdi-file-certificate"></i>
                                             </span>
                                             <span className="uk-nav-title">Services</span>
                                         </div>
@@ -147,7 +147,7 @@ export default function Sidebar() {
                                     <div className="uk-flex uk-flex-middle uk-width-1-1">
                                         <div className="uk-flex uk-flex-middle uk-width-1-1">
                                             <span className="uk-nav-icon">
-                                                <i class="mdi mdi-code-tags-check"></i>
+                                                <i className="mdi mdi-code-tags-check"></i>
                                             </span>
                                             <span className="uk-nav-title">Review section</span>
                                         </div>

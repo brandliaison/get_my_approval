@@ -57,5 +57,9 @@ class EntityRevision extends Model
         return isset($models[$this->entity_type]) ? $models[$this->entity_type]::with('createdByUser')->find($this->entity_id) : null;
     }
 
+    public function reviews(){
+        return $this->hasMany(EntityReview::class, 'entity_revision_id', '_id');
+    }
+
     protected $appends = ['revised_user', 'entity_data'];
 }
