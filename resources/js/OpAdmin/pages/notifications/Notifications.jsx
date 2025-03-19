@@ -62,7 +62,7 @@ export default function Notifications() {
             <div id="sc-page-wrapper">
                 <div id="sc-page-content">
                     <div className="uk-flex uk-flex-right">
-                    <Link to="/op-admin/addproducts">
+                    <Link to="/op-admin/addnotifications">
                         <button
                             className="sc-fab sc-fab-text sc-fab-success solid-button"
                         >
