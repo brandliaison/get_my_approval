@@ -71,7 +71,7 @@ class TutorialVideoController extends Controller
         $data = TutorialVideo::create($validated);
         if ($data) {
             EntityRevision::create([
-                'entity_type' => 'Service',
+                'entity_type' => 'TutorialVideo',
                 'entity_id' => $data->_id,
                 'old_data' => null,
                 'new_data' => $data->with('category')->find($data->_id),
