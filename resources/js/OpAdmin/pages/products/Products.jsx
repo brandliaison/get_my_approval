@@ -1,351 +1,174 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import apiClient from "../../services/api";
+import UIkit from "uikit";
 
 export default function Products() {
+
+    const navigate = useNavigate();
+
+    const [categories, setCategories] = useState();
+
+    const getCategories = () => {
+        apiClient.get(`/products`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            .then((res) => {
+                setCategories(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+    
+    const deleteCategory = (id) => {
+        apiClient
+            .delete(`/products/${id}`)
+            .then((res) => {
+                UIkit.notification({
+                    message:
+                        res.data.message || "Category deleted successfully!",
+                    status: "success",
+                    timeout: 1000,
+                    pos: "top-center",
+                });
+                getCategories()
+            })
+            .catch((err) => {
+                console.log(err);
+
+                UIkit.notification({
+                    message: "Failed to delete blog!",
+                    status: "danger",
+                    timeout: 1000,
+                    pos: "top-center",
+                });
+            });
+    };
+
+    useEffect(() => {
+        getCategories();
+    }, []);
+
+    const handleViewService = (id) => {
+        navigate(`/op-admin/editproducts/${id}`); // Redirect to second page with blog ID in URL
+    };
+
+
   return (
     <>
-                <div id="sc-page-wrapper">
+            <div id="sc-page-wrapper">
                 <div id="sc-page-content">
-                    <div class="uk-child-width-1-2@l" data-uk-grid>
-                        <div>
-                            <div class="uk-card">
-                                <div class="uk-card-body">
-                                    <h5 class="uk-heading-line"><span>Form Inputs</span></h5>
-                                    <form>
-                                        <fieldset class="uk-fieldset">
-                                            <legend class="uk-legend">Legend</legend>
-                                            <div class="uk-margin">
-                                                <input class="uk-input" type="text" placeholder="Input ..." data-sc-input />
-                                            </div>
-                                            <div class="uk-margin">
-                                                <textarea class="uk-textarea" rows="5" placeholder="Textarea ..." data-sc-input></textarea>
-                                            </div>
-                                            <div class="uk-margin">
-                                                <textarea class="uk-textarea sc-js-autosize" rows="3" placeholder="Autosize textarea ..." data-sc-input></textarea>
-                                            </div>
-                                            <div class="uk-margin">
-                                                <textarea id="sc-js-autosize-external-change" class="uk-textarea sc-js-autosize" rows="2" placeholder="Autosize textarea ..." data-sc-input></textarea>
-                                                <button class="sc-button sc-button-small sc-js-autosize-change uk-margin-small-top">Change value</button>
-                                            </div>
-                                            <div class="uk-margin">
-                                                <select class="uk-select">
-                                                    <option>Option 01</option>
-                                                    <option>Option 02</option>
-                                                </select>
-                                            </div>
-                                            <hr />
-                                            <div class="uk-child-width-expand@m uk-grid-divider" data-uk-grid>
-                                                <div>
-                                                    <p class="uk-margin-small-bottom">Radio boxes (CSS)</p>
-                                                    <div class="uk-grid-small uk-child-width-auto" data-uk-grid>
-                                                        <label><input class="uk-radio" type="radio" name="radio2" />A</label>
-                                                        <label><input class="uk-radio" type="radio" name="radio2" checked />B</label>
-                                                        <label><input class="uk-radio" type="radio" name="radio2c" disabled />C</label>
-                                                        <label><input class="uk-radio" type="radio" name="radio2d" checked disabled />D</label>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <p class="uk-margin-small-bottom">Checkboxes (CSS)</p>
-                                                    <div class="uk-grid-small uk-child-width-auto" data-uk-grid>
-                                                        <label><input class="uk-checkbox" type="checkbox" checked />A</label>
-                                                        <label><input class="uk-checkbox" type="checkbox" />B</label>
-                                                        <label><input class="uk-checkbox" type="checkbox" disabled />C</label>
-                                                        <label><input class="uk-checkbox" type="checkbox" checked disabled />D</label>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <p class="uk-margin-mini-bottom">Switch (CSS)</p>
-                                                    <div>
-                                                        <input type="checkbox" class="sc-switch-input" id="switch-css" />
-                                                        <label for="switch-css" class="sc-switch-label">
-                                                            Switch
-                                                            <span class="sc-switch-toggle-on">On</span>
-                                                            <span class="sc-switch-toggle-off">Off</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="uk-card uk-margin-top">
-                                <div class="uk-card-body">
-                                    <h5 class="uk-heading-line"><span>Outlined Form Inputs</span></h5>
-                                    <div class="uk-child-width-1-2@s" data-uk-grid>
-                                        <div>
-                                            <label>Label</label>
-                                            <input class="uk-input" type="text" data-sc-input="outline" />
-                                        </div>
-                                        <div>
-                                            <label>Label</label>
-                                            <textarea class="uk-textarea" rows="5" data-sc-input="outline"></textarea>
-                                        </div>
-                                        <div>
-                                            <input class="uk-input" type="text" placeholder="Input ..." data-sc-input="outline" />
-                                        </div>
-                                        <div>
-                                            <textarea class="uk-textarea" rows="5" placeholder="Textarea ..." data-sc-input="outline"></textarea>
-                                        </div>
-                                        <div>
-                                            <label>Label</label>
-                                            <input class="uk-input uk-form-danger" type="text" data-sc-input="outline" />
-                                        </div>
-                                        <div>
-                                            <label>Label</label>
-                                            <input class="uk-input uk-form-success" type="text" data-sc-input="outline" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="uk-card uk-margin-top">
-                                <div class="uk-card-body">
-                                    <h5 class="uk-heading-line"><span>Help text</span></h5>
-                                    <form>
-                                        <div class="uk-margin">
-                                            <input type="text" placeholder="Text input" class="uk-input uk-form-width-medium" data-sc-input /><span class="uk-form-help-inline" >The <code>.uk-form-help-inline</code> class creates spacing to the left.</span>
-                                        </div>
-                                        <div class="uk-margin-top">
-                                            <textarea cols="30" rows="5" placeholder="Textarea" class="uk-textarea uk-form-width-large" data-sc-input></textarea>
-                                            <p class="uk-form-help-block">The <code>.uk-form-help-block</code> class creates an associated paragraph.</p>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="uk-card uk-margin-top">
-                                <div class="uk-card-body">
-                                    <h5 class="uk-heading-line"><span>Icons</span></h5>
-                                    <div class="uk-child-width-1-2@s uk-flex-bottom" data-uk-grid>
-                                        <div>
-                                            <span class="uk-form-icon uk-form-icon-flip"><i class="mdi mdi-alert-circle"></i></span>
-                                            <input type="text" placeholder="form-danger" class="uk-form-danger uk-input" data-sc-input />
-                                        </div>
-                                        <div>
-                                            <span class="uk-form-icon uk-form-icon-flip mdi mdi-thumb-up sc-form-icon"></span>
-                                            <label>form-success</label>
-                                            <input type="text" class="uk-form-success uk-input" data-sc-input />
-                                        </div>
-                                        <div>
-                                            <span class="uk-form-icon" data-uk-icon="icon: user"></span>
-                                            <input class="uk-input" type="text" data-sc-input />
-                                        </div>
-                                        <div>
-                                            <span class="uk-form-icon uk-form-icon-flip" data-uk-icon="icon: lock"></span>
-                                            <input class="uk-input" type="text" data-sc-input />
-                                        </div>
-                                        <div>
-                                            <label>Clickable icon</label>
-                                            <a class="uk-form-icon sc-form-icon" href="#" data-uk-icon="icon: pencil"></a>
-                                            <input class="uk-input" type="text" data-sc-input />
-                                        </div>
-                                        <div>
-                                            <a class="uk-form-icon uk-form-icon-flip" href="#" data-uk-icon="icon: link"></a>
-                                            <input class="uk-input" type="text" placeholder="clickable" data-sc-input />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="uk-card">
-                                <div class="uk-card-body">
-                                    <h5 class="uk-heading-line"><span>States modifiers</span></h5>
-                                    <div class="uk-child-width-1-2@s uk-child-width-1-3@m" data-uk-grid>
-                                        <div>
-                                            <input type="text" placeholder="form-danger" class="uk-form-danger uk-input" data-sc-input />
-                                        </div>
-                                        <div>
-                                            <input type="text" placeholder="form-success" class="uk-form-success uk-input" data-sc-input />
-                                        </div>
-                                        <div>
-                                            <input type="text" placeholder="disabled" disabled class="uk-input" data-sc-input />
-                                        </div>
-                                        <div>
-                                            <select disabled class="uk-select" data-sc-input>
-                                                <option>select disabled</option>
-                                                <option>Option 02</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="uk-card uk-margin-top">
-                                <div class="uk-card-body">
-                                    <h5 class="uk-heading-line"><span>Size modifiers</span></h5>
-                                    <div class="uk-margin">
-                                        <label class="uk-label-large">form-large</label>
-                                        <input type="text" class="uk-form-large uk-input" data-sc-input />
-                                    </div>
-                                    <div class="uk-margin">
-                                        <label>default</label>
-                                        <input type="text" class="uk-input" data-sc-input />
-                                    </div>
-                                    <div class="uk-margin">
-                                        <label class="uk-label-small">form-small</label>
-                                        <input type="text" class="uk-form-small uk-input" data-sc-input />
-                                    </div>
-                                    <h5 class="uk-heading-line uk-margin-large-top"><span>Width modifiers</span></h5>
-                                    <div class="uk-margin">
-                                        <form action="#">
-                                            <div class="uk-margin-small">
-                                                <input type="text" placeholder="uk-width-1-1" class="uk-width-1-1 uk-input" data-sc-input />
-                                            </div>
-                                            <div class="uk-margin-small">
-                                                <input type="text" placeholder="large" class="uk-form-width-large uk-input" data-sc-input />
-                                            </div>
-                                            <div class="uk-margin-small">
-                                                <input type="text" placeholder="medium" class="uk-form-width-medium uk-input" data-sc-input />
-                                            </div>
-                                            <div class="uk-margin-small">
-                                                <input type="text" placeholder="small" class="uk-form-width-small uk-input" data-sc-input />
-                                            </div>
-                                            <div class="uk-margin-small">
-                                                <input type="text" placeholder="xsmall" class="uk-form-width-xsmall uk-input" data-sc-input />
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <h5 class="uk-heading-line uk-margin-large-top"><span>Form and grid</span></h5>
-                                    <div class="uk-margin">
-                                        <form class="uk-grid-medium" data-uk-grid>
-                                            <div class="uk-width-1-1">
-                                                <input class="uk-input" type="text" placeholder="100%" data-sc-input />
-                                            </div>
-                                            <div class="uk-width-1-2@s">
-                                                <input class="uk-input" type="text" placeholder="50%" data-sc-input />
-                                            </div>
-                                            <div class="uk-width-1-4@s">
-                                                <input class="uk-input" type="text" placeholder="25%" data-sc-input />
-                                            </div>
-                                            <div class="uk-width-1-4@s">
-                                                <input class="uk-input" type="text" placeholder="25%" data-sc-input />
-                                            </div>
-                                            <div class="uk-width-1-2@s">
-                                                <input class="uk-input" type="text" placeholder="50%" data-sc-input />
-                                            </div>
-                                            <div class="uk-width-1-2@s">
-                                                <input class="uk-input" type="text" placeholder="50%" data-sc-input />
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="uk-card uk-margin-top">
-                                <div class="uk-card-body">
-                                    <h5 class="uk-heading-line"><span>Horizontal form</span></h5>
-                                    <form class="uk-form-horizontal">
-                                        <div class="uk-margin">
-                                            <label class="uk-form-label" for="form-h-text">Text</label>
-                                            <div class="uk-form-controls">
-                                                <input class="uk-input" id="form-h-text" type="text" placeholder="Some text..." data-sc-input />
-                                            </div>
-                                        </div>
-                                        <div class="uk-margin">
-                                            <label class="uk-form-label" for="form-h-select">Select</label>
-                                            <div class="uk-form-controls">
-                                                <select class="uk-select" id="form-h-select" data-sc-input>
-                                                    <option>Option 01</option>
-                                                    <option>Option 02</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="uk-card uk-margin-top">
-                                <div class="uk-card-body">
-                                    <h5 class="uk-heading-line"><span>Custom select</span></h5>
-                                    <div class="uk-child-width-auto@s uk-flex-middle" data-uk-grid>
-                                        <div>
-                                            <div data-uk-form-custom="target: true">
-                                                <select>
-                                                    <option value="1">Option 01</option>
-                                                    <option value="2">Option 02</option>
-                                                    <option value="3">Option 03</option>
-                                                    <option value="4">Option 04</option>
-                                                </select>
-                                                <span></span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div data-uk-form-custom="target: > * > span:last-child">
-                                                <select>
-                                                    <option value="1">Option 01</option>
-                                                    <option value="2">Option 02</option>
-                                                    <option value="3">Option 03</option>
-                                                    <option value="4">Option 04</option>
-                                                </select>
-                                                <span class="uk-link">
-                                                    <span data-uk-icon="icon: pencil"></span>
-                                                    <span></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div data-uk-form-custom="target: > * > span:first-child">
-                                                <select>
-                                                    <option value="">Please select...</option>
-                                                    <option value="1">Option 01</option>
-                                                    <option value="2">Option 02</option>
-                                                    <option value="3">Option 03</option>
-                                                    <option value="4">Option 04</option>
-                                                </select>
-                                                <button class="sc-button sc-button-default sc-button-outline" type="button">
-                                                    <span></span>
-                                                    <span data-uk-icon="icon: chevron-down"></span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div data-uk-form-custom="target: > * > span:first-child">
-                                                <select>
-                                                    <option value="">Select user...</option>
-                                                    <option value="1">User 01</option>
-                                                    <option value="2">User 02</option>
-                                                    <option value="3">User 03</option>
-                                                    <option value="4">User 04</option>
-                                                </select>
-                                                <button class="sc-button sc-button-default sc-button-outline sc-button-flex sc-button-icon" type="button">
-                                                    <span class="uk-margin-small-left uk-margin-small-right"></span>
-                                                    <span class="mdi mdi-account-badge-outline uk-flex-first"></span>
-                                                    <span data-uk-icon="icon: chevron-down"></span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="uk-card uk-margin-top">
-                                <div class="uk-card-body">
-                                    <h5 class="uk-heading-line">
-                                        <span>Custom controls</span>
-                                    </h5>
-                                    <div class="uk-child-width-auto@s uk-grid" data-uk-grid>
-                                        <div>
-                                            <div data-uk-form-custom>
-                                                <input type="file" />
-                                                <button class="uk-button uk-button-default" type="button" tabIndex="-1">
-                                                    Select
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span class="uk-text-middle">Here is a text</span>
-                                            <div data-uk-form-custom>
-                                                <input type="file" />
-                                                <span class="uk-link">upload</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div data-uk-form-custom="target: true">
-                                                <input type="file" />
-                                                <input class="uk-input uk-form-width-medium uk-visible@m" type="text" placeholder="Select file" disabled />
-                                                <input class="uk-input uk-form-width-small uk-hidden@m" type="text" placeholder="Select file" disabled />
-                                            </div>
-                                            <button class="uk-button uk-button-default">
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div className="uk-flex uk-flex-right">
+                    <Link to="/op-admin/addproducts">
+                        <button
+                            className="sc-fab sc-fab-text sc-fab-success solid-button"
+                        >
+                            <i className="mdi mdi-plus"></i>Create
+                        </button>
+                    </Link>
+                    </div>
+
+                    <form
+                        className="uk-search uk-search-default uk-width-1-1 uk-background-default uk-border-rounded uk-flex uk-flex-middle uk-margin-top"
+                        style={{ padding: "10px 15px" }}
+                    >
+                        <span
+                            style={{
+                                color: "gray",
+                                fontSize: "24px",
+                                padding: "5px",
+                            }}
+                        >
+                            <i className="mdi mdi-magnify"></i>
+                        </span>
+                        <input
+                            className="uk-search-input uk-width-1-1 uk-background-default uk-border-none"
+                            type="search"
+                            placeholder="Search..."
+                            style={{ border: "none" }}
+                        />
+                    </form>
+
+                    <div className="uk-card uk-margin">
+                        <h3 className="uk-card-title">Products</h3>
+                        <div className="uk-card-body">
+                            <div className="uk-overflow-auto">
+                                <table className="uk-table uk-table-hover uk-table-middle uk-table-divider">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <input
+                                                    className="uk-checkbox sc-main-checkbox"
+                                                    type="checkbox"
+                                                    data-sc-icheck
+                                                    data-group=".sc-js-table-checkbox"
+                                                />
+                                            </th>
+                                            <th>Product Image</th>
+                                            <th>Product Discription</th>
+                                            <th>Product Name</th>
+                                            <th>Product Title</th>
+                                            <th>Product Blog</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {categories?.data?.length > 0 ? (
+                                            categories?.data?.map((value, index) => (
+                                                <tr key={index}>
+                                                    <td>
+                                                        <input
+                                                            className="uk-checkbox sc-js-table-checkbox"
+                                                            type="checkbox"
+                                                            data-sc-icheck
+                                                        />
+                                                    </td>
+                                                    <td>
+                                                        <img
+                                                            src={`http://192.168.1.13:8000//${value.image_url}`}
+                                                            className="sc-avatar uk-preserve-width"
+                                                            alt={value.image_alt}
+                                                            style={{borderRadius: '5px', maxWidth: '150px'}}
+                                                        />
+                                                    </td>
+                                                    <td>{value.description}</td>
+                                                    <td>{value.name}</td>
+                                                    <td>{value.content}</td>
+                                                    <td>
+                                                        <div onClick={e => deleteCategory(value._id)}>
+                                                            <a
+                                                                className="sc-button sc-button-secondary sc-js-button-wave-light"
+                                                                href="#"
+                                                            >
+                                                                <i className="mdi mdi-trash-can-outline"></i>{" "}
+                                                                Delete
+                                                            </a>
+                                                        </div>
+                                                        <div className="uk-margin-top" onClick={() => handleViewService(value._id)}>
+                                                            <a
+                                                                className="sc-button sc-button-primary sc-js-button-wave-light"
+                                                                href="#"
+                                                            >
+                                                                <i className="mdi mdi-file-edit">
+                                                                    {" "}
+                                                                </i>
+                                                                Edit
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td>
+                                                    <p>No blogs available.</p>
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
