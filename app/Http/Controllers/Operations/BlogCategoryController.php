@@ -67,7 +67,7 @@ class BlogCategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = BlogCategory::find($id);
+        $category = BlogCategory::where('revisions.reviews')->find($id);
 
         if (!$category) {
             return response()->json(['error' => 'Blog Category Not Found'], 404);

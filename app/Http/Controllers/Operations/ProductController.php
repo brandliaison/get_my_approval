@@ -83,7 +83,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        $data = Product::find($id);
+        $data = Product::with('revisions.reviews')->find($id);
         if (!$data) {
             return response()->json(['error' => 'Product Not Found'], 404);
         }

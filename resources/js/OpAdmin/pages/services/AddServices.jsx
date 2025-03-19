@@ -19,9 +19,8 @@ export default function AddServices() {
     }, [])
 
     const gettutorialcategories = () => {
-        apiClient.get(`/service-categories/`)
+        apiClient.get(`/active-service-categories/`)
         .then((res) => {
-            console.log(res.data)
             settutorialcategrydata(res.data)
         })
         .catch((err) => {
@@ -69,7 +68,7 @@ export default function AddServices() {
         .then(response => {
             console.log("Success:", response.data);
             UIkit.notification({
-                message: "Blog created successfully!",
+                message: "Data created successfully!",
                 status: "success",
                 timeout: 2000,
                 pos: "top-center",
@@ -94,10 +93,10 @@ export default function AddServices() {
         });
     };
 
-    
+
   return (
     <>
-    
+
         <div id="sc-page-wrapper">
             <div id="sc-page-content">
                 <div className="uk-child-width-1-1@l" data-uk-grid>
@@ -115,8 +114,8 @@ export default function AddServices() {
                                             <div>
                                             <select className="uk-select uk-margin-bottom" name='service_category_id' onChange={handleChange} value={formData.service_category_id} style={{borderTop: 'none', borderLeft: 'none', borderRight: 'none', borderRadius: '0px'}}>
                                                     <option value="">Select a category</option>
-                                                    {Array.isArray(tutorialcategrydata) && tutorialcategrydata.length > 0 ? (
-                                                        tutorialcategrydata.map((value, index) => (
+                                                    {Array.isArray(tutorialcategrydata?.data) && tutorialcategrydata?.data.length > 0 ? (
+                                                        tutorialcategrydata?.data.map((value, index) => (
                                                             <option key={index} value={value._id}>
                                                                 {value.name}
                                                             </option>

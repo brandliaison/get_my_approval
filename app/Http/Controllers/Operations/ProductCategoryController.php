@@ -66,7 +66,7 @@ class ProductCategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = ProductCategory::find($id);
+        $category = ProductCategory::with('revisions.reviews')->find($id);
 
         if (!$category) {
             return response()->json(['error' => 'Product Category Not Found'], 404);

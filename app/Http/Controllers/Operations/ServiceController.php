@@ -78,7 +78,7 @@ class ServiceController extends Controller
     // Get a single service
     public function show($id)
     {
-        $service = Service::find($id);
+        $service = Service::with('revisions.reviews')->find($id);
         if (!$service) {
             return response()->json(['error' => 'Service Not Found'], 404);
         }

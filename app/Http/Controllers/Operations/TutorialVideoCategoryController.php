@@ -69,7 +69,7 @@ class TutorialVideoCategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = TutorialVideoCategory::find($id);
+        $category = TutorialVideoCategory::with('revisions.reviews')->find($id);
 
         if (!$category) {
             return response()->json(['error' => 'Tutorial Video Category Not Found'], 404);

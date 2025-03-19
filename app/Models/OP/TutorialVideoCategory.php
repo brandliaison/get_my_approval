@@ -24,4 +24,9 @@ class TutorialVideoCategory extends Model
         'approval_status',
         'status',
     ];
+
+    public function revisions()
+    {
+        return $this->hasMany(EntityRevision::class, 'entity_id', '_id')->where('entity_type', 'TutorialVideoCategory');
+    }
 }
