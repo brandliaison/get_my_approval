@@ -30,7 +30,7 @@ export default function Header() {
                 <div className="custom-container uk-flex uk-flex-between uk-flex-middle">
                 <div className="one">
                     <a href="/">
-                        <img src="./images/logos/logonavone.png" />
+                        <img src='/images/logos/logonavtwo.png' />
                     </a>
                 </div>
                 <div className="two">
@@ -44,7 +44,7 @@ export default function Header() {
             <div className="nav-last uk-box-shadow-medium uk-padding-small uk-padding-remove-horizontal">
                 <div className="custom-container uk-flex uk-flex-between uk-flex-middle">
                 <div className="nav-last-left uk-flex">
-                    <a href="/services.html" className="uk-link-reset">
+                    <a href="/services" className="uk-link-reset">
                         <div className="uk-flex uk-flex-middle uk-margin-large-right">
                         <img
                             src="./images/notifications/solutions.png"
@@ -55,7 +55,7 @@ export default function Header() {
                         </h5>
                         </div>
                     </a>
-                    <a href="/notification.html" className="uk-link-reset">
+                    <a href="/notification" className="uk-link-reset">
                         <div className="uk-flex uk-flex-middle uk-margin-large-right">
                         <img
                             src="./images/notifications/notification.png"
@@ -66,7 +66,7 @@ export default function Header() {
                         </h5>
                         </div>
                     </a>
-                    <a href="/tutorial.html" className="uk-link-reset">
+                    <a href="/tutorial" className="uk-link-reset">
                         <div className="uk-flex uk-flex-middle uk-margin-large-right">
                         <img
                             src="./images/notifications/tutorials.png"
