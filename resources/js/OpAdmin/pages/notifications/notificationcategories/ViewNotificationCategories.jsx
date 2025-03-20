@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import apiClient from "../../services/api";
-import RevisionList from "../../components/RevisionList";
+import { useParams } from "react-router-dom";
+import RevisionList from "../../../components/RevisionList";
+import apiClient from "../../../services/api";
 
-export default function ViewServices() {
+export default function ViewNotificationCategories() {
+
     const { id } = useParams();
-    const navigate = useNavigate();
-    const [tutorialcategrydata, settutorialcategrydata] = useState([]);
     const [formData, setformData] = useState({
         name: "",
         service_category_id: "",
@@ -18,7 +17,7 @@ export default function ViewServices() {
 
     const edittutorial = () => {
         apiClient
-            .get(`/services/${id}`)
+            .get(`/notification-categories/${id}`)
             .then((res) => {
                 setformData(res.data);
             })
@@ -31,8 +30,9 @@ export default function ViewServices() {
         edittutorial();
     }, []);
 
-    return (
-        <>
+  return (
+    <>
+    
             <div id="sc-page-wrapper">
                 <div id="sc-page-content">
                     <div className="uk-child-width-1-1@l" data-uk-grid>
@@ -76,6 +76,7 @@ export default function ViewServices() {
                     </div>
                 </div>
             </div>
-        </>
-    );
+
+    </>
+  )
 }

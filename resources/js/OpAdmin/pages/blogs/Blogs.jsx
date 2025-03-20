@@ -37,7 +37,7 @@ export default function Blogs() {
     const getblogs = () => {
         apiClient.get(`/blogs`)
             .then((res) => {
-                setblogs(res.data);
+                setblogs(res.data.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -52,8 +52,6 @@ export default function Blogs() {
     const handleViewBlog = (id) => {
         navigate(`/op-admin/editblog/${id}`); // Redirect to second page with blog ID in URL
     };
-
-    console.log(blogs);
 
     return (
         <>
@@ -135,25 +133,32 @@ export default function Blogs() {
                                                     <td>{value.name}</td>
                                                     <td>{value.content}</td>
                                                     <td>
-                                                        <div onClick={e => deleteblog(value._id)}>
-                                                            <a
-                                                                className="sc-button sc-button-secondary sc-js-button-wave-light"
-                                                                href="#"
-                                                            >
-                                                                <i className="mdi mdi-trash-can-outline"></i>{" "}
-                                                                Delete
-                                                            </a>
-                                                        </div>
-                                                        <div className="uk-margin-top" onClick={() => handleViewBlog(value._id)}>
-                                                            <a
-                                                                className="sc-button sc-button-primary sc-js-button-wave-light"
-                                                                href="#"
-                                                            >
-                                                                <i className="mdi mdi-file-edit">
-                                                                    {" "}
-                                                                </i>
-                                                                Edit
-                                                            </a>
+                                                        <div className="uk-flex gap-2">
+                                                            <div>
+                                                                <Link
+                                                                    to={`/op-admin/view-blog/${value._id}`}
+                                                                    className="sc-button sc-button-primary sc-js-button-wave-light"
+                                                                >
+                                                                    <i className="mdi mdi-eye"></i>
+                                                                </Link>
+                                                            </div>
+                                                            <div onClick={() => handleViewBlog(value._id)}>
+                                                                <a
+                                                                    className="sc-button sc-button-danger sc-js-button-wave-light"
+                                                                    href="#"
+                                                                >
+                                                                    <i className="mdi mdi-file-edit">
+                                                                    </i>
+                                                                </a>
+                                                            </div>
+                                                            <div onClick={e => deleteblog(value._id)}>
+                                                                <a
+                                                                    className="sc-button sc-button-secondary sc-js-button-wave-light"
+                                                                    href="#"
+                                                                >
+                                                                    <i className="mdi mdi-trash-can-outline"></i>
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                 </tr>

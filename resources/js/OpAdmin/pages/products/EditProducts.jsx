@@ -37,7 +37,7 @@ export default function EditProducts() {
         apiClient.get(`/active-product-categories/`)
         .then((res) => {
             console.log(res.data)
-            settutorialcategrydata(res.data)
+            settutorialcategrydata(res.data.data)
         })
         .catch((err) => {
             console.log(err)

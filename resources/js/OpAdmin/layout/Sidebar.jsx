@@ -58,6 +58,11 @@ export default function Sidebar() {
                                             <span className="uk-nav-title">Service Categories</span>
                                         </Link>
                                     </li>
+                                    <li>
+                                        <Link to="/op-admin/service-section">
+                                            <span className="uk-nav-title">Service Section</span>
+                                        </Link>
+                                    </li>
                                 </ul>
                             </li>
 
