@@ -138,8 +138,8 @@ export default function NewSubmittedPosts() {
                                                         <td>
                                                             {
                                                                 value
-                                                                    .created_by_user
-                                                                    .name
+                                                                    ?.created_by_user
+                                                                    ?.name
                                                             }
                                                         </td>
                                                         <td>
