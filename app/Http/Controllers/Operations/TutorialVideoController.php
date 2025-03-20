@@ -67,6 +67,8 @@ class TutorialVideoController extends Controller
 
         $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
         $validated['status'] = 'inactive';
+        $validated['approval_status'] = 'submitted';
+        $validated['created_by'] = Auth::user()->_id;
 
         $data = TutorialVideo::create($validated);
         if ($data) {

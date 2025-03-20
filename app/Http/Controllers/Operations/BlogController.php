@@ -40,7 +40,7 @@ class BlogController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'blog_category_id' => 'required|exists:blog_categories,_id',
-            'image_url' => 'nullable|mimes:png,jpg,jpeg',
+            'image_url' => 'nullable|mimes:png,jpg,jpeg,webp',
             'image_alt' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'content' => 'nullable|string',
@@ -61,6 +61,7 @@ class BlogController extends Controller
 
         $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
         $validated['status'] = 'inactive';
+        $validated['approval_status'] = 'submitted';
         $validated['created_by'] = Auth::user()->_id;
 
         $data = Blog::create($validated);
@@ -103,7 +104,7 @@ class BlogController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'blog_category_id' => 'required|exists:blog_categories,_id',
-            'image_url' => 'nullable|mimes:png,jpg,jpeg',
+            'image_url' => 'nullable|mimes:png,jpg,jpeg,webp',
             'image_alt' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'content' => 'nullable|string',
