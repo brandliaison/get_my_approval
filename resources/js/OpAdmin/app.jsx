@@ -50,6 +50,8 @@ import ViewTutorial from "./pages/tutorials/ViewTutorial";
 import ViewTutorialCategories from "./pages/tutorials/tutorialcategory/ViewTutorialCategories";
 import ViewProducts from "./pages/products/ViewProducts";
 import ViewProductCategories from "./pages/products/productcategories.jsx/ViewProductCategories";
+import ViewNotifications from "./pages/notifications/ViewNotifications";
+import ViewNotificationCategories from "./pages/notifications/notificationcategories/ViewNotificationCategories";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -88,9 +90,11 @@ export default function App() {
                             <Route path="notifications" element={<Notifications />} />
                             <Route path="addnotifications" element={<AddNotifications />} />
                             <Route path="editnotifications/:id" element={<EditNotifications />} />
+                            <Route path="view-notifications/:id" element={<ViewNotifications />} />
                             <Route path="notification-categories" element={<NotificationCategories />} />
                             <Route path="addnotification-categories" element={<AddNotificationCategories />} />
                             <Route path="editnotification-categories/:id" element={<EditNotificationCategories />} />
+                            <Route path="view-notification-categories/:id" element={<ViewNotificationCategories />} />
                             <Route path="blog-categories" element={<BlogCategories />} />
                             <Route path="addblog-categories" element={<AddBlogCategories />} />
                             <Route path="editblogcategory/:id" element={<EditBlogCategory />} />
