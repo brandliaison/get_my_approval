@@ -87,8 +87,8 @@ export default function App() {
                             <Route path="view-service-category/:id" element={<ViewServiceCategory />} />
                             <Route path="service-section" element={<ServiceSection />} />
                             <Route path="addservice-section" element={<AddServiceSection />} />
-                            <Route path="editservice-section" element={<EditServiceSection />} />
-                            <Route path="view-service-section" element={<ViewServiceSection />} />
+                            <Route path="editservice-section/:id" element={<EditServiceSection />} />
+                            <Route path="view-service-section/:id" element={<ViewServiceSection />} />
                             <Route path="products" element={<Products />} />
                             <Route path="addproducts" element={<AddProducts />} />
                             <Route path="editproducts/:id" element={<EditProducts />} />

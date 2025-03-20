@@ -1,6 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import apiClient from '../frontservices/api';
 
 export default function Home() {
+
+    const [data, setdata] = useState([]);
+
+    useEffect(() => {
+        homedata();
+    }, []);
+
+    const homedata = () => {
+        apiClient.get('/home')
+            .then(response => {
+                setdata(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data', error);
+            });
+    }
+
+    console.log(data);
+
   return (
     <>
 
