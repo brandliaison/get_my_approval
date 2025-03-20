@@ -28,6 +28,7 @@ class TutorialVideo extends Model
         'final_approved_date',
         'from_platform',
         'approval_status',
+        'created_by',
         'status',
     ];
 
@@ -44,6 +45,10 @@ class TutorialVideo extends Model
 
     public function revisions()
     {
-        return $this->hasMany(EntityRevision::class, 'entity_id', '_id')->where('entity_type', 'TutorialVideo');
+        return $this->hasMany(EntityRevision::class, 'entity_id', '_id')->where('entity_type', 'TutorialVideoCategory');
+    }
+
+    public function createdByUser(){
+        return $this->belongsTo(OpStaff::class, 'created_by', '_id');
     }
 }

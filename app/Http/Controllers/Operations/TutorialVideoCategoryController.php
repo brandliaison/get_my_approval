@@ -51,6 +51,7 @@ class TutorialVideoCategoryController extends Controller
             'description' => $request->description,
             'title' => $request->title,
             'from_platform' => 'operations',
+            'created_by' => Auth::user()->_id,
             'approval_status' => 'submitted',
             'status' => 'inactive',
         ]);

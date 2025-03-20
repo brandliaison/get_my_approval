@@ -27,6 +27,7 @@ class Blog extends Model
         'final_approver',
         'final_approved_date',
         'from_platform',
+        'created_by',
         'approval_status',
         'status',
     ];
@@ -45,5 +46,8 @@ class Blog extends Model
     public function revisions()
     {
         return $this->hasMany(EntityRevision::class, 'entity_id', '_id')->where('entity_type', 'Blog');
+    }
+    public function createdByUser(){
+        return $this->belongsTo(OpStaff::class, 'created_by', '_id');
     }
 }

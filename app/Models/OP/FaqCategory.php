@@ -29,4 +29,7 @@ class FaqCategory extends Model
     {
         return $this->hasMany(EntityRevision::class, 'entity_id', '_id')->where('entity_type', 'FaqCategory');
     }
+    public function createdByUser(){
+        return $this->belongsTo(OpStaff::class, 'created_by', '_id');
+    }
 }

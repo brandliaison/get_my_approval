@@ -41,7 +41,7 @@ export default function AddTutorialCategories() {
 
             // Show success notification
             UIkit.notification({
-                message: "Blog Category created successfully!",
+                message: "Category created successfully!",
                 status: "success",
                 timeout: 2000,
                 pos: "top-center",

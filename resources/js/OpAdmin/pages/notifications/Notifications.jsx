@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../../services/api";
 import UIkit from "uikit";
+import FormatText from "../../components/FormatText";
+import FormattedDate from "../../components/FormattedDate";
 
 export default function Notifications() {
 
@@ -22,7 +24,7 @@ export default function Notifications() {
                 console.log(err);
             });
     };
-    
+
     const deleteCategory = (id) => {
         apiClient
             .delete(`/notifications/${id}`)
@@ -93,7 +95,7 @@ export default function Notifications() {
                     </form>
 
                     <div className="uk-card uk-margin">
-                        <h3 className="uk-card-title">Products</h3>
+                        <h3 className="uk-card-title">Notifications</h3>
                         <div className="uk-card-body">
                             <div className="uk-overflow-auto">
                                 <table className="uk-table uk-table-hover uk-table-middle uk-table-divider">
@@ -107,11 +109,13 @@ export default function Notifications() {
                                                     data-group=".sc-js-table-checkbox"
                                                 />
                                             </th>
-                                            <th>Product Image</th>
-                                            <th>Product Discription</th>
-                                            <th>Product Name</th>
-                                            <th>Product Title</th>
-                                            <th>Product Blog</th>
+                                            <th>Title </th>
+                                            <th>Description</th>
+                                            <th>Category</th>
+                                            <th>Status</th>
+                                            <th>Approval Status</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -125,17 +129,12 @@ export default function Notifications() {
                                                             data-sc-icheck
                                                         />
                                                     </td>
-                                                    <td>
-                                                        <img
-                                                            src={`http://192.168.1.13:8000//${value.image_url}`}
-                                                            className="sc-avatar uk-preserve-width"
-                                                            alt={value.image_alt}
-                                                            style={{borderRadius: '5px', maxWidth: '150px'}}
-                                                        />
-                                                    </td>
-                                                    <td>{value.description}</td>
                                                     <td>{value.name}</td>
-                                                    <td>{value.content}</td>
+                                                    <td>{value.description.slice(0, 20)}</td>
+                                                    <td>{value.category.name}</td>
+                                                    <td><FormatText text={value.status} /> </td>
+                                                    <td><FormatText text={value.approval_status} /> </td>
+                                                    <td><FormattedDate getDate={value.created_at} /> </td>
                                                     <td>
                                                         <div onClick={e => deleteCategory(value._id)}>
                                                             <a

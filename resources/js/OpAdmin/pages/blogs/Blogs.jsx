@@ -113,8 +113,8 @@ export default function Blogs() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {blogs?.length > 0 ? (
-                                            blogs?.map((value, index) => (
+                                        {blogs?.data?.length > 0 ? (
+                                            blogs?.data?.map((value, index) => (
                                                 <tr key={index}>
                                                     <td>
                                                         <input
@@ -131,7 +131,7 @@ export default function Blogs() {
                                                             style={{borderRadius: '5px', maxWidth: '150px'}}
                                                         />
                                                     </td>
-                                                    <td>{value.description}</td>
+                                                    <td>{value.description.slice(0, 20)}</td>
                                                     <td>{value.name}</td>
                                                     <td>{value.content}</td>
                                                     <td>
