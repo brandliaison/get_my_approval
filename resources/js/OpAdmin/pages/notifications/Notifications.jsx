@@ -136,25 +136,32 @@ export default function Notifications() {
                                                     <td><FormatText text={value.approval_status} /> </td>
                                                     <td><FormattedDate getDate={value.created_at} /> </td>
                                                     <td>
-                                                        <div onClick={e => deleteCategory(value._id)}>
-                                                            <a
-                                                                className="sc-button sc-button-secondary sc-js-button-wave-light"
-                                                                href="#"
-                                                            >
-                                                                <i className="mdi mdi-trash-can-outline"></i>{" "}
-                                                                Delete
-                                                            </a>
-                                                        </div>
-                                                        <div className="uk-margin-top" onClick={() => handleViewService(value._id)}>
-                                                            <a
-                                                                className="sc-button sc-button-primary sc-js-button-wave-light"
-                                                                href="#"
-                                                            >
-                                                                <i className="mdi mdi-file-edit">
-                                                                    {" "}
-                                                                </i>
-                                                                Edit
-                                                            </a>
+                                                        <div className="uk-flex gap-2">
+                                                            <div>
+                                                                <Link
+                                                                    to={`/op-admin/view-notifications/${value._id}`}
+                                                                    className="sc-button sc-button-primary sc-js-button-wave-light"
+                                                                >
+                                                                    <i className="mdi mdi-eye"></i>
+                                                                </Link>
+                                                            </div>
+                                                            <div onClick={() => handleViewService(value._id)}>
+                                                                <a
+                                                                    className="sc-button sc-button-danger sc-js-button-wave-light"
+                                                                    href="#"
+                                                                >
+                                                                    <i className="mdi mdi-file-edit">
+                                                                    </i>
+                                                                </a>
+                                                            </div>
+                                                            <div onClick={e => deleteCategory(value._id)}>
+                                                                <a
+                                                                    className="sc-button sc-button-secondary sc-js-button-wave-light"
+                                                                    href="#"
+                                                                >
+                                                                    <i className="mdi mdi-trash-can-outline"></i>
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                 </tr>

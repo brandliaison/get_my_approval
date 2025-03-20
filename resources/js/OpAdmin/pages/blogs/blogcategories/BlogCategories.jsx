@@ -124,38 +124,43 @@ export default function BlogCategories() {
                                                     <td>{value.name}</td>
                                                     <td>{value.title}</td>
                                                     <td>
-                                                        <div
-                                                            onClick={(e) =>
-                                                                deleteblogcategory(
-                                                                    value._id
-                                                                )
-                                                            }
-                                                        >
-                                                            <a
-                                                                className="sc-button sc-button-secondary sc-js-button-wave-light"
-                                                                href="#"
+                                                        <div className="uk-flex gap-2">
+                                                            <div>
+                                                                <Link
+                                                                    to={`/op-admin/view-blog-category/${value._id}`}
+                                                                    className="sc-button sc-button-primary sc-js-button-wave-light"
+                                                                >
+                                                                    <i className="mdi mdi-eye"></i>
+                                                                </Link>
+                                                            </div>
+                                                            <div
+                                                                onClick={() =>
+                                                                    handleViewBlog(
+                                                                        value._id
+                                                                    )
+                                                                }
                                                             >
-                                                                <i className="mdi mdi-trash-can-outline"></i>{" "}
-                                                                Delete
-                                                            </a>
-                                                        </div>
-                                                        <div
-                                                            className="uk-margin-top"
-                                                            onClick={() =>
-                                                                handleViewBlog(
-                                                                    value._id
-                                                                )
-                                                            }
-                                                        >
-                                                            <a
-                                                                className="sc-button sc-button-primary sc-js-button-wave-light"
-                                                                href="#"
+                                                                <a
+                                                                    className="sc-button sc-button-danger sc-js-button-wave-light"
+                                                                    href="#"
+                                                                >
+                                                                    <i className="mdi mdi-file-edit"></i>
+                                                                </a>
+                                                            </div>
+                                                            <div
+                                                                onClick={(e) =>
+                                                                    deleteblogcategory(
+                                                                        value._id
+                                                                    )
+                                                                }
                                                             >
-                                                                <i className="mdi mdi-file-edit">
-                                                                    {" "}
-                                                                </i>
-                                                                Edit
-                                                            </a>
+                                                                <a
+                                                                    className="sc-button sc-button-secondary sc-js-button-wave-light"
+                                                                    href="#"
+                                                                >
+                                                                    <i className="mdi mdi-trash-can-outline"></i>
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                 </tr>

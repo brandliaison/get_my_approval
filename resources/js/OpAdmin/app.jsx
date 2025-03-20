@@ -48,6 +48,16 @@ import ViewServiceCategory from "./pages/services/ServiceCategories/ViewServiceC
 import ViewServices from "./pages/services/ViewServices";
 import ViewTutorial from "./pages/tutorials/ViewTutorial";
 import ViewTutorialCategories from "./pages/tutorials/tutorialcategory/ViewTutorialCategories";
+import ViewProducts from "./pages/products/ViewProducts";
+import ViewProductCategories from "./pages/products/productcategories.jsx/ViewProductCategories";
+import ViewNotifications from "./pages/notifications/ViewNotifications";
+import ViewNotificationCategories from "./pages/notifications/notificationcategories/ViewNotificationCategories";
+import ViewBlogs from "./pages/blogs/ViewBlogs";
+import ViewBlogCategories from "./pages/blogs/blogcategories/ViewBlogCategories";
+import ServiceSection from "./pages/services/servicesection/ServiceSection";
+import AddServiceSection from "./pages/services/servicesection/AddServiceSection";
+import EditServiceSection from "./pages/services/servicesection/EditServiceSection";
+import ViewServiceSection from "./pages/services/servicesection/ViewServiceSection";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -75,24 +85,34 @@ export default function App() {
                             <Route path="add-service-categories" element={<AddServiceCategories />} />
                             <Route path="edit-service-category/:id" element={<EditServiceCategory />} />
                             <Route path="view-service-category/:id" element={<ViewServiceCategory />} />
+                            <Route path="service-section" element={<ServiceSection />} />
+                            <Route path="addservice-section" element={<AddServiceSection />} />
+                            <Route path="editservice-section" element={<EditServiceSection />} />
+                            <Route path="view-service-section" element={<ViewServiceSection />} />
                             <Route path="products" element={<Products />} />
                             <Route path="addproducts" element={<AddProducts />} />
                             <Route path="editproducts/:id" element={<EditProducts />} />
+                            <Route path="view-product/:id" element={<ViewProducts />} />
                             <Route path="product-categories" element={<ProductCategories />} />
                             <Route path="addproduct-categories" element={<AddProductCategories />} />
                             <Route path="editproduct-categories/:id" element={<EditProductCategories />} />
+                            <Route path="view-product-category/:id" element={<ViewProductCategories />} />
                             <Route path="notifications" element={<Notifications />} />
                             <Route path="addnotifications" element={<AddNotifications />} />
                             <Route path="editnotifications/:id" element={<EditNotifications />} />
+                            <Route path="view-notifications/:id" element={<ViewNotifications />} />
                             <Route path="notification-categories" element={<NotificationCategories />} />
                             <Route path="addnotification-categories" element={<AddNotificationCategories />} />
                             <Route path="editnotification-categories/:id" element={<EditNotificationCategories />} />
+                            <Route path="view-notification-categories/:id" element={<ViewNotificationCategories />} />
                             <Route path="blog-categories" element={<BlogCategories />} />
                             <Route path="addblog-categories" element={<AddBlogCategories />} />
                             <Route path="editblogcategory/:id" element={<EditBlogCategory />} />
+                            <Route path="view-blog-category/:id" element={<ViewBlogCategories />} />
                             <Route path="blogs" element={<Blogs />} />
                             <Route path="addblog" element={<AddBlogs />} />
                             <Route path="editblog/:id" element={<EditBlogs />} />
+                            <Route path="view-blog/:id" element={<ViewBlogs />} />
                             <Route path="tutorials" element={<Tutorials />} />
                             <Route path="addtutorials" element={<AddTutorial />} />
                             <Route path="edittutorials/:id" element={<EditTutorial />} />

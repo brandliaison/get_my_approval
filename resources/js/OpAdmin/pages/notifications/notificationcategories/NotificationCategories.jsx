@@ -137,7 +137,14 @@ export default function NotificationCategories() {
                                                     </td>
                                                     <td>
                                                         <div className="uk-flex gap-2">
-
+                                                            <div>
+                                                                <Link
+                                                                    to={`/op-admin/view-notification-categories/${value._id}`}
+                                                                    className="sc-button sc-button-primary sc-js-button-wave-light"
+                                                                >
+                                                                    <i className="mdi mdi-eye"></i>
+                                                                </Link>
+                                                            </div>
                                                             <div
                                                                 onClick={() =>
                                                                     handleViewService(
@@ -146,13 +153,11 @@ export default function NotificationCategories() {
                                                                 }
                                                             >
                                                                 <a
-                                                                    className="sc-button sc-button-primary sc-js-button-wave-light"
+                                                                    className="sc-button sc-button-danger sc-js-button-wave-light"
                                                                     href="#"
                                                                 >
                                                                     <i className="mdi mdi-file-edit">
-                                                                        {" "}
                                                                     </i>
-                                                                    Edit
                                                                 </a>
                                                             </div>
 
@@ -168,7 +173,6 @@ export default function NotificationCategories() {
                                                                     href="#"
                                                                 >
                                                                     <i className="mdi mdi-trash-can-outline"></i>
-                                                                    Delete
                                                                 </a>
                                                             </div>
                                                         </div>
