@@ -133,4 +133,15 @@ class BlogCategoryController extends Controller
         $category->delete();
         return response()->json(['message' => 'Blog Category Deleted Successfully'], 200);
     }
+
+    public function activeBlogCategories()
+    {
+        $data = BlogCategory::where('status', 'active')->get();
+
+        if (!count($data) > 0) {
+            return response()->json('Data Not Found', 400);
+        }
+
+        return response()->json($data, 200);
+    }
 }

@@ -34,7 +34,7 @@ export default function EditProducts() {
     }, [])
 
     const gettutorialcategories = () => {
-        apiClient.get(`/product-categories/`)
+        apiClient.get(`/active-product-categories/`)
         .then((res) => {
             console.log(res.data)
             settutorialcategrydata(res.data)
@@ -108,7 +108,7 @@ export default function EditProducts() {
 
   return (
     <>
-    
+
         <div id="sc-page-wrapper">
             <div id="sc-page-content">
                 <div className="uk-child-width-1-1@l" data-uk-grid>

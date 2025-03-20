@@ -20,7 +20,7 @@ export default function AddProducts() {
     }, [])
 
     const gettutorialcategories = () => {
-        apiClient.get(`/product-categories/`)
+        apiClient.get(`/active-product-categories/`)
         .then((res) => {
             console.log(res.data)
             settutorialcategrydata(res.data.data)
@@ -99,7 +99,7 @@ export default function AddProducts() {
 
   return (
     <>
-    
+
         <div id="sc-page-wrapper">
             <div id="sc-page-content">
                 <div className="uk-child-width-1-1@l" data-uk-grid>

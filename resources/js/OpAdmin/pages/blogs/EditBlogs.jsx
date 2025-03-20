@@ -35,7 +35,7 @@ export default function EditBlogs() {
     }
 
     const getblogcategories = () => {
-        apiClient.get(`/blog-categories/`)
+        apiClient.get(`/active-blog-categories/`)
         .then((res) => {
             console.log(res.data)
             setblogcategrydata(res.data)

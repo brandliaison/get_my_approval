@@ -20,7 +20,7 @@ export default function AddTutorial() {
     }, [])
 
     const gettutorialcategories = () => {
-        apiClient.get(`/tutorial-videos-categories/`)
+        apiClient.get(`/active-tutorial-videos-categories/`)
         .then((res) => {
             console.log(res.data.data)
             settutorialcategrydata(res.data.data)

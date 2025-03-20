@@ -52,18 +52,22 @@ Route::prefix('v1/op-admin')->group(function () {
 
         // Notifications
         Route::apiResource('notification-categories', NotificationCategoryController::class);
+        Route::get('active-notification-categories', [NotificationCategoryController::class, 'activeNotificationCategories']);
         Route::apiResource('notifications', NotificationController::class);
 
         // Tutorial Videos
         Route::apiResource('tutorial-videos-categories', TutorialVideoCategoryController::class);
+        Route::get('active-tutorial-videos-categories', [TutorialVideoCategoryController::class, 'activeTutorialVideoCategories']);
         Route::apiResource('tutorial-videos', TutorialVideoController::class);
 
         // Blogs
         Route::apiResource('blog-categories', BlogCategoryController::class);
+        Route::api('active-blog-categories', [BlogCategoryController::class, 'activeBlogCategories']);
         Route::apiResource('blogs', BlogController::class);
 
         // Products
         Route::apiResource('product-categories', ProductCategoryController::class);
+        Route::get('active-product-categories', [ProductCategoryController::class, 'activeProductCategories']);
         Route::apiResource('products', ProductController::class);
 
         // Posts Comments
@@ -93,6 +97,7 @@ Route::prefix('v1/op-admin')->group(function () {
 
         //FAQ
         Route::apiResource('faq-categories', FaqCategoryController::class);
+        Route::get('active-faq-categories', [FaqCategoryController::class, 'activeFaqCategories']);
         Route::apiResource('faq', FaqController::class);
 
         // Gallery

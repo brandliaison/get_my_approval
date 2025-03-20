@@ -34,7 +34,7 @@ export default function EditNotifications() {
     }, [])
 
     const gettutorialcategories = () => {
-        apiClient.get(`/notification-categories/`)
+        apiClient.get(`/active-notification-categories/`)
         .then((res) => {
             console.log(res.data)
             settutorialcategrydata(res.data.data)
@@ -107,7 +107,7 @@ export default function EditNotifications() {
 
   return (
     <>
-    
+
         <div id="sc-page-wrapper">
             <div id="sc-page-content">
                 <div className="uk-child-width-1-1@l" data-uk-grid>
