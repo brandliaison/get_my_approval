@@ -37,7 +37,7 @@ export default function Blogs() {
     const getblogs = () => {
         apiClient.get(`/blogs`)
             .then((res) => {
-                setblogs(res.data.data);
+                setblogs(res.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -107,7 +107,10 @@ export default function Blogs() {
                                             <th>Blog Discription</th>
                                             <th>Blog Name</th>
                                             <th>Blog Title</th>
-                                            <th>Edit Blog</th>
+                                            <th>Status</th>
+                                            <th>Approval Status</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

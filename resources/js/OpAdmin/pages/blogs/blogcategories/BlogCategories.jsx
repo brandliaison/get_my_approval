@@ -103,8 +103,8 @@ export default function BlogCategories() {
                                                     data-group=".sc-js-table-checkbox"
                                                 />
                                             </th>
-                                            <th>Blog Categories Discription</th>
                                             <th>Blog Categories Name</th>
+                                            <th>Blog Categories Discription</th>
                                             <th>Blog Categories Title</th>
                                             <th>Edit Blog</th>
                                         </tr>
@@ -120,8 +120,8 @@ export default function BlogCategories() {
                                                             data-sc-icheck
                                                         />
                                                     </td>
-                                                    <td>{value.description}</td>
                                                     <td>{value.name}</td>
+                                                    <td>{value.description.slice(0, 50)}...</td>
                                                     <td>{value.title}</td>
                                                     <td>
                                                         <div className="uk-flex gap-2">
