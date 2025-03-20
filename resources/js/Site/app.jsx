@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import 'uikit/dist/css/uikit.min.css'; // Import UIkit CSS
@@ -12,16 +12,30 @@ import Footer from './layout/footer/Footer';
 import Services from './pages/Services';
 import Notification from './pages/Notification';
 import Tutorial from './pages/Tutorial';
+import apiClient from './frontservices/api';
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [layoutdata, sdetlayoutdata] = useState([]);
+
+  useEffect(() => {
+    layoutcall();
+  }, []);
+
+  const layoutcall = () => {
+    apiClient.get('/header-footer').then((response) => {
+      sdetlayoutdata(response.data);
+    }).catch((error) => {
+      console.error(error);
+    });
+  }
 
   return (
     <Router>
-      <Header />
+      <Header header={layoutdata}/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -29,7 +43,7 @@ function App() {
         <Route path="/notification" element={<Notification />} />
         <Route path="/tutorial" element={<Tutorial />} />
       </Routes>
-      <Footer />
+      <Footer footer={layoutdata}/>
     </Router>
   )
 }

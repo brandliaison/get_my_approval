@@ -1,6 +1,10 @@
 import React from 'react';
 
-export default function Header() {
+export default function Header(header) {
+
+    const alldata = header.header.data
+    console.log(alldata);
+
   return (
     <>
 
@@ -13,7 +17,7 @@ export default function Header() {
                 <div className="uk-flex uk-flex-center uk-flex-between uk-flex-middle">
                     <p className="color-white uk-flex uk-flex-midile">
                         <span uk-icon="receiver" className="icons uk-margin-small-right"></span>
-                        Helpline No : 91-9810363988
+                        Helpline No : 91-9810363988 
                     </p>
                     <p className="color-white uk-flex uk-flex-midile">
                         <span uk-icon="mail" className="icons uk-margin-small-right"></span>

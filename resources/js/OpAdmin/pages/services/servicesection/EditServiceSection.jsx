@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import apiClient from '../../../services/api';
 import UIkit from 'uikit';
+import apiClient from '../../../services/api';
 
 export default function EditServiceSection() {
 
-    const navigate = useNavigate();
     const { id } = useParams();
+    const navigate = useNavigate();
+    const [tutorialcategrydata, settutorialcategrydata] = useState([]);
     const [formData, setformData] = useState({
         name: '',
         service_id: '',
@@ -14,20 +15,8 @@ export default function EditServiceSection() {
         content: '',
     });
 
-        // Handle text input changes
-    const handleChange = (e) => {
-        setformData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    useEffect(() => {
-        editblogcategory()
-    }, [])
-
-    const editblogcategory = () => {
-        apiClient.get(`/service-categories/${id}`)
+    const edittutorial = () => {
+        apiClient.get(`/services-sections/${id}`)
         .then((res) => {
             setformData(res.data)
         })
@@ -36,50 +25,81 @@ export default function EditServiceSection() {
         })
     }
 
+    useEffect(() => {
+        gettutorialcategories();
+        edittutorial()
+    }, [])
+
+    const gettutorialcategories = () => {
+        apiClient.get(`/services/`)
+        .then((res) => {
+            settutorialcategrydata(res.data.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+    // Handle text input changes
+    const handleChange = (e) => {
+        setformData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    // Handle file input change
+    // const handleFileChange = (e) => {
+    //     console.log(e.target.files[0])
+    //     setformData({
+    //         ...formData,
+    //         image_url: e.target.files[0], // Store the first selected file
+    //     });
+    // }
+
+    // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
 
         // Create FormData object
         const data = new FormData();
         data.append("name", formData.name);
-        data.append("service_id", formData.service_id);
-        data.append("slug", formData.slug);
-        data.append("content", formData.content);
+        data.append("service_category_id", formData.service_category_id);
+        data.append("image_url", formData.image_url);
+        data.append("image_alt", formData.image_alt);
+        data.append("description", formData.description);
+        data.append("compliance_header", formData.compliance_header);
         data.append("_method", 'PUT');
 
         // Log to console (for debugging)
         console.log("Form Data:", Object.fromEntries(data));
 
-        // API Call
-        apiClient.post(`/service-categories/${id}`, data, {
+        // API Call (Optional)
+        apiClient.post(`/services-sections/${id}`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         })
         .then(response => {
             console.log("Success:", response.data);
-
-            // Show success notification
+            navigate('/op-admin/service-section')
             UIkit.notification({
-                message: "Category updated successfully!",
+                message: "Blog created successfully!",
                 status: "success",
                 timeout: 2000,
                 pos: "top-center",
             });
-
-            // navigate to categories
-            navigate('/op-admin/service-categories')
         })
         .catch(error => {
             console.error("Error:", error);
-
-            // Show error notification
             UIkit.notification({
-                message: error?.response?.data?.message || "An error occurred",
+                message: error?.response?.data?.message,
                 status: "danger",
                 timeout: 2000,
                 pos: "top-center",
             });
         });
     };
+
+    console.log(formData)
 
   return (
     <>
@@ -90,21 +110,31 @@ export default function EditServiceSection() {
                     <div>
                         <div className="uk-card">
                             <div className="uk-card-body">
-                                <h5 className="uk-heading-line"><span>Add Service Category</span></h5>
-
+                                <h5 className="uk-heading-line"><span>Edit Service</span></h5>
                                 <form onSubmit={handleSubmit}>
                                     <fieldset className="uk-fieldset">
-                                    <div className="uk-grid uk-grid-small uk-child-width-1-2@l" uk-grid="true">
+                                        <div className="uk-grid uk-grid-small uk-child-width-1-2@l" uk-grid="true">
                                             <div>
-                                                <input className="uk-input uk-margin-bottom" type="text" name="name" onChange={handleChange} value={formData.name} placeholder="Category Name" data-sc-input />
+                                                <input className="uk-input uk-margin-bottom" type="text" name="name" onChange={handleChange} value={formData.name} placeholder="Service Name" data-sc-input />
                                             </div>
                                             <div>
-                                                <input className="uk-input uk-margin-bottom" type="text" name='title' onChange={handleChange} value={formData.title} placeholder="Category Title" data-sc-input />
+                                            <select className="uk-select uk-margin-bottom" name='service_id' onChange={handleChange} value={formData.service_id} style={{borderTop: 'none', borderLeft: 'none', borderRight: 'none', borderRadius: '0px'}}>
+                                                    <option value="">Select a category</option>
+                                                    {Array.isArray(tutorialcategrydata) && tutorialcategrydata.length > 0 ? (
+                                                        tutorialcategrydata.map((value, index) => (
+                                                            <option key={index} value={value._id}>
+                                                                {value.name}
+                                                            </option>
+                                                        ))
+                                                    ) : (
+                                                        <option disabled>No categories available</option>
+                                                    )}
+                                                </select>
                                             </div>
                                         </div>
                                         <div className="uk-margin">
-                                                <input className="uk-input uk-margin-bottom" type="text" name='slug' onChange={handleChange} value={formData.slug} placeholder="Category Slug" data-sc-input />
-                                                <textarea className="uk-textarea" rows="5" name='description' onChange={handleChange} value={formData.description} placeholder="Discription" data-sc-input></textarea>
+                                                <input className="uk-input uk-margin-bottom" type="text" name='slug' onChange={handleChange} value={formData.slug} placeholder="Compliance Header" data-sc-input />
+                                                <textarea className="uk-textarea" rows="5" name='content' onChange={handleChange} value={formData.content} placeholder="Discription" data-sc-input></textarea>
                                         </div>
                                         <div className="uk-margin">
                                             <input type='submit' className='sc-button waves-effect waves-button solid-button' value='Submit'></input>

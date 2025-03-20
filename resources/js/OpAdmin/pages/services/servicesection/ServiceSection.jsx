@@ -64,7 +64,7 @@ export default function ServiceSection() {
             <div id="sc-page-content">
                 <div className="uk-flex uk-flex-between uk-flex-middle">
                     <h3>Service Section</h3>
-                    <Link to="/op-admin/add-service-categories">
+                    <Link to="/op-admin/addservice-section">
                         <button className="sc-fab sc-fab-text sc-fab-success solid-button">
                             <i className="mdi mdi-plus"></i>Create
                         </button>
