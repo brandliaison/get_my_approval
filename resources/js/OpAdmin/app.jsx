@@ -48,6 +48,8 @@ import ViewServiceCategory from "./pages/services/ServiceCategories/ViewServiceC
 import ViewServices from "./pages/services/ViewServices";
 import ViewTutorial from "./pages/tutorials/ViewTutorial";
 import ViewTutorialCategories from "./pages/tutorials/tutorialcategory/ViewTutorialCategories";
+import ViewProducts from "./pages/products/ViewProducts";
+import ViewProductCategories from "./pages/products/productcategories.jsx/ViewProductCategories";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -78,9 +80,11 @@ export default function App() {
                             <Route path="products" element={<Products />} />
                             <Route path="addproducts" element={<AddProducts />} />
                             <Route path="editproducts/:id" element={<EditProducts />} />
+                            <Route path="view-product/:id" element={<ViewProducts />} />
                             <Route path="product-categories" element={<ProductCategories />} />
                             <Route path="addproduct-categories" element={<AddProductCategories />} />
                             <Route path="editproduct-categories/:id" element={<EditProductCategories />} />
+                            <Route path="view-product-category/:id" element={<ViewProductCategories />} />
                             <Route path="notifications" element={<Notifications />} />
                             <Route path="addnotifications" element={<AddNotifications />} />
                             <Route path="editnotifications/:id" element={<EditNotifications />} />
