@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../../services/api";
 import UIkit from "uikit";
+import FormattedDate from "../../components/FormattedDate";
+import FormatText from "../../components/FormatText";
 
 export default function Services() {
     const navigate = useNavigate();
@@ -112,6 +114,7 @@ export default function Services() {
                                             <th>Title</th>
                                             <th>Status</th>
                                             <th>Approval Status</th>
+                                            <th>Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -141,7 +144,7 @@ export default function Services() {
                                                             }}
                                                         />
                                                     </td>
-                                                    <td>{value.description}</td>
+                                                    <td>{value.description.slice(0, 50)}...</td>
                                                     <td>{value.name}</td>
                                                     <td>
                                                         {
@@ -149,10 +152,13 @@ export default function Services() {
                                                         }
                                                     </td>
                                                     <td className="uk-text-capitalize">
-                                                        {value.status}
+                                                        <FormatText text={value.status} />
                                                     </td>
                                                     <td className="uk-text-capitalize">
-                                                        {value.approval_status}
+                                                        <FormatText text={value.approval_status} />
+                                                    </td>
+                                                    <td className="uk-text-capitalize">
+                                                        <FormattedDate getDate={value.created_at} />
                                                     </td>
                                                     <td>
                                                         <div className="uk-flex gap-2">
