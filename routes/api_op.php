@@ -62,7 +62,7 @@ Route::prefix('v1/op-admin')->group(function () {
 
         // Blogs
         Route::apiResource('blog-categories', BlogCategoryController::class);
-        Route::api('active-blog-categories', [BlogCategoryController::class, 'activeBlogCategories']);
+        Route::get('active-blog-categories', [BlogCategoryController::class, 'activeBlogCategories']);
         Route::apiResource('blogs', BlogController::class);
 
         // Products
