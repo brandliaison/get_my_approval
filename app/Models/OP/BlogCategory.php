@@ -30,5 +30,8 @@ class BlogCategory extends Model
     {
         return $this->hasMany(EntityRevision::class, 'entity_id', '_id')->where('entity_type', 'BlogCategory');
     }
+    public function createdByUser(){
+        return $this->belongsTo(OpStaff::class, 'created_by', '_id');
+    }
 
 }

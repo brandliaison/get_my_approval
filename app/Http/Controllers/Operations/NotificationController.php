@@ -66,6 +66,7 @@ class NotificationController extends Controller
 
         $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
         $validated['status'] = 'inactive';
+        $validated['approval_status'] = 'submitted';
         $validated['created_by'] = Auth::user()->_id;
 
         $notification = Notification::create($validated);

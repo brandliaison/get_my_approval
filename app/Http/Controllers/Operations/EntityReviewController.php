@@ -100,6 +100,8 @@ class EntityReviewController extends Controller
             'ProductCategory' => 'Product Category',
             'Faq' => 'Faq',
             'FaqCategory' => 'Faq Category',
+            'TutorialVideoCategory' => 'Tutorial Video Category',
+            'TutorialVideo' => 'Tutorial Video',
         ];
 
         return response()->json(['data' => $list]);

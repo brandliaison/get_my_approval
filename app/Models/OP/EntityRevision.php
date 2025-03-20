@@ -52,6 +52,8 @@ class EntityRevision extends Model
             "ProductCategory" => ProductCategory::class,
             "Faq" => Faq::class,
             "FaqCategory" => FaqCategory::class,
+            "TutorialVideoCategory" => TutorialVideoCategory::class,
+            "TutorialVideo" => TutorialVideo::class,
         ];
 
         return isset($models[$this->entity_type]) ? $models[$this->entity_type]::with('createdByUser')->find($this->entity_id) : null;

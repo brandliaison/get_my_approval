@@ -71,7 +71,7 @@ export default function AddTutorial() {
         .then(response => {
             console.log("Success:", response.data);
             UIkit.notification({
-                message: "Blog created successfully!",
+                message: "Data created successfully!",
                 status: "success",
                 timeout: 2000,
                 pos: "top-center",
