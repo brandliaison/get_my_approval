@@ -131,7 +131,7 @@ export default function Tutorials() {
                                                                     href="#"
                                                                 >
                                                                     <i className="mdi mdi-file-edit">
-                                                                        {" "}
+                                                                        
                                                                     </i>
                                                                 </a>
                                                             </div>
