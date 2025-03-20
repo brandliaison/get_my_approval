@@ -20,7 +20,7 @@ export default function AddBlogs() {
     }, [])
 
     const getblogcategories = () => {
-        apiClient.get(`/blog-categories/`)
+        apiClient.get(`/active-blog-categories/`)
         .then((res) => {
             console.log(res.data)
             setblogcategrydata(res.data)

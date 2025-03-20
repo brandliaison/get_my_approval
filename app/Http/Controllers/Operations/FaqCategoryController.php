@@ -131,4 +131,15 @@ class FaqCategoryController extends Controller
 
         return response()->json(['message' => 'Category deleted successfully'], 200);
     }
+
+    public function activeFaqCategories()
+    {
+        $data = FaqCategory::where('status', 'active')->get();
+
+        if (!count($data) > 0) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
+    }
 }

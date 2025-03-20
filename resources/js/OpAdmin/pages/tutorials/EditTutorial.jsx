@@ -34,7 +34,7 @@ export default function EditTutorial() {
     }, [])
 
     const gettutorialcategories = () => {
-        apiClient.get(`/tutorial-videos-categories/`)
+        apiClient.get(`/active-tutorial-videos-categories/`)
         .then((res) => {
             console.log(res.data)
             settutorialcategrydata(res.data.data)

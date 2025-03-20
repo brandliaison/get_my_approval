@@ -33,7 +33,7 @@ export default function EditServices() {
     }, [])
 
     const gettutorialcategories = () => {
-        apiClient.get(`/service-categories/`)
+        apiClient.get(`/active-service-categories/`)
         .then((res) => {
             console.log(res.data)
             settutorialcategrydata(res.data)

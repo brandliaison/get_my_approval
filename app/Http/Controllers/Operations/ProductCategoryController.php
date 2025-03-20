@@ -131,4 +131,15 @@ class ProductCategoryController extends Controller
         $category->delete();
         return response()->json(['message' => 'Product Category Deleted Successfully'], 200);
     }
+
+    public function activeProductCategories()
+    {
+        $data = ProductCategory::where('status', 'active')->get();
+
+        if (!count($data) > 0) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
+    }
 }

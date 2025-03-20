@@ -145,4 +145,14 @@ class NotificationCategoryController extends Controller
 
         return response()->json(['message' => 'Notification Category Deleted Successfully'], 200);
     }
+
+    public function activeNotificationCategories(){
+        $data = NotificationCategory::where('status', 'active')->get();
+
+        if (!count($data) > 0) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
+    }
 }

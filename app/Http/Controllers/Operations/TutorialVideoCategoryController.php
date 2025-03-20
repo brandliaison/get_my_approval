@@ -16,7 +16,11 @@ class TutorialVideoCategoryController extends Controller
      */
     public function index()
     {
-        $data = TutorialVideoCategory::get();
+        $data = TutorialVideoCategory::where(function ($query) {
+            $query->where('status', 'active')
+                ->orWhere('created_by', Auth::id());
+        })->get();
+
         if (!count($data) > 0) {
             return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
         }
@@ -143,5 +147,15 @@ class TutorialVideoCategoryController extends Controller
         $category->delete();
 
         return response()->json(['message' => 'Tutorial Video Category Deleted Successfully'], 200);
+    }
+
+    public function activeTutorialVideoCategories()
+    {
+        $data = TutorialVideoCategory::where('status', 'active')->get();
+        if (!count($data) > 0) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
     }
 }
