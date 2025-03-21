@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ItStaff\AuthController;
 use App\Http\Controllers\ItStaff\DesginationController;
+use App\Http\Controllers\ItStaff\PageManagementController;
+use App\Http\Controllers\ItStaff\PageSectionController;
 use App\Http\Controllers\ItStaff\RolesController;
 use App\Http\Controllers\ItStaff\StaffController;
 use App\Http\Controllers\ItStaff\WebsiteSettingsController;
@@ -28,6 +30,7 @@ Route::prefix('v1/it-admin')->group(function () {
         Route::get('permissions-by-role/{id}', [RolesController::class, 'permissionsByRole']);
         Route::post('create-permissions', [RolesController::class, 'createPermissions']);
         Route::post('assign-permissions', [RolesController::class, 'assignPermissions']);
+        Route::apiResource('pages', PageManagementController::class);
+        Route::apiResource('page-sections', PageSectionController::class);
     });
 });
-

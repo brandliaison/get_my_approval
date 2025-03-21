@@ -13,9 +13,13 @@ class DesginationController extends Controller
      */
     public function index()
     {
-        $get = ItDesignation::get();
+        $data = ItDesignation::get();
 
-        return response()->json($get, 201);
+        if (!count($data) > 0) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
     }
 
     /**
@@ -91,8 +95,11 @@ class DesginationController extends Controller
      */
     public function destroy(string $id)
     {
-        $itDesignation = ItDesignation::find($id);
-        $delete = $itDesignation->delete();
-        return response()->json($delete, 201);
+        $data = ItDesignation::find($id);
+        if (!$data) {
+            return response()->json(['error' => 'Data Not Found'], 404);
+        }
+        $data->delete();
+        return response()->json(['message' => 'Data deleted successfully']);
     }
 }

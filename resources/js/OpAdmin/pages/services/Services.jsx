@@ -109,7 +109,6 @@ export default function Services() {
                                                 />
                                             </th>
                                             <th>Image</th>
-                                            <th>Discription</th>
                                             <th>Name</th>
                                             <th>Title</th>
                                             <th>Status</th>
@@ -144,7 +143,6 @@ export default function Services() {
                                                             }}
                                                         />
                                                     </td>
-                                                    <td>{value.description.slice(0, 50)}...</td>
                                                     <td>{value.name}</td>
                                                     <td>
                                                         {

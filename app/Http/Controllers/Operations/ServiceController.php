@@ -21,7 +21,7 @@ class ServiceController extends Controller
             $query->where('status', 'active')
                 ->orWhere('created_by', Auth::id());
             })
-            ->with('category')
+            ->with('category')->orderBy('created_at', 'desc')
             ->get();
 
         if (!count($data) > 0) {
