@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import apiClient from '../../../services/api';
-import UIkit from 'uikit';
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import apiClient from "../../../services/api";
+import UIkit from "uikit";
+import FormattedDate from "../../../components/FormattedDate";
 
 export default function NotificationCategories() {
-
     const navigate = useNavigate();
 
     const [categories, setCategories] = useState();
@@ -35,7 +35,8 @@ export default function NotificationCategories() {
     };
 
     const getCategories = () => {
-        apiClient.get(`/notification-categories`, {
+        apiClient
+            .get(`/notification-categories`, {
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -57,10 +58,8 @@ export default function NotificationCategories() {
         navigate(`/op-admin/editnotification-categories/${id}`); // Redirect to second page with blog ID in URL
     };
 
-
-  return (
-    <>
-
+    return (
+        <>
             <div id="sc-page-wrapper">
                 <div id="sc-page-content">
                     <div className="uk-flex uk-flex-between uk-flex-middle">
@@ -108,77 +107,92 @@ export default function NotificationCategories() {
                                                 />
                                             </th>
                                             <th>Name</th>
-                                            <th>Title</th>
                                             <th>Discription</th>
                                             <th>Status</th>
                                             <th>Approval Status</th>
+                                            <th>Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {categories?.data?.length > 0 ? (
-                                            categories?.data?.map((value, index) => (
-                                                <tr key={index}>
-                                                    <td>
-                                                        <input
-                                                            className="uk-checkbox sc-js-table-checkbox"
-                                                            type="checkbox"
-                                                            data-sc-icheck
-                                                        />
-                                                    </td>
-                                                    <td>{value.name}</td>
-                                                    <td>{value.title}</td>
-                                                    <td>{value.description}</td>
-                                                    <td className="uk-text-capitalize">
-                                                        {value.status}
-                                                    </td>
-                                                    <td className="uk-text-capitalize">
-                                                        {value.approval_status}
-                                                    </td>
-                                                    <td>
-                                                        <div className="uk-flex gap-2">
-                                                            <div>
-                                                                <Link
-                                                                    to={`/op-admin/view-notification-categories/${value._id}`}
-                                                                    className="sc-button sc-button-primary sc-js-button-wave-light"
+                                            categories?.data?.map(
+                                                (value, index) => (
+                                                    <tr key={index}>
+                                                        <td>
+                                                            <input
+                                                                className="uk-checkbox sc-js-table-checkbox"
+                                                                type="checkbox"
+                                                                data-sc-icheck
+                                                            />
+                                                        </td>
+                                                        <td>{value.name}</td>
+                                                        <td>
+                                                            {value.description}
+                                                        </td>
+                                                        <td className="uk-text-capitalize">
+                                                            {value.status}
+                                                        </td>
+                                                        <td className="uk-text-capitalize">
+                                                            {
+                                                                value.approval_status
+                                                            }
+                                                        </td>
+                                                        <td className="uk-text-capitalize">
+                                                            {
+                                                                <FormattedDate
+                                                                    getDate={
+                                                                        value.created_at
+                                                                    }
+                                                                />
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            <div className="uk-flex gap-2">
+                                                                <div>
+                                                                    <Link
+                                                                        to={`/op-admin/view-notification-categories/${value._id}`}
+                                                                        className="sc-button sc-button-primary sc-js-button-wave-light"
+                                                                    >
+                                                                        <i className="mdi mdi-eye"></i>
+                                                                    </Link>
+                                                                </div>
+                                                                <div
+                                                                    onClick={() =>
+                                                                        handleViewService(
+                                                                            value._id
+                                                                        )
+                                                                    }
                                                                 >
-                                                                    <i className="mdi mdi-eye"></i>
-                                                                </Link>
-                                                            </div>
-                                                            <div
-                                                                onClick={() =>
-                                                                    handleViewService(
-                                                                        value._id
-                                                                    )
-                                                                }
-                                                            >
-                                                                <a
-                                                                    className="sc-button sc-button-danger sc-js-button-wave-light"
-                                                                    href="#"
-                                                                >
-                                                                    <i className="mdi mdi-file-edit">
-                                                                    </i>
-                                                                </a>
-                                                            </div>
+                                                                    <a
+                                                                        className="sc-button sc-button-danger sc-js-button-wave-light"
+                                                                        href="#"
+                                                                    >
+                                                                        <i className="mdi mdi-file-edit"></i>
+                                                                    </a>
+                                                                </div>
 
-                                                            <div
-                                                                onClick={(e) =>
-                                                                    deleteCategory(
-                                                                        value._id
-                                                                    )
-                                                                }
-                                                            >
-                                                                <a
-                                                                    className="sc-button sc-button-secondary sc-js-button-wave-light"
-                                                                    href="#"
+                                                                <div
+                                                                    onClick={(
+                                                                        e
+                                                                    ) =>
+                                                                        deleteCategory(
+                                                                            value._id
+                                                                        )
+                                                                    }
                                                                 >
-                                                                    <i className="mdi mdi-trash-can-outline"></i>
-                                                                </a>
+                                                                    <a
+                                                                        className="sc-button sc-button-secondary sc-js-button-wave-light"
+                                                                        href="#"
+                                                                    >
+                                                                        <i className="mdi mdi-trash-can-outline"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            )
                                         ) : (
                                             <tr>
                                                 <td>
@@ -193,7 +207,6 @@ export default function NotificationCategories() {
                     </div>
                 </div>
             </div>
-
-    </>
-  )
+        </>
+    );
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Operations\EnquiryController;
 use App\Http\Controllers\Operations\RequestCallbackController;
 use App\Http\Controllers\UserController;
@@ -34,6 +35,10 @@ Route::post('enquiries', [EnquiryController::class, 'store']);
 
 // Request callback
 Route::post('request-callbacks', [RequestCallbackController::class, 'store']);
+
+// Home
+Route::get('home', [HomeController::class, 'index']);
+Route::get('header-footer', [HomeController::class, 'headerFooter']);
 
 // IT Staff APIs
 require('api_it.php');
