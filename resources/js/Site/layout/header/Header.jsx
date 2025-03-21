@@ -38,10 +38,10 @@ export default function Header(header) {
                     </a>
                 </div>
                 <div className="two">
-                    <img src="./images/logos/logonavtwo.png" />
+                    <img src={`http://192.168.1.13:8000${alldata?.find((item) => item.key === "india_logo")?.value || ""}`} />
                 </div>
                 <div className="three">
-                    <img src="./images/logos/logonavthree.png" />
+                    <img src={`http://192.168.1.13:8000${alldata?.find((item) => item.key === "racap_logo")?.value || ""}`} />
                 </div>
                 </div>
             </div>
