@@ -21,11 +21,11 @@ export default function Header(header) {
                     </p>
                     <p className="color-white uk-flex uk-flex-midile">
                         <span uk-icon="mail" className="icons uk-margin-small-right"></span>
-                        {alldata?.find((item) => item.key === "email_default")?.value || "No phone number available"}
+                        E-Mail : {alldata?.find((item) => item.key === "email_default")?.value || "No Email Address available"}
                     </p>
                     <p className="color-white uk-flex uk-flex-midile">
                         <span uk-icon="location" className="icons uk-margin-small-right"></span>
-                        {alldata?.find((item) => item.key === "header_address")?.value || "No phone number available"}
+                        {alldata?.find((item) => item.key === "header_address")?.value || "No Address available"}
                     </p>
                 </div>
                 </div>
@@ -34,7 +34,7 @@ export default function Header(header) {
                 <div className="custom-container uk-flex uk-flex-between uk-flex-middle">
                 <div className="one">
                     <a href="/">
-                        <img src='/images/logos/logonavtwo.png' />
+                        <img src={`http://192.168.1.13:8000${alldata?.find((item) => item.key === "main_logo")?.value || ""}`} />
                     </a>
                 </div>
                 <div className="two">
