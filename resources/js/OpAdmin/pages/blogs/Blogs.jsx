@@ -24,7 +24,6 @@ export default function Blogs() {
             })
             .catch((err) => {
                 console.log(err);
-
                 UIkit.notification({
                     message: "Failed to delete blog!",
                     status: "danger",

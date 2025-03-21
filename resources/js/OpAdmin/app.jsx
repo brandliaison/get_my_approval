@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "uikit/dist/css/uikit.min.css"; // Import UIkit CSS
-import "./assets/css/themes/themes_combined.min.css";
-import "./assets/css/main.min.css";
+import "./../../assets/css/themes/themes_combined.min.css";
+import "./../../assets/css/main.min.css";
 import "@mdi/font/css/materialdesignicons.min.css";
 import UIkit from "uikit"; // Import UIkit JS
 import Icons from "uikit/dist/js/uikit-icons"; // Import UIkit icons

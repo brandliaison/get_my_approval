@@ -3,6 +3,7 @@ import React from 'react'
 export default function Header() {
   return (
     <>
+    
         <header id="sc-header">
             <nav className="uk-navbar uk-navbar-container" data-uk-navbar="mode: click; duration: 360">
                 <div className="uk-navbar-left nav-overlay-small uk-margin-right uk-navbar-aside">
@@ -221,6 +222,7 @@ export default function Header() {
                 </div>
             </nav>
         </header>
+    
     </>
   )
 }
