@@ -17,15 +17,15 @@ export default function Header(header) {
                 <div className="uk-flex uk-flex-center uk-flex-between uk-flex-middle">
                     <p className="color-white uk-flex uk-flex-midile">
                         <span uk-icon="receiver" className="icons uk-margin-small-right"></span>
-                        Helpline No : 91-9810363988 
+                        Helpline No : {alldata?.find((item) => item.key === "phone_default")?.value || "No phone number available"}
                     </p>
                     <p className="color-white uk-flex uk-flex-midile">
                         <span uk-icon="mail" className="icons uk-margin-small-right"></span>
-                        E-Mail:info@exportapproval.com
+                        {alldata?.find((item) => item.key === "email_default")?.value || "No phone number available"}
                     </p>
                     <p className="color-white uk-flex uk-flex-midile">
                         <span uk-icon="location" className="icons uk-margin-small-right"></span>
-                        Laxmi Nagar Delhi - 110092, India
+                        {alldata?.find((item) => item.key === "header_address")?.value || "No phone number available"}
                     </p>
                 </div>
                 </div>
