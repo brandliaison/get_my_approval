@@ -5,9 +5,6 @@ namespace App\Http\Controllers\Operations;
 use App\Http\Controllers\Controller;
 use App\Models\OP\EntityRevision;
 use App\Models\OP\ServiceCategory;
-use App\Models\OP\ServiceCategoryReview;
-use App\Models\OP\ServiceCategoryRevision;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -48,6 +45,7 @@ class ServiceCategoryController extends Controller
             'from_platform' => 'operations',
             'created_by' => Auth::user()->_id,
             'approval_status' => 'submitted',
+            'parent_category' => $request->parent_category,
             'status' => 'inactive',
         ]);
 
@@ -100,6 +98,7 @@ class ServiceCategoryController extends Controller
             'slug' => $request->slug ? Str::slug($request->slug) : $oldcategory->slug,
             'description' => $request->description ?? $oldcategory->description,
             'title' => $request->title ?? $oldcategory->title,
+            'parent_category' => $request->parent_category ?? $oldcategory->parent_category,
         ]);
 
         if ($category) {

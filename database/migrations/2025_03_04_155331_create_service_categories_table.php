@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('from_platform')->nullable();
             $table->string('created_by')->nullable();
             $table->string('approval_status')->default('submitted');
+            $table->string('parent_category')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

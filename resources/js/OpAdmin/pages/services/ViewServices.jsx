@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import apiClient from "../../services/api";
 import RevisionList from "../../components/RevisionList";
+import FormatText from "../../components/FormatText";
+import FormattedDate from "../../components/FormattedDate";
 
 export default function ViewServices() {
     const { id } = useParams();
@@ -39,27 +41,78 @@ export default function ViewServices() {
                         <div>
                             <div className="uk-card">
                                 <div className="uk-card-body">
-                                    <h2>{formData.name}</h2>
+                                    <h2>Service Details</h2>
                                     <fieldset className="uk-fieldset">
-                                        <div className="uk-margin">
-                                            <div>
-                                                <b>Slug</b>
+                                        <div className="uk-flex uk-flex-between gap-3">
+                                            <div className="uk-width-1-2">
+                                                <div
+                                                    className="uk-padding-small"
+                                                    style={{
+                                                        border: "1px solid #ccc",
+                                                    }}
+                                                >
+                                                    <b>Title</b>:{" "}
+                                                    {formData.name}
+                                                </div>
+                                                <div
+                                                    className="uk-padding-small"
+                                                    style={{
+                                                        border: "1px solid #ccc",
+                                                    }}
+                                                >
+                                                    <b>Slug</b>: {formData.slug}
+                                                </div>
+                                                <div
+                                                    className="uk-padding-small"
+                                                    style={{
+                                                        border: "1px solid #ccc",
+                                                    }}
+                                                >
+                                                    <b>Category</b>:{" "}
+                                                    {formData?.category?.name}
+                                                </div>
+
+                                                <div
+                                                    className="uk-padding-small"
+                                                    style={{
+                                                        border: "1px solid #ccc",
+                                                    }}
+                                                >
+                                                    <b>Status</b>:{" "}
+                                                    <FormatText text={formData?.status} />
+                                                </div>
+                                                <div
+                                                    className="uk-padding-small"
+                                                    style={{
+                                                        border: "1px solid #ccc",
+                                                    }}
+                                                >
+                                                    <div>
+                                                        <b>Description</b>
+                                                    </div>
+                                                    {formData.description}
+                                                </div>
                                             </div>
-                                            {formData.name}
-                                        </div>
-                                        <div className="uk-margin">
-                                            <div>
-                                                <b>Category</b>
+                                            <div className="uk-width-1-2">
+                                                <div
+                                                    className="uk-padding-small"
+                                                    style={{
+                                                        border: "1px solid #ccc",
+                                                    }}
+                                                >
+                                                    <b>Image</b>:{" "}
+                                                    <img src={formData?.image_url} alt="" />
+                                                </div>
+                                                <div
+                                                    className="uk-padding-small"
+                                                    style={{
+                                                        border: "1px solid #ccc",
+                                                    }}
+                                                >
+                                                    <b>Date</b>:{" "} <FormattedDate getDate={formData?.created_at} />
+                                                </div>
                                             </div>
-                                            {formData?.category?.name}
                                         </div>
-                                        <div className="uk-margin">
-                                            <div>
-                                                <b>Description</b>
-                                            </div>
-                                            {formData.description}
-                                        </div>
-                                        <div className="uk-margin"></div>
                                     </fieldset>
 
                                     <div className="uk-margin-top">

@@ -13,6 +13,7 @@ import Services from './pages/Services';
 import Notification from './pages/Notification';
 import Tutorial from './pages/Tutorial';
 import apiClient from './frontservices/api';
+import ServicePartnerForm from './pages/Forms/ServicePartnerForm';
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -42,6 +43,9 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/notification" element={<Notification />} />
         <Route path="/tutorial" element={<Tutorial />} />
+
+        {/* Forms */}
+        <Route path="/service-partner-registraton" element={<ServicePartnerForm />} />
       </Routes>
       <Footer footer={layoutdata}/>
     </Router>

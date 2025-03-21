@@ -14,7 +14,7 @@ class ServiceCategory extends Model
         'name', 'slug', 'description', 'title',
         'revised_by', 'first_approver', 'first_approved_date',
         'final_approver', 'final_approved_date', 'from_platform', 'created_by',
-        'approval_status', 'status',
+        'approval_status', 'parent_category', 'status',
     ];
 
     public function revisions()
@@ -49,5 +49,9 @@ class ServiceCategory extends Model
 
     public function createdByUser(){
         return $this->belongsTo(OpStaff::class, 'created_by', '_id');
+    }
+
+    public function parentCat(){
+        return $this->belongsTo(ServiceCategory::class, 'parent_category', '_id');
     }
 }
