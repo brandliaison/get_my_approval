@@ -70,11 +70,11 @@ class FaqController extends Controller
      */
     public function show(string $id)
     {
-        $data = Faq::with('revisions.reviews')->find($id);
+        $data = Faq::with('category', 'revisions.reviews')->find($id);
         if (!$data) {
             return response()->json(['error' => 'Faq Not Found'], 404);
         }
-        return response()->json($data->load('category', 'revisions'));
+        return response()->json($data);
     }
 
     /**

@@ -89,11 +89,11 @@ class NotificationController extends Controller
      */
     public function show(string $id)
     {
-        $notification = Notification::with('revisions.reviews')->find($id);
+        $notification = Notification::with('category', 'revisions.reviews')->find($id);
         if (!$notification) {
             return response()->json(['error' => 'Notification Not Found'], 404);
         }
-        return response()->json($notification->load('category', 'revisions'));
+        return response()->json($notification);
     }
 
     /**
