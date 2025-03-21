@@ -21,11 +21,11 @@ export default function Header(header) {
                     </p>
                     <p className="color-white uk-flex uk-flex-midile">
                         <span uk-icon="mail" className="icons uk-margin-small-right"></span>
-                        {alldata?.find((item) => item.key === "email_default")?.value || "No phone number available"}
+                        E-Mail : {alldata?.find((item) => item.key === "email_default")?.value || "No Email Address available"}
                     </p>
                     <p className="color-white uk-flex uk-flex-midile">
                         <span uk-icon="location" className="icons uk-margin-small-right"></span>
-                        {alldata?.find((item) => item.key === "header_address")?.value || "No phone number available"}
+                        {alldata?.find((item) => item.key === "header_address")?.value || "No Address available"}
                     </p>
                 </div>
                 </div>
