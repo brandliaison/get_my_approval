@@ -53,7 +53,7 @@ class BrochureController extends Controller
      */
     public function show(string $id)
     {
-        $data = Brochure::find($id);
+        $data = Brochure::with(('category'))->find($id);
         if (!$data) {
             return response()->json(['error' => 'Brochure Not Found'], 404);
         }

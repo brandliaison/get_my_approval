@@ -25,7 +25,7 @@ export default function Sidebar() {
                             </li>
 
                             <li title="Chat">
-                                <Link to="/op-admin/">
+                                <Link to="/op-admin/dashboard">
                                     <span className="uk-nav-icon">
                                         <i className="mdi mdi-home"></i>
                                     </span>
