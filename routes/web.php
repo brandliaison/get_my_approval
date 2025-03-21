@@ -2,7 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 
-// CMS Routes
+// CMS Routes IT
+Route::get('/it-admin/{path?}', function () {
+    return view('itstaff'); // Your cms React view file
+})->where('path', '.*');
+
+
+// CMS Routes OP
 Route::get('/op-admin/{path?}', function () {
     return view('operations'); // Your cms React view file
 })->where('path', '.*');
