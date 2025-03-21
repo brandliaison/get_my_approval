@@ -34,7 +34,7 @@ export default function Header(header) {
                 <div className="custom-container uk-flex uk-flex-between uk-flex-middle">
                 <div className="one">
                     <a href="/">
-                        <img src='/images/logos/logonavtwo.png' />
+                        <img src={`http://192.168.1.13:8000${alldata?.find((item) => item.key === "main_logo")?.value || ""}`} />
                     </a>
                 </div>
                 <div className="two">
