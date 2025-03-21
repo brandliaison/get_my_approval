@@ -3,18 +3,20 @@ import { Link, useNavigate } from 'react-router-dom';
 import apiClient from '../../itdashboardservices/api';
 import UIkit from 'uikit';
 
-export default function Designation() {
+export default function Roles() {
 
     const navigate = useNavigate();
     const [data, setdata] = useState([]);
+    const [permissionsdata, setpermissionsdata] = useState([]);
 
     useEffect(() => {
         getdata();
+        getpermissions();
     }, []);
 
     const getdata = async () => {
         await
-        apiClient.get('designation')
+        apiClient.get('roles')
             .then((response) => {
                 setdata(response.data.data);
                 console.log(response.data);
@@ -25,7 +27,7 @@ export default function Designation() {
     }
 
     const deletedata = async (id) => {
-        apiClient.delete(`designation/${id}`)
+        apiClient.delete(`roles/${id}`)
            .then((res) => {
                 UIkit.notification({
                     message: res.data.message || "Deleted successfully",
@@ -45,9 +47,16 @@ export default function Designation() {
             });
     }
 
-    const handleedit = (id) => {
-        navigate(`/it-admin/edit-designation/${id}`); // Redirect to second page with blog ID in URL
-    };
+    const getpermissions = async () => {
+        await
+        apiClient.get(`permissions`)
+           .then((response) => {
+                setpermissionsdata(response.data.data)
+            })
+           .catch((error) => {
+                console.error('Error fetching data', error);
+            });
+    }
 
   return (
     <>
@@ -56,7 +65,7 @@ export default function Designation() {
                 <div id="sc-page-content">
                     <div className="uk-flex uk-flex-between uk-flex-middle">
                         <h3>Designations</h3>
-                        <Link to="/it-admin/add-designation">
+                        <Link to="/it-admin/add-roles">
                             <button className="sc-fab sc-fab-text sc-fab-success solid-button">
                                 <i className="mdi mdi-plus"></i>Create
                             </button>
@@ -99,6 +108,7 @@ export default function Designation() {
                                                 />
                                             </th>
                                             <th>Name</th>
+                                            <th>Permissions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -113,37 +123,17 @@ export default function Designation() {
                                                                 data-sc-icheck
                                                             />
                                                         </td>
-                                                        <td>{value.name}</td>
+                                                        <td style={{textWrap: 'nowrap'}}>{value.name}</td>
+                                                        <td>{permissionsdata?.map((value, index) => {
+                                                            return (
+                                                                <span key={index} class="uk-label uk-text-medium uk-margin-right uk-margin-bottom md-bg-grey-600">{value.name}</span>
+                                                            )})
+                                                            }
+                                                        </td>
                                                         <td>
                                                             <div className="uk-flex uk-flex-right gap-2">
-                                                                <div
-                                                                    onClick={() =>
-                                                                        handleedit(
-                                                                            value._id
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    <a
-                                                                        className="sc-button sc-button-danger sc-js-button-wave-light"
-                                                                        href="#"
-                                                                    >
-                                                                        <i className="mdi mdi-file-edit"></i>
-                                                                    </a>
-                                                                </div>
-
-                                                                <div
-                                                                    onClick={(
-                                                                        e
-                                                                    ) =>
-                                                                        deletedata(
-                                                                            value._id
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    <a
-                                                                        className="sc-button sc-button-secondary sc-js-button-wave-light"
-                                                                        href="#"
-                                                                    >
+                                                                <div onClick={(e) => deletedata(value._id)}>
+                                                                    <a className="sc-button sc-button-secondary sc-js-button-wave-light" href="#">
                                                                         <i className="mdi mdi-trash-can-outline"></i>
                                                                     </a>
                                                                 </div>
@@ -166,7 +156,7 @@ export default function Designation() {
                     </div>
                 </div>
             </div>
-
+    
     </>
   )
 }

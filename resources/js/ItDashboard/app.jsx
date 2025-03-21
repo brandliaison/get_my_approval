@@ -12,7 +12,10 @@ import AdminLayout from "./components/AdminLayout";
 import Home from "./pages/home/Home";
 import Login from "./auth/login/login";
 import Designation from "./pages/designation/Designation";
-
+import AddDesignation from "./pages/designation/AddDesignation";
+import EditDesignation from "./pages/designation/EditDesignation";
+import Roles from "./pages/roles/Roles";
+import AddRoles from "./pages/roles/AddRoles";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -32,6 +35,10 @@ export default function App() {
                         <Route element={<AdminLayout />}>
                             <Route path="dashboard" element={<Home />} />
                             <Route path="designation" element={<Designation />} />
+                            <Route path="add-designation" element={<AddDesignation />} />
+                            <Route path="edit-designation/:id" element={<EditDesignation />} />
+                            <Route path="roles" element={<Roles />} />
+                            <Route path="add-roles" element={<AddRoles />} />
                         </Route>
                       </Route>
                   </Routes>
