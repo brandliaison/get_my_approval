@@ -86,9 +86,9 @@ export default function Sidebar() {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="/it-admin/permissions">
+                                        <Link to="/it-admin/staffmanagement">
                                             <span className="uk-nav-title">
-                                                Permissions
+                                                Staff Management
                                             </span>
                                         </Link>
                                     </li>
