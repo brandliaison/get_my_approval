@@ -16,7 +16,7 @@ class FaqCategoryController extends Controller
      */
     public function index()
     {
-        $data = FaqCategory::where(function ($query) {
+        $data = FaqCategory::with('parentCat')->where(function ($query) {
             $query->where('status', 'active')
                   ->orWhere('created_by', Auth::id());
         })
@@ -46,6 +46,7 @@ class FaqCategoryController extends Controller
             'posted_by' => Auth::user()->_id,
             'from_platform' => 'operations',
             'approval_status' => 'submitted',
+            'parent_category' => $request->parent_category,
             'created_by' => Auth::user()->_id,
             'status' => 'inactive',
         ]);
@@ -69,7 +70,7 @@ class FaqCategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = FaqCategory::with('revisions.reviews')->findOrFail($id);
+        $category = FaqCategory::with('revisions.reviews', 'parentCat')->findOrFail($id);
         return response()->json($category);
     }
 
@@ -100,6 +101,7 @@ class FaqCategoryController extends Controller
             'slug' => $request->slug ? Str::slug($request->slug) : $oldcategory->slug,
             'description' => $request->description ?? $oldcategory->description,
             'title' => $request->title ?? $oldcategory->title,
+            'parent_category' => $request->parent_category ?? $oldcategory->parent_category,
         ]);
 
         if ($category) {

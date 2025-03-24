@@ -20,7 +20,7 @@ class ServiceCategoryController extends Controller
             $query->where('status', 'active')
                   ->orWhere('created_by', Auth::id());
         })
-        ->with('firstAppoveruser', 'finalAppoveruser')
+        ->with('firstAppoveruser', 'finalAppoveruser', 'parentCat')
         ->get();
 
         if (!count($data) > 0) {
@@ -65,7 +65,7 @@ class ServiceCategoryController extends Controller
     // Show a Single Service Category
     public function show($id)
     {
-        $category = ServiceCategory::with('firstAppoveruser', 'finalAppoveruser', 'revisions.reviews')->find($id);
+        $category = ServiceCategory::with('firstAppoveruser', 'finalAppoveruser', 'revisions.reviews', 'parentCat')->find($id);
 
         if (!$category) {
             return response()->json(['error' => 'Service Category Not Found'], 404);

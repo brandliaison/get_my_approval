@@ -22,6 +22,7 @@ class NotificationCategory extends Model
         'final_approved_date',
         'from_platform',
         'created_by',
+        'parent_category',
         'approval_status',
         'status',
     ];
@@ -32,5 +33,8 @@ class NotificationCategory extends Model
     public function revisions()
     {
         return $this->hasMany(EntityRevision::class, 'entity_id', '_id')->where('entity_type', 'NotificationCategory');
+    }
+    public function parentCat(){
+        return $this->belongsTo(NotificationCategory::class, 'parent_category', '_id')->select('_id', 'name');
     }
 }

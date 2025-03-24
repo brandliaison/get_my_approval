@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import apiClient from '../../../services/api';
 import axios from 'axios';
 import UIkit from 'uikit';
@@ -10,6 +10,7 @@ export default function AddBlogCategories() {
         description: '',
         title: '',
         slug: '',
+        parent_category: '',
     });
 
     // Handle text input changes
@@ -29,6 +30,7 @@ export default function AddBlogCategories() {
         data.append("description", formData.description);
         data.append("title", formData.title);
         data.append("slug", formData.slug);
+        data.append("parent_category", formData.parent_category);
 
         // Log to console (for debugging)
         console.log("Form Data:", Object.fromEntries(data));
@@ -69,6 +71,26 @@ export default function AddBlogCategories() {
         });
     };
 
+    const [categories, setCategories] = useState();
+    const getCategories = () => {
+        apiClient
+            .get(`/active-blog-categories`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            .then((res) => {
+                setCategories(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    useEffect(() => {
+        getCategories();
+    }, []);
+
   return (
     <>
         <div id="sc-page-wrapper">
@@ -88,8 +110,58 @@ export default function AddBlogCategories() {
                                                 <input className="uk-input uk-margin-bottom" type="text" name='title' onChange={handleChange} value={formData.title} placeholder="Blog Category Title" data-sc-input />
                                             </div>
                                         </div>
+                                        <div
+                                                className="uk-grid uk-grid-small uk-child-width-1-2@l"
+                                                uk-grid="true"
+                                            >
+                                                <div>
+                                                    <input
+                                                        className="uk-input uk-margin-bottom"
+                                                        type="text"
+                                                        name="slug"
+                                                        onChange={handleChange}
+                                                        value={formData.slug}
+                                                        placeholder="Category Slug"
+                                                        data-sc-input
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <select
+                                                        id=""
+                                                        name="parent_category"
+                                                        className="uk-select"
+                                                        onChange={handleChange}
+                                                        value={
+                                                            formData?.parent_category
+                                                        }
+                                                    >
+                                                        <option value="">
+                                                            Select Parent
+                                                            Category
+                                                        </option>
+                                                        {categories?.data
+                                                            ?.length > 0
+                                                            ? categories?.data?.map(
+                                                                  (val, i) => (
+                                                                      <option
+                                                                          value={
+                                                                              val?._id
+                                                                          }
+                                                                          key={
+                                                                              i
+                                                                          }
+                                                                      >
+                                                                          {
+                                                                              val.name
+                                                                          }
+                                                                      </option>
+                                                                  )
+                                                              )
+                                                            : ""}
+                                                    </select>
+                                                </div>
+                                            </div>
                                         <div className="uk-margin">
-                                                <input className="uk-input uk-margin-bottom" type="text" name='slug' onChange={handleChange} value={formData.slug} placeholder="Blog Category Slug" data-sc-input />
                                                 <textarea className="uk-textarea" rows="5" name='description' onChange={handleChange} value={formData.description} placeholder="Discription" data-sc-input></textarea>
                                         </div>
                                         <div className="uk-margin">

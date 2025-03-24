@@ -17,6 +17,7 @@ class FaqCategory extends Model
         'final_approver',
         'final_approved_date',
         'from_platform',
+        'parent_category',
         'created_by',
         'approval_status', 'status'
     ];
@@ -31,5 +32,8 @@ class FaqCategory extends Model
     }
     public function createdByUser(){
         return $this->belongsTo(OpStaff::class, 'created_by', '_id');
+    }
+    public function parentCat(){
+        return $this->belongsTo(FaqCategory::class, 'parent_category', '_id')->select('_id', 'name');
     }
 }

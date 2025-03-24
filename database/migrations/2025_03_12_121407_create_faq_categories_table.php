@@ -24,6 +24,7 @@ return new class extends Migration
             $table->date('final_approved_date')->nullable();
             $table->string('from_platform')->nullable();
             $table->string('created_by')->nullable();
+            $table->string('parent_category')->nullable();
             $table->string('approval_status')->default('submitted');
             $table->string('status')->default('active');
             $table->timestamps();

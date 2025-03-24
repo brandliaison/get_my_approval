@@ -14,7 +14,7 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $roles = Role::where('guard_name', 'itstaff')->get();
+        $roles = Role::with('permissions')->where('guard_name', 'itstaff')->get();
         return response()->json(['message' => 'Data Success', 'data' => $roles], 201);
     }
 
@@ -31,7 +31,7 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        $role = Role::create(['name' => $request->role_name, 'guard_name' => 'itstaff']);
+        $role = Role::with('permissions')->create(['name' => $request->name, 'guard_name' => 'itstaff']);
         return response()->json(['message' => 'Data Success', 'data' => $role], 201);
     }
 
@@ -40,7 +40,12 @@ class RolesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $role = Role::with('permissions')->find($id);
+        if (!$role) {
+            return response()->json(['message' => 'Role Not Found'], 404);
+        }
+
+        return response()->json(['data' => $role, 'message' => 'Role Found']);
     }
 
     /**
@@ -56,7 +61,28 @@ class RolesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // return $request->all();
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'permissions' => 'nullable',
+            'permissions.*' => 'exists:permissions,name',
+        ]);
+
+        $permissions= json_decode($request->permissions);
+        $role = Role::findOrFail($id);
+
+        // Update role name
+        $role->update(['name' => $validated['name']]);
+
+        // Sync new permissions
+        if ($request->has('permissions')) {
+            $role->syncPermissions($permissions);
+        }
+
+        return response()->json([
+            'message' => 'Role updated successfully',
+            'role' => $role->load('permissions'),
+        ]);
     }
 
     /**

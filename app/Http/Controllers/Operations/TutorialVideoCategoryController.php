@@ -16,7 +16,7 @@ class TutorialVideoCategoryController extends Controller
      */
     public function index()
     {
-        $data = TutorialVideoCategory::where(function ($query) {
+        $data = TutorialVideoCategory::with('parentCat')->where(function ($query) {
             $query->where('status', 'active')
                 ->orWhere('created_by', Auth::id());
         })->get();
@@ -52,6 +52,7 @@ class TutorialVideoCategoryController extends Controller
             'title' => $request->title,
             'from_platform' => 'operations',
             'created_by' => Auth::user()->_id,
+            'parent_category' => $request->parent_category,
             'approval_status' => 'submitted',
             'status' => 'inactive',
         ]);
@@ -74,7 +75,7 @@ class TutorialVideoCategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = TutorialVideoCategory::with('revisions.reviews')->find($id);
+        $category = TutorialVideoCategory::with('revisions.reviews', 'parentCat')->find($id);
 
         if (!$category) {
             return response()->json(['error' => 'Tutorial Video Category Not Found'], 404);
@@ -118,6 +119,7 @@ class TutorialVideoCategoryController extends Controller
             'slug' => $request->slug ? Str::slug($request->slug) : $oldcategory->slug,
             'description' => $request->description ?? $oldcategory->description,
             'title' => $request->title ?? $oldcategory->title,
+            'parent_category' => $request->parent_category ?? $oldcategory->parent_category,
         ]);
 
         if ($category) {

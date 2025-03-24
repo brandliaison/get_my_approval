@@ -12,6 +12,7 @@ export default function EditBlogCategory() {
         description: '',
         title: '',
         slug: '',
+        parent_category: '',
     });
 
         // Handle text input changes
@@ -45,6 +46,7 @@ export default function EditBlogCategory() {
         data.append("description", formData.description);
         data.append("title", formData.title);
         data.append("slug", formData.slug);
+        data.append("parent_category", formData.parent_category);
         data.append("_method", 'PUT');
 
         // Log to console (for debugging)

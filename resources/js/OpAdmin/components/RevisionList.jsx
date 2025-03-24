@@ -9,15 +9,14 @@ export default function RevisionList(data) {
               return (
                   <div
                       key={index}
-                      className="uk-padding-small uk-margin-bottom"
                       style={{ border: "1px solid #ccc" }}
                   >
                       <ul uk-accordion="true">
                           <li>
-                              <a className="uk-accordion-title">
+                              <a className="uk-accordion-title uk-padding-small">
                                   <b>Date: {formattedDate}</b>
                               </a>
-                              <div className="uk-accordion-content">
+                              <div className="uk-accordion-content uk-padding-small">
                                   <div className="uk-flex gap-6">
                                       <div className="uk-width-1-2">
                                           <b>New Data</b>

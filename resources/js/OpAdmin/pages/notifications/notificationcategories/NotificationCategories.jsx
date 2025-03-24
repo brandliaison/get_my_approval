@@ -108,6 +108,7 @@ export default function NotificationCategories() {
                                             </th>
                                             <th>Name</th>
                                             <th>Discription</th>
+                                            <th>Parent Category</th>
                                             <th>Status</th>
                                             <th>Approval Status</th>
                                             <th>Date</th>
@@ -130,6 +131,7 @@ export default function NotificationCategories() {
                                                         <td>
                                                             {value.description}
                                                         </td>
+                                                        <td>{value?.parent_cat?.name}</td>
                                                         <td className="uk-text-capitalize">
                                                             {value.status}
                                                         </td>

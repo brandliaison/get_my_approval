@@ -107,6 +107,7 @@ export default function ServiceCategories() {
                                             </th>
                                             <th>Name</th>
                                             <th>Description</th>
+                                            <th>Parent Category</th>
                                             <th>Status</th>
                                             <th>Approval Status</th>
                                             <th>Date</th>
@@ -128,6 +129,9 @@ export default function ServiceCategories() {
                                                         <td>{value.name}</td>
                                                         <td>
                                                             {value.description}
+                                                        </td>
+                                                        <td>
+                                                            {value?.parent_cat?.name}
                                                         </td>
                                                         <td className="uk-text-capitalize">
                                                             {value.status}
