@@ -16,6 +16,10 @@ import AddDesignation from "./pages/designation/AddDesignation";
 import EditDesignation from "./pages/designation/EditDesignation";
 import Roles from "./pages/roles/Roles";
 import AddRoles from "./pages/roles/AddRoles";
+import EditRoles from "./pages/roles/EditRoles";
+import StaffManagement from "./pages/staffmanagement/StaffManagement";
+import AddStaffManagement from "./pages/staffmanagement/AddStaffManagement";
+import EditStaffManagement from "./pages/staffmanagement/EditStaffManagement";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -39,6 +43,10 @@ export default function App() {
                             <Route path="edit-designation/:id" element={<EditDesignation />} />
                             <Route path="roles" element={<Roles />} />
                             <Route path="add-roles" element={<AddRoles />} />
+                            <Route path="edit-roles/:id" element={<EditRoles />} />
+                            <Route path="staffmanagement" element={<StaffManagement />} />
+                            <Route path="add-staffmanagement" element={<AddStaffManagement />} />
+                            <Route path="edit-staffmanagement/:id" element={<EditStaffManagement />} />
                         </Route>
                       </Route>
                   </Routes>
