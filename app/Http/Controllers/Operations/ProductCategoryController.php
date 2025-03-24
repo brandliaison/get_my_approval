@@ -16,7 +16,7 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        $data = ProductCategory::where(function ($query) {
+        $data = ProductCategory::with('parentCat')->where(function ($query) {
             $query->where('status', 'active')
                 ->orWhere('created_by', Auth::id());
         })->get();
@@ -45,6 +45,7 @@ class ProductCategoryController extends Controller
             'from_platform' => 'operations',
             'created_by' => Auth::user()->_id,
             'approval_status' => 'submitted',
+            'parent_category' => $request->parent_category,
             'status' => 'inactive',
         ]);
 
@@ -66,7 +67,7 @@ class ProductCategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = ProductCategory::with('revisions.reviews')->find($id);
+        $category = ProductCategory::with('revisions.reviews', 'parentCat')->find($id);
 
         if (!$category) {
             return response()->json(['error' => 'Product Category Not Found'], 404);
@@ -101,6 +102,7 @@ class ProductCategoryController extends Controller
             'slug' => $request->slug ? Str::slug($request->slug) : $oldcategory->slug,
             'description' => $request->description ?? $oldcategory->description,
             'title' => $request->title ?? $oldcategory->title,
+            'parent_category' => $request->parent_category ?? $oldcategory->parent_category,
         ]);
 
         if ($category) {

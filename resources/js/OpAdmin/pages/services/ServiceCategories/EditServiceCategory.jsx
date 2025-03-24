@@ -25,7 +25,7 @@ export default function EditServiceCategory() {
 
     const getCategories = () => {
         apiClient
-            .get(`/service-categories`, {
+            .get(`/active-service-categories`, {
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -63,6 +63,7 @@ export default function EditServiceCategory() {
         data.append("description", formData.description);
         data.append("title", formData.title);
         data.append("slug", formData.slug);
+        data.append("parent_category", formData.parent_category);
         data.append("_method", "PUT");
 
         // Log to console (for debugging)

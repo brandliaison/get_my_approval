@@ -17,7 +17,13 @@ class StaffController extends Controller
      */
     public function index()
     {
-        return response()->json(ItStaff::all());
+        $data = ItStaff::whereNot('role', 'it_super_admin')->get();
+
+        if (!count($data) > 0) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
     }
 
     /**
@@ -71,7 +77,7 @@ class StaffController extends Controller
         if (!$itStaff) {
             return response()->json(['message' => 'IT Staff Not Found'], 404);
         }
-        return response()->json($itStaff);
+        return response()->json(['data' => $itStaff, 'message' => 'Data Found'], 200);
     }
 
     /**

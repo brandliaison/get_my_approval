@@ -51,32 +51,70 @@ export default function ViewServiceCategory() {
                                     </h5>
 
                                     <fieldset className="uk-fieldset">
-                                        <h2>{formData.name}</h2>
-                                        <div>
-                                            <div>
-                                                <b>Slug:</b>
+                                        <div className="uk-width-1-2">
+                                            <div
+                                                className="uk-padding-small"
+                                                style={{
+                                                    border: "1px solid #ccc",
+                                                }}
+                                            >
+                                                <b>Name</b>: {formData.name}
                                             </div>
-                                            {formData.slug}
                                         </div>
-                                        <div className="uk-margin">
-                                            <div>
-                                                <b>Title:</b>
+
+                                        <div className="uk-width-1-2">
+                                            <div
+                                                className="uk-padding-small"
+                                                style={{
+                                                    border: "1px solid #ccc",
+                                                }}
+                                            >
+                                                <b>Title</b>: {formData.title}
                                             </div>
-                                            {formData.title}
                                         </div>
-                                        <div className="uk-margin">
-                                            <div>
-                                                <b>Description:</b>
+
+                                        <div className="uk-width-1-2">
+                                            <div
+                                                className="uk-padding-small"
+                                                style={{
+                                                    border: "1px solid #ccc",
+                                                }}
+                                            >
+                                                <b>Slug</b>: {formData.slug}
                                             </div>
-                                            {formData.description}
+                                        </div>
+
+                                        <div className="uk-width-1-2">
+                                            <div
+                                                className="uk-padding-small"
+                                                style={{
+                                                    border: "1px solid #ccc",
+                                                }}
+                                            >
+                                                <b>Description</b>:{" "}
+                                                {formData.description}
+                                            </div>
+                                        </div>
+
+                                        <div className="uk-width-1-2">
+                                            <div
+                                                className="uk-padding-small"
+                                                style={{
+                                                    border: "1px solid #ccc",
+                                                }}
+                                            >
+                                                <b>Parent Category</b>:{" "}
+                                                {formData?.parent_cat?.name}
+                                            </div>
                                         </div>
                                     </fieldset>
 
                                     <div className="uk-margin-top">
                                         <h2>Post Revisions</h2>
                                         <div>
-                                            <RevisionList data={formData?.revisions} />
-                                            
+                                            <RevisionList
+                                                data={formData?.revisions}
+                                            />
                                         </div>
                                     </div>
                                 </div>

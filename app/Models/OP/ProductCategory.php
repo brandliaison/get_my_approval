@@ -23,6 +23,7 @@ class ProductCategory extends Model
         'from_platform',
         'created_by',
         'approval_status',
+        'parent_category',
         'status',
     ];
 
@@ -32,5 +33,8 @@ class ProductCategory extends Model
     }
     public function createdByUser(){
         return $this->belongsTo(OpStaff::class, 'created_by', '_id');
+    }
+    public function parentCat(){
+        return $this->belongsTo(ProductCategory::class, 'parent_category', '_id')->select('_id', 'name');
     }
 }

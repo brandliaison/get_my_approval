@@ -19,7 +19,7 @@ class ServiceCategory extends Model
 
     public function revisions()
     {
-        return $this->hasMany(EntityRevision::class, 'entity_id', '_id')->where('entity_type', 'ServiceCategory');
+        return $this->hasMany(EntityRevision::class, 'entity_id', '_id')->where('entity_type', 'ServiceCategory')->orderBy('created_at', 'desc');
     }
 
     public function reviews()
@@ -52,6 +52,6 @@ class ServiceCategory extends Model
     }
 
     public function parentCat(){
-        return $this->belongsTo(ServiceCategory::class, 'parent_category', '_id');
+        return $this->belongsTo(ServiceCategory::class, 'parent_category', '_id')->select('_id', 'name');
     }
 }

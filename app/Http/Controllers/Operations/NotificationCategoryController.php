@@ -16,7 +16,7 @@ class NotificationCategoryController extends Controller
      */
     public function index()
     {
-        $data = NotificationCategory::where(function ($query) {
+        $data = NotificationCategory::with('parentCat')->where(function ($query) {
             $query->where('status', 'active')
                 ->orWhere('created_by', Auth::id());
         })->get();
@@ -49,6 +49,7 @@ class NotificationCategoryController extends Controller
             'title' => $request->title,
             'from_platform' => 'operations',
             'approval_status' => 'submitted',
+            'parent_category' => $request->parent_category,
             'created_by' => Auth::user()->_id,
             'status' => 'inactive',
         ]);
@@ -71,7 +72,7 @@ class NotificationCategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = NotificationCategory::with('revisions.reviews')->find($id);
+        $category = NotificationCategory::with('revisions.reviews', 'parentCat')->find($id);
 
         if (!$category) {
             return response()->json(['error' => 'Notification Category Not Found'], 404);
@@ -114,6 +115,7 @@ class NotificationCategoryController extends Controller
             'slug' => $request->slug ? Str::slug($request->slug) : $oldcategory->slug,
             'description' => $request->description ?? $oldcategory->description,
             'title' => $request->title ?? $oldcategory->title,
+            'parent_category' => $request->parent_category ?? $oldcategory->parent_category,
         ]);
 
         if ($category) {

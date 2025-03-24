@@ -16,17 +16,17 @@ class BlogCategoryController extends Controller
      */
     public function index()
     {
-        $data = BlogCategory::where(function ($query) {
+        $data = BlogCategory::with('parentCat')->where(function ($query) {
             $query->where('status', 'active')
                 ->orWhere('created_by', Auth::id());
         })
             ->get();
 
         if (!count($data) > 0) {
-            return response()->json('Data Not Found', 400);
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
         }
 
-        return response()->json($data, 200);
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
     }
 
     /**
@@ -45,6 +45,7 @@ class BlogCategoryController extends Controller
             'title' => $request->title,
             'from_platform' => 'operations',
             'approval_status' => 'submitted',
+            'parent_category' => $request->parent_category,
             'created_by' => Auth::user()->_id,
             'status' => 'inactive',
         ]);
@@ -67,7 +68,7 @@ class BlogCategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = BlogCategory::with('revisions.reviews')->find($id);
+        $category = BlogCategory::with('revisions.reviews', 'parentCat')->find($id);
 
         if (!$category) {
             return response()->json(['error' => 'Blog Category Not Found'], 404);
@@ -103,6 +104,7 @@ class BlogCategoryController extends Controller
             'slug' => $request->slug ? Str::slug($request->slug) : $oldcategory->slug,
             'description' => $request->description ?? $oldcategory->description,
             'title' => $request->title ?? $oldcategory->title,
+            'parent_category' => $request->parent_category ?? $oldcategory->parent_category,
         ]);
 
         if ($category) {
@@ -139,9 +141,9 @@ class BlogCategoryController extends Controller
         $data = BlogCategory::where('status', 'active')->get();
 
         if (!count($data) > 0) {
-            return response()->json('Data Not Found', 400);
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
         }
 
-        return response()->json($data, 200);
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
     }
 }

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import UIkit from 'uikit';
-import apiClient from '../../../services/api';
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import UIkit from "uikit";
+import apiClient from "../../../services/api";
+import FormattedDate from "../../../components/FormattedDate";
 
 export default function TutorialCategories() {
-
     const navigate = useNavigate();
 
     const [tutorialcategories, settutorialcategories] = useState();
@@ -34,9 +34,10 @@ export default function TutorialCategories() {
     };
 
     const gettutorialcategories = () => {
-        apiClient.get(`/tutorial-videos-categories/`)
+        apiClient
+            .get(`/tutorial-videos-categories/`)
             .then((res) => {
-                console.log(res)
+                console.log(res);
                 settutorialcategories(res.data.data);
             })
             .catch((err) => {
@@ -48,15 +49,14 @@ export default function TutorialCategories() {
         gettutorialcategories();
     }, []);
 
-
     const handleViewBlog = (id) => {
         navigate(`/op-admin/edittutorials-categories/${id}`); // Redirect to second page with blog ID in URL
     };
 
     console.log(tutorialcategories);
 
-  return (
-    <>
+    return (
+        <>
             <div id="sc-page-wrapper">
                 <div id="sc-page-content">
                     <div className="uk-flex uk-flex-right">
@@ -103,50 +103,100 @@ export default function TutorialCategories() {
                                                     data-group=".sc-js-table-checkbox"
                                                 />
                                             </th>
-                                            <th>Tutorial Categories Discription</th>
-                                            <th>Tutorial Categories Name</th>
-                                            <th>Tutorial Categories Title</th>
-                                            <th>Edit Tutorial</th>
+                                            <th>Name</th>
+                                            <th>Discription</th>
+                                            <th>Parent Category</th>
+                                            <th>Status</th>
+                                            <th>Approval Status</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {tutorialcategories?.length > 0 ? (
-                                            tutorialcategories?.map((value, index) => (
-                                                <tr key={index}>
-                                                    <td>
-                                                        <input
-                                                            className="uk-checkbox sc-js-table-checkbox"
-                                                            type="checkbox"
-                                                            data-sc-icheck
-                                                        />
-                                                    </td>
-                                                    <td>{value.description}</td>
-                                                    <td>{value.name}</td>
-                                                    <td>{value.title}</td>
-                                                    <td>
-                                                        <div className="uk-flex gap-2">
-                                                            <div>
-                                                                <Link
-                                                                    to={`/op-admin/view-tutorials-categories/${value._id}`}
-                                                                    className="sc-button sc-button-primary sc-js-button-wave-light"
+                                            tutorialcategories?.map(
+                                                (value, index) => (
+                                                    <tr key={index}>
+                                                        <td>
+                                                            <input
+                                                                className="uk-checkbox sc-js-table-checkbox"
+                                                                type="checkbox"
+                                                                data-sc-icheck
+                                                            />
+                                                        </td>
+                                                        <td>{value.name}</td>
+                                                        <td>
+                                                            {value.description}
+                                                        </td>
+                                                        <td>
+                                                            {
+                                                                value
+                                                                    ?.parent_cat
+                                                                    ?.name
+                                                            }
+                                                        </td>
+                                                        <td className="uk-text-capitalize">
+                                                            {value.status}
+                                                        </td>
+                                                        <td className="uk-text-capitalize">
+                                                            {
+                                                                value.approval_status
+                                                            }
+                                                        </td>
+                                                        <td className="uk-text-capitalize">
+                                                            {
+                                                                <FormattedDate
+                                                                    getDate={
+                                                                        value.created_at
+                                                                    }
+                                                                />
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            <div className="uk-flex gap-2">
+                                                                <div>
+                                                                    <Link
+                                                                        to={`/op-admin/view-tutorials-categories/${value._id}`}
+                                                                        className="sc-button sc-button-primary sc-js-button-wave-light"
+                                                                    >
+                                                                        <i className="mdi mdi-eye"></i>
+                                                                    </Link>
+                                                                </div>
+                                                                <div
+                                                                    onClick={(
+                                                                        e
+                                                                    ) =>
+                                                                        deletetutorialcategory(
+                                                                            value._id
+                                                                        )
+                                                                    }
                                                                 >
-                                                                    <i className="mdi mdi-eye"></i>
-                                                                </Link>
+                                                                    <a
+                                                                        className="sc-button sc-button-secondary sc-js-button-wave-light"
+                                                                        href="#"
+                                                                    >
+                                                                        <i className="mdi mdi-trash-can-outline"></i>{" "}
+                                                                    </a>
+                                                                </div>
+                                                                <div
+                                                                    onClick={() =>
+                                                                        handleViewBlog(
+                                                                            value._id
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    <a
+                                                                        className="sc-button sc-button-danger sc-js-button-wave-light"
+                                                                        href="#"
+                                                                    >
+                                                                        <i className="mdi mdi-file-edit"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
-                                                            <div onClick={(e) => deletetutorialcategory(value._id)}>
-                                                                <a className="sc-button sc-button-secondary sc-js-button-wave-light" href="#">
-                                                                    <i className="mdi mdi-trash-can-outline"></i>{" "}
-                                                                </a>
-                                                            </div>
-                                                            <div onClick={() => handleViewBlog(value._id)}>
-                                                                <a className="sc-button sc-button-danger sc-js-button-wave-light" href="#" >
-                                                                    <i className="mdi mdi-file-edit"></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            )
                                         ) : (
                                             <tr>
                                                 <td>
@@ -161,6 +211,6 @@ export default function TutorialCategories() {
                     </div>
                 </div>
             </div>
-    </>
-  )
+        </>
+    );
 }

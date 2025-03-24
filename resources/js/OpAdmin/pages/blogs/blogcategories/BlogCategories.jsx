@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../../../services/api";
 import UIkit from "uikit";
+import FormattedDate from "../../../components/FormattedDate";
 
 export default function BlogCategories() {
-
     const navigate = useNavigate();
 
     const [blogcategories, setblogcategories] = useState();
@@ -35,7 +35,8 @@ export default function BlogCategories() {
     };
 
     const getblogcategories = () => {
-        apiClient.get(`/blog-categories`)
+        apiClient
+            .get(`/blog-categories`)
             .then((res) => {
                 setblogcategories(res.data);
             })
@@ -47,7 +48,6 @@ export default function BlogCategories() {
     useEffect(() => {
         getblogcategories();
     }, []);
-
 
     const handleViewBlog = (id) => {
         navigate(`/op-admin/editblogcategory/${id}`); // Redirect to second page with blog ID in URL
@@ -103,68 +103,104 @@ export default function BlogCategories() {
                                                     data-group=".sc-js-table-checkbox"
                                                 />
                                             </th>
-                                            <th>Blog Categories Name</th>
-                                            <th>Blog Categories Discription</th>
-                                            <th>Blog Categories Title</th>
-                                            <th>Edit Blog</th>
+                                            <th>Categories Name</th>
+                                            <th>Categories Discription</th>
+                                            <th>Parent Category</th>
+                                            <th>Status</th>
+                                            <th>Approval Status</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {blogcategories?.length > 0 ? (
-                                            blogcategories?.map((value, index) => (
-                                                <tr key={index}>
-                                                    <td>
-                                                        <input
-                                                            className="uk-checkbox sc-js-table-checkbox"
-                                                            type="checkbox"
-                                                            data-sc-icheck
-                                                        />
-                                                    </td>
-                                                    <td>{value.name}</td>
-                                                    <td>{value.description.slice(0, 50)}...</td>
-                                                    <td>{value.title}</td>
-                                                    <td>
-                                                        <div className="uk-flex gap-2">
-                                                            <div>
-                                                                <Link
-                                                                    to={`/op-admin/view-blog-category/${value._id}`}
-                                                                    className="sc-button sc-button-primary sc-js-button-wave-light"
+                                        {blogcategories?.data?.length > 0 ? (
+                                            blogcategories?.data?.map(
+                                                (value, index) => (
+                                                    <tr key={index}>
+                                                        <td>
+                                                            <input
+                                                                className="uk-checkbox sc-js-table-checkbox"
+                                                                type="checkbox"
+                                                                data-sc-icheck
+                                                            />
+                                                        </td>
+                                                        <td>{value.name}</td>
+                                                        <td>
+                                                            {value.description.slice(
+                                                                0,
+                                                                50
+                                                            )}
+                                                            ...
+                                                        </td>
+                                                        <td>
+                                                            {
+                                                                value
+                                                                    ?.parent_cat
+                                                                    ?.name
+                                                            }
+                                                        </td>
+                                                        <td className="uk-text-capitalize">
+                                                            {value.status}
+                                                        </td>
+                                                        <td className="uk-text-capitalize">
+                                                            {
+                                                                value.approval_status
+                                                            }
+                                                        </td>
+                                                        <td className="uk-text-capitalize">
+                                                            {
+                                                                <FormattedDate
+                                                                    getDate={
+                                                                        value.created_at
+                                                                    }
+                                                                />
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            <div className="uk-flex gap-2">
+                                                                <div>
+                                                                    <Link
+                                                                        to={`/op-admin/view-blog-category/${value._id}`}
+                                                                        className="sc-button sc-button-primary sc-js-button-wave-light"
+                                                                    >
+                                                                        <i className="mdi mdi-eye"></i>
+                                                                    </Link>
+                                                                </div>
+                                                                <div
+                                                                    onClick={() =>
+                                                                        handleViewBlog(
+                                                                            value._id
+                                                                        )
+                                                                    }
                                                                 >
-                                                                    <i className="mdi mdi-eye"></i>
-                                                                </Link>
-                                                            </div>
-                                                            <div
-                                                                onClick={() =>
-                                                                    handleViewBlog(
-                                                                        value._id
-                                                                    )
-                                                                }
-                                                            >
-                                                                <a
-                                                                    className="sc-button sc-button-danger sc-js-button-wave-light"
-                                                                    href="#"
+                                                                    <a
+                                                                        className="sc-button sc-button-danger sc-js-button-wave-light"
+                                                                        href="#"
+                                                                    >
+                                                                        <i className="mdi mdi-file-edit"></i>
+                                                                    </a>
+                                                                </div>
+                                                                <div
+                                                                    onClick={(
+                                                                        e
+                                                                    ) =>
+                                                                        deleteblogcategory(
+                                                                            value._id
+                                                                        )
+                                                                    }
                                                                 >
-                                                                    <i className="mdi mdi-file-edit"></i>
-                                                                </a>
+                                                                    <a
+                                                                        className="sc-button sc-button-secondary sc-js-button-wave-light"
+                                                                        href="#"
+                                                                    >
+                                                                        <i className="mdi mdi-trash-can-outline"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
-                                                            <div
-                                                                onClick={(e) =>
-                                                                    deleteblogcategory(
-                                                                        value._id
-                                                                    )
-                                                                }
-                                                            >
-                                                                <a
-                                                                    className="sc-button sc-button-secondary sc-js-button-wave-light"
-                                                                    href="#"
-                                                                >
-                                                                    <i className="mdi mdi-trash-can-outline"></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            )
                                         ) : (
                                             <tr>
                                                 <td>

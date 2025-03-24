@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import RevisionList from '../../../components/RevisionList';
-import apiClient from '../../../services/api';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import RevisionList from "../../../components/RevisionList";
+import apiClient from "../../../services/api";
 
 export default function ViewProductCategories() {
-
     const { id } = useParams();
     const [formData, setformData] = useState({
         name: "",
@@ -30,9 +29,8 @@ export default function ViewProductCategories() {
         edittutorial();
     }, []);
 
-  return (
-    <>
-    
+    return (
+        <>
             <div id="sc-page-wrapper">
                 <div id="sc-page-content">
                     <div className="uk-child-width-1-1@l" data-uk-grid>
@@ -41,25 +39,62 @@ export default function ViewProductCategories() {
                                 <div className="uk-card-body">
                                     <h2>{formData.name}</h2>
                                     <fieldset className="uk-fieldset">
-                                        <div className="uk-margin">
-                                            <div>
-                                                <b>Slug</b>
+                                        <div className="uk-width-1-2">
+                                            <div
+                                                className="uk-padding-small"
+                                                style={{
+                                                    border: "1px solid #ccc",
+                                                }}
+                                            >
+                                                <b>Name</b>: {formData.name}
                                             </div>
-                                            {formData.name}
                                         </div>
-                                        <div className="uk-margin">
-                                            <div>
-                                                <b>Category</b>
+
+                                        <div className="uk-width-1-2">
+                                            <div
+                                                className="uk-padding-small"
+                                                style={{
+                                                    border: "1px solid #ccc",
+                                                }}
+                                            >
+                                                <b>Title</b>: {formData.title}
                                             </div>
-                                            {formData?.category?.name}
                                         </div>
-                                        <div className="uk-margin">
-                                            <div>
-                                                <b>Description</b>
+
+                                        <div className="uk-width-1-2">
+                                            <div
+                                                className="uk-padding-small"
+                                                style={{
+                                                    border: "1px solid #ccc",
+                                                }}
+                                            >
+                                                <b>Slug</b>: {formData.slug}
                                             </div>
-                                            {formData.description}
                                         </div>
-                                        <div className="uk-margin"></div>
+
+                                        <div className="uk-width-1-2">
+                                            <div
+                                                className="uk-padding-small"
+                                                style={{
+                                                    border: "1px solid #ccc",
+                                                }}
+                                            >
+                                                <b>Description</b>:{" "}
+                                                {formData.description}
+                                            </div>
+                                        </div>
+
+                                        <div className="uk-width-1-2">
+                                            <div
+                                                className="uk-padding-small"
+                                                style={{
+                                                    border: "1px solid #ccc",
+                                                }}
+                                            >
+                                                <b>Parent Category</b>:{" "}
+                                                {formData?.parent_cat?.name}
+                                            </div>
+                                        </div>
                                     </fieldset>
 
                                     <div className="uk-margin-top">
@@ -76,7 +111,6 @@ export default function ViewProductCategories() {
                     </div>
                 </div>
             </div>
-    
-    </>
-  )
+        </>
+    );
 }
