@@ -46,7 +46,7 @@ export default function StaffManagement() {
     }
 
     const handleView = (id) => {
-        navigate(`/it-admin/edit-it-staff/${id}`); // Redirect to second page with blog ID in URL
+        navigate(`/it-admin/edit-staffmanagement/${id}`); // Redirect to second page with blog ID in URL
     };
 
   return (
@@ -56,7 +56,7 @@ export default function StaffManagement() {
                 <div id="sc-page-content">
                     <div className="uk-flex uk-flex-between uk-flex-middle">
                         <h3>Staff Management</h3>
-                        <Link to="/it-admin/add-roles">
+                        <Link to="/it-admin/add-staffmanagement">
                             <button className="sc-fab sc-fab-text sc-fab-success solid-button">
                                 <i className="mdi mdi-plus"></i>Create
                             </button>
