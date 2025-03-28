@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Operations\EnquiryController;
 use App\Http\Controllers\Operations\RequestCallbackController;
+use App\Http\Controllers\Operations\ServiceCategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTicketController;
 use Illuminate\Http\Request;
@@ -39,6 +40,11 @@ Route::post('request-callbacks', [RequestCallbackController::class, 'store']);
 // Home
 Route::get('home', [HomeController::class, 'index']);
 Route::get('header-footer', [HomeController::class, 'headerFooter']);
+Route::post('register-service-partner', [HomeController::class, 'registerServicePartner']);
+Route::post('resend-service-partner-otp', [HomeController::class, 'resendServicePartnerOtp']);
+Route::post('verify-service-partner-otp', [HomeController::class, 'verifyServicePartnerOtp']);
+Route::get('get-service-partner/{id}', [HomeController::class, 'getServicePartner']);
+Route::post('service-partner-details-save', [HomeController::class, 'servicePartnerDetailsSave']);
 
 // IT Staff APIs
 require('api_it.php');

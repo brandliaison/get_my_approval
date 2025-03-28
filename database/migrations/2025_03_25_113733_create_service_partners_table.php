@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('service_partners', function (Blueprint $table) {
             $table->id();
+            $table->string('reg_type');
             $table->enum('country', ['India', 'Other']);
+            $table->string('org_name')->nullable();
             $table->string('name');
+            $table->string('designation')->nullable();
             $table->string('email')->unique();
             $table->string('email_otp')->nullable();
             $table->timestamp('email_verified_at')->nullable();
@@ -51,6 +54,10 @@ return new class extends Migration
             // Skills / Services
             $table->text('skills')->nullable(); // JSON format
 
+            // Business
+            $table->string('business_title')->nullable();
+            $table->string('business_description')->nullable();
+
             // Uploads
             $table->string('profile_photo')->nullable();
             $table->string('photo')->nullable();
@@ -60,6 +67,7 @@ return new class extends Migration
 
             // Status
             $table->string('status')->default('pending');
+            $table->string('steps')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

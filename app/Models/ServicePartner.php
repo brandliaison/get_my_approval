@@ -11,8 +11,11 @@ class ServicePartner extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'reg_type',
         'country',
+        'org_name',
         'name',
+        'designation',
         'email',
         'email_otp',
         'email_verified_at',
@@ -38,9 +41,12 @@ class ServicePartner extends Model
         'experience_years',
         'experience_months',
         'skills',
+        'business_title',
+        'business_description',
         'profile_photo',
         'photo',
         'agreed_terms',
         'status',
+        'steps',
     ];
 }

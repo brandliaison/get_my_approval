@@ -3,6 +3,7 @@
 namespace App\CommonHelpers;
 
 use App\Models\OP\Service;
+use Illuminate\Support\Facades\Http;
 
 class CommonHelpers
 {
@@ -48,5 +49,20 @@ class CommonHelpers
         }
 
         return null;
+    }
+
+    public static function sendOtp($mobile, $otp)
+    {
+        $response = Http::get('https://2factor.in/API/V1/'.env('2FACTOR_TOKEN').'/SMS/+91'.$mobile.'/'.$otp.'/mobile verification');
+
+        // Get response data
+        $data = $response->json();
+
+        // Check if the request was successful
+        if ($response->successful()) {
+            return $data;
+        } else {
+            return response()->json(['error' => $response. 'Failed to send OTP'], 500);
+        }
     }
 }

@@ -14,6 +14,8 @@ import Notification from './pages/Notification';
 import Tutorial from './pages/Tutorial';
 import apiClient from './frontservices/api';
 import ServicePartnerForm from './pages/Forms/ServicePartnerForm';
+import ServicePartnerOtp from './pages/Forms/ServicePartnerOtp';
+import ServicePartnerDetails from './pages/Forms/ServicePartnerDetails';
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -44,8 +46,11 @@ function App() {
         <Route path="/notification" element={<Notification />} />
         <Route path="/tutorial" element={<Tutorial />} />
 
-        {/* Forms */}
+        {/* Service Partner Forms */}
         <Route path="/service-partner-registraton" element={<ServicePartnerForm />} />
+        <Route path="/service-verify-otp" element={<ServicePartnerOtp />} />
+        <Route path="/service-partner-details" element={<ServicePartnerDetails />} />
+
       </Routes>
       <Footer footer={layoutdata}/>
     </Router>

@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import apiClient from "../../../OpAdmin/services/api";
-import UIkit from 'uikit';
+import apiClient from "../../services/api";
+import UIkit from "uikit";
+import { useNavigate } from "react-router-dom";
 
 export default function ServicePartnerForm() {
-    const [country, setCountry] = useState();
-    const [countryOther, setCountryOther] = useState("");
-
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
+        reg_type: "Individual",
         country: "India",
+        org_name: "",
         name: "",
+        name: "",
+        reg_type: "",
         email: "",
         mobile: "",
         alt_mobile: "",
@@ -28,28 +31,13 @@ export default function ServicePartnerForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Create FormData object
-        const data = new FormData();
-        data.append("name", formData.blogname);
-        data.append("blog_category_id", formData.blogcategory);
-        data.append("image_url", formData.blogimage);
-        data.append("image_alt", formData.blogimagealt);
-        data.append("description", formData.blogdiscription);
-        data.append("content", formData.blogcontent);
-        data.append("technical_name", formData.blogtechnicalname);
-
-        // Log to console (for debugging)
-        console.log("Form Data:", Object.fromEntries(data));
-
         // API Call (Optional)
         apiClient
-            .post(`/blogs`, data, {
-                headers: { "Content-Type": "multipart/form-data" },
-            })
+            .post(`/register-service-partner`, formData)
             .then((response) => {
                 console.log("Success:", response.data);
                 UIkit.notification({
-                    message: "Blog created successfully!",
+                    message: response?.data?.message,
                     status: "success",
                     timeout: 2000,
                     pos: "top-center",
@@ -64,15 +52,35 @@ export default function ServicePartnerForm() {
                     district: "",
                     pincode: "",
                 });
+                navigate("/service-verify-otp");
+                localStorage.setItem(
+                    "service_partner_reg",
+                    response.data.user_id
+                );
             })
             .catch((error) => {
-                console.error("Error:", error);
-                UIkit.notification({
-                    message: error?.response?.data?.message,
-                    status: "danger",
-                    timeout: 2000,
-                    pos: "top-center",
-                });
+                // console.error("Error:", error?.response);
+                if (error?.response?.data?.errors) {
+                    Object.entries(error.response.data.errors).forEach(
+                        ([key, messages]) => {
+                            messages.forEach((msg) => {
+                                UIkit.notification({
+                                    message: msg, // Display actual error message
+                                    status: "danger",
+                                    timeout: 2000,
+                                    pos: "top-center",
+                                });
+                            });
+                        }
+                    );
+                } else {
+                    UIkit.notification({
+                        message: error?.response?.data?.message,
+                        status: "danger",
+                        timeout: 2000,
+                        pos: "top-center",
+                    });
+                }
             });
     };
 
@@ -82,11 +90,43 @@ export default function ServicePartnerForm() {
         <div className="uk-flex uk-flex-center uk-padding-large">
             <div style={{ width: "600px" }}>
                 <h2>Service Partner Registration</h2>
-                <form className="uk-form-stacked">
+                <form className="uk-form-stacked" onSubmit={handleSubmit}>
                     <div>
-                        <label className="uk-form-label">Select Country</label>
                         <div className="uk-form-controls">
                             <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                <label className="uk-form-label">
+                                    Select Type
+                                </label>
+                                <label>
+                                    <input
+                                        className="uk-radio"
+                                        type="radio"
+                                        name="reg_type"
+                                        value="Individual"
+                                        onChange={handleChange}
+                                        checked={
+                                            formData.reg_type == "Individual"
+                                                ? true
+                                                : false
+                                        }
+                                    />{" "}
+                                    Individual
+                                </label>
+                                <label>
+                                    <input
+                                        className="uk-radio"
+                                        type="radio"
+                                        value="Company"
+                                        name="reg_type"
+                                        onChange={handleChange}
+                                    />{" "}
+                                    Company
+                                </label>
+                            </div>
+                            <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                <label className="uk-form-label">
+                                    Select Country
+                                </label>
                                 <label>
                                     <input
                                         className="uk-radio"
@@ -653,12 +693,35 @@ export default function ServicePartnerForm() {
                                     </select>
                                 </label>
                             </div>
+                            <h4 className="uk-margin-small-bottom">
+                                <b>Basic Details:</b>{" "}
+                            </h4>
+
+                            {formData.reg_type == "Company" ? (
+                                <div className="uk-margin">
+                                    <label>
+                                        Organization Name{" "}
+                                        <span className="uk-text-danger">
+                                            *
+                                        </span>
+                                        <input
+                                            type="text"
+                                            className="uk-input"
+                                            placeholder="Enter Organization Name"
+                                            name="org_name"
+                                            onChange={handleChange}
+                                            value={formData.org_name}
+                                        />
+                                    </label>
+                                </div>
+                            ) : (
+                                ""
+                            )}
                             <div className="uk-margin">
-                                <h4 className="uk-margin-small-bottom">
-                                    <b>Basic Details:</b>{" "}
-                                </h4>
                                 <label>
-                                    Name{" "}
+                                    {formData.reg_type == "Company"
+                                        ? "Contact Person"
+                                        : "Name"}{" "}
                                     <span className="uk-text-danger">*</span>
                                     <input
                                         type="text"
@@ -670,6 +733,26 @@ export default function ServicePartnerForm() {
                                     />
                                 </label>
                             </div>
+                            {formData.reg_type == "Company" ? (
+                                <div className="uk-margin">
+                                    <label>
+                                        Designation{" "}
+                                        <span className="uk-text-danger">
+                                            *
+                                        </span>
+                                        <input
+                                            type="text"
+                                            className="uk-input"
+                                            placeholder="Enter Designation"
+                                            name="designation"
+                                            onChange={handleChange}
+                                            value={formData.designation}
+                                        />
+                                    </label>
+                                </div>
+                            ) : (
+                                ""
+                            )}
                             <div className="uk-margin">
                                 <label>
                                     Email{" "}
