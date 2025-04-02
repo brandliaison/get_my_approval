@@ -58,6 +58,8 @@ import ServiceSection from "./pages/services/servicesection/ServiceSection";
 import AddServiceSection from "./pages/services/servicesection/AddServiceSection";
 import EditServiceSection from "./pages/services/servicesection/EditServiceSection";
 import ViewServiceSection from "./pages/services/servicesection/ViewServiceSection";
+import ServicePartners from "./pages/servicePartners/ServicePartners";
+import ServicePartnersDetails from "./pages/servicePartners/ServicePartnersDetails";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -123,6 +125,9 @@ export default function App() {
                             <Route path="view-tutorials-categories/:id" element={<ViewTutorialCategories />} />
                             <Route path="new-submitted-posts" element={<NewSubmittedPosts />} />
                             <Route path="submitted-post-view/:id" element={<ViewSubmittedPost />} />
+
+                            <Route path="manage-service-partners" element={<ServicePartners />} />
+                            <Route path="service-partner-details/:id" element={<ServicePartnersDetails />} />
                         </Route>
                       </Route>
                   </Routes>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import apiClient from "../../frontservices/api";
 import UIkit from "uikit";
 
-const Profile = ({ onSubmit }) => {
+const Profile = ({ user, onSubmit }) => {
     const [formData, setFormData] = useState({
         business_title: "",
         business_description: "",
@@ -15,11 +15,15 @@ const Profile = ({ onSubmit }) => {
         e.preventDefault();
 
         const data = new FormData();
-        data.append("user_id", `${localStorage.getItem("service_partner_reg")}`);
+        data.append(
+            "user_id",
+            `${localStorage.getItem("service_partner_reg")}`
+        );
         data.append("business_title", formData.business_title);
         data.append("business_description", formData.business_description);
         data.append("profile_photo", formData.profile_photo);
         data.append("photo", formData.photo);
+        data.append("website", formData.website);
         data.append("agreed_terms", formData.agreed_terms);
         data.append("su_type", "profile");
 
@@ -84,6 +88,7 @@ const Profile = ({ onSubmit }) => {
     useEffect(() => {
         getServiceCategories();
     }, []);
+    console.log(user);
 
     return (
         <div>
@@ -91,37 +96,61 @@ const Profile = ({ onSubmit }) => {
             <form className="uk-form-stacked" onSubmit={handleSubmitSk}>
                 <div className="uk-form-controls">
                     <>
-                        <div className="uk-width-1-1">
-                            <label htmlFor="">Business Title</label>
-                            <input
-                                type="text"
-                                className="uk-input"
-                                placeholder="Enter Business Name"
-                                name="business_title"
-                                value={formData.business_title}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="uk-width-1-1 uk-margin-small-top">
-                            <label htmlFor="">Business Description</label>
-                            <input
-                                type="text"
-                                className="uk-input"
-                                placeholder="Enter Business Description"
-                                name="business_description"
-                                value={formData.business_description}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div
-                            className="uk-flex gap-6 uk-margin-small-top uk-margin-small-bottom"
-                        >
+                        {user?.reg_type == "Individual" ? (
+                            <>
+                                <div className="uk-width-1-1">
+                                    <label htmlFor="">Business Title</label>
+                                    <input
+                                        type="text"
+                                        className="uk-input"
+                                        placeholder="Enter Business Name"
+                                        name="business_title"
+                                        value={formData.business_title}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="uk-width-1-1 uk-margin-small-top">
+                                    <label htmlFor="">
+                                        Business Description
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="uk-input"
+                                        placeholder="Enter Business Description"
+                                        name="business_description"
+                                        value={formData.business_description}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            </>
+                        ) : (
+                            ""
+                        )}
+
+                        {user?.reg_type == "Company" ? (
+                            <div className="uk-width-1-1">
+                                <label htmlFor="">Website</label>
+                                <input
+                                    type="text"
+                                    className="uk-input"
+                                    placeholder="Enter Website"
+                                    name="website"
+                                    value={formData.website}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        ) : (
+                            ""
+                        )}
+
+                        <div className="uk-flex gap-6 uk-margin-small-top uk-margin-small-bottom">
                             {/* Service Dropdown */}
                             <div className="uk-width-1-2">
-                                <label htmlFor="">Upload Profile</label>
+                                <label htmlFor="">
+                                    Upload Brochure / Profile
+                                </label>
                             </div>
 
-                            {/* Text Input */}
                             <div className="uk-width-1-2 uk-flex uk-gap-small">
                                 <input
                                     type="file"
@@ -131,23 +160,26 @@ const Profile = ({ onSubmit }) => {
                                 />
                             </div>
                         </div>
+                        {user?.reg_type == "Individual" ? (
+                            <div className="uk-flex gap-6 uk-margin-small-top uk-margin-small-bottom">
+                                {/* Service Dropdown */}
+                                <div className="uk-width-1-2">
+                                    <label htmlFor="">Upload Photograph</label>
+                                </div>
 
-                        <div className="uk-flex gap-6 uk-margin-small-top uk-margin-small-bottom">
-                            {/* Service Dropdown */}
-                            <div className="uk-width-1-2">
-                                <label htmlFor="">Upload Photograph</label>
+                                {/* Text Input */}
+                                <div className="uk-width-1-2 uk-flex uk-gap-small">
+                                    <input
+                                        type="file"
+                                        className="uk-input"
+                                        name="photo"
+                                        onChange={handleFileChange}
+                                    />
+                                </div>
                             </div>
-
-                            {/* Text Input */}
-                            <div className="uk-width-1-2 uk-flex uk-gap-small">
-                                <input
-                                    type="file"
-                                    className="uk-input"
-                                    name="photo"
-                                    onChange={handleFileChange}
-                                />
-                            </div>
-                        </div>
+                        ) : (
+                            ""
+                        )}
                         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                             <label>
                                 <input class="uk-checkbox" type="checkbox" />{" "}

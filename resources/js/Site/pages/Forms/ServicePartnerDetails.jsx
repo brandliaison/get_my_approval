@@ -7,6 +7,8 @@ import Skills from "../../Components/ServicePartnerRegistration/Skills";
 import Profile from "../../Components/ServicePartnerRegistration/Profile";
 import axios from "axios";
 import AadharVerification from "../../Components/ServicePartnerRegistration/AadharVerification";
+import GstVerification from "../../Components/ServicePartnerRegistration/GstVerification";
+import Branches from "../../Components/ServicePartnerRegistration/Branches";
 
 export default function ServicePartnerDetails() {
     // const navigate = useNavigate();
@@ -81,6 +83,7 @@ export default function ServicePartnerDetails() {
             });
     };
 
+    console.log(formData);
     const getData = () => {
         apiClient
             .get(
@@ -102,9 +105,6 @@ export default function ServicePartnerDetails() {
                 console.log(err);
             });
     };
-
-    const [showSkills, setSkills] = useState("none");
-    const [showProfile, setProfile] = useState("none");
 
     useEffect(() => {
         getData();
@@ -128,79 +128,156 @@ export default function ServicePartnerDetails() {
                             className="uk-form-stacked"
                             onSubmit={handleSubmit}
                         >
-                            <div>
-                                <div className="uk-form-controls">
-                                    <h4 className="uk-margin-small-bottom">
-                                        <b>Verification Details:</b>{" "}
-                                    </h4>
-                                    {user?.country == "India" ? (
-                                        <>
-                                            {user?.reg_type === "Individual" ? (
-                                                <AadharVerification
-                                                    user={user}
-                                                    onSubmit={handleChildSubmit}
+                            <div className="uk-form-controls">
+                                <h4 className="uk-margin-small-bottom">
+                                    <b>Verification Details:</b>{" "}
+                                </h4>
+                                {user?.country == "India" ? (
+                                    <>
+                                        {user?.reg_type === "Individual" ? (
+                                            <AadharVerification
+                                                user={user}
+                                                onSubmit={handleChildSubmit}
+                                            />
+                                        ) : (
+                                            ""
+                                        )}
+                                        {user?.reg_type === "Company" ? (
+                                            <GstVerification
+                                                user={user}
+                                                onSubmit={handleChildSubmit}
+                                            />
+                                        ) : (
+                                            ""
+                                        )}
+                                    </>
+                                ) : (
+                                    ""
+                                )}
+
+                                {user?.country !== "India" ? (
+                                    <>
+                                        <div className="uk-margin">
+                                            <label>
+                                                Upload ID Card{" "}
+                                                <span className="uk-text-danger">
+                                                    *
+                                                </span>
+                                                <input
+                                                    type="file"
+                                                    className="uk-input"
+                                                    placeholder="Upload ID Card"
+                                                    name="id_card"
+                                                    onChange={handleFileChange}
                                                 />
-                                            ) : (
-                                                ""
-                                            )}
-                                        </>
-                                    ) : (
-                                        ""
-                                    )}
+                                            </label>
+                                        </div>
+                                    </>
+                                ) : (
+                                    ""
+                                )}
+                                {user?.aadhar_verified || user?.gst_verified ? (
+                                    <>
+                                        <div className="uk-margin">
+                                            <label>
+                                                Office Address{" "}
+                                                <span className="uk-text-danger">
+                                                    *
+                                                </span>
+                                                <input
+                                                    type="text"
+                                                    className="uk-input"
+                                                    placeholder="Enter Office Address"
+                                                    name="office_address"
+                                                    onChange={handleChange}
+                                                    value={
+                                                        formData.office_address
+                                                    }
+                                                />
+                                            </label>
+                                        </div>
+                                        <div className="uk-margin">
+                                            <label>
+                                                Office District / County
+                                                <span className="uk-text-danger">
+                                                    *
+                                                </span>
+                                                <input
+                                                    type="text"
+                                                    className="uk-input"
+                                                    placeholder="Enter Office District / County"
+                                                    name="office_district"
+                                                    onChange={handleChange}
+                                                    value={
+                                                        formData.office_district
+                                                    }
+                                                />
+                                            </label>
+                                        </div>
+                                        <div className="uk-margin">
+                                            <label>
+                                                Office State / Province{" "}
+                                                <span className="uk-text-danger">
+                                                    *
+                                                </span>
+                                                <input
+                                                    type="text"
+                                                    className="uk-input"
+                                                    placeholder="Enter Office State / Province"
+                                                    name="office_state"
+                                                    onChange={handleChange}
+                                                    value={
+                                                        formData.office_state
+                                                    }
+                                                />
+                                            </label>
+                                        </div>
+                                        <div className="uk-margin">
+                                            <label>
+                                                Office Pincode / Zipcode{" "}
+                                                <span className="uk-text-danger">
+                                                    *
+                                                </span>
+                                                <input
+                                                    type="text"
+                                                    className="uk-input"
+                                                    placeholder="Office Pincode / Zipcode"
+                                                    name="office_pincode"
+                                                    onChange={handleChange}
+                                                    value={
+                                                        formData.office_pincode
+                                                    }
+                                                />
+                                            </label>
+                                        </div>
 
-                                    {user?.country !== "India" ? (
-                                        <>
-                                            <div className="uk-margin">
-                                                <label>
-                                                    Upload ID Card{" "}
-                                                    <span className="uk-text-danger">
-                                                        *
-                                                    </span>
-                                                    <input
-                                                        type="file"
-                                                        className="uk-input"
-                                                        placeholder="Upload ID Card"
-                                                        name="id_card"
-                                                        onChange={
-                                                            handleFileChange
-                                                        }
-                                                    />
-                                                </label>
-                                            </div>
-                                        </>
-                                    ) : (
-                                        ""
-                                    )}
-                                    {user?.aadhar_verified ? (
-                                        <>
-                                            <div className="uk-margin">
-                                                <label>
-                                                    Date Of Birth{" "}
-                                                    <span className="uk-text-danger">
-                                                        *
-                                                    </span>
-                                                    <input
-                                                        type="date"
-                                                        className="uk-input"
-                                                        placeholder="Date Of Birth"
-                                                        name="dob"
-                                                        onChange={handleChange}
-                                                        value={formData.dob}
-                                                        max={today}
-                                                    />
-                                                </label>
-                                            </div>
+                                        <div className="uk-margin">
+                                            <label>
+                                                Date Of Birth{" "}
+                                                <span className="uk-text-danger">
+                                                    *
+                                                </span>
+                                                <input
+                                                    type="date"
+                                                    className="uk-input"
+                                                    placeholder="Date Of Birth"
+                                                    name="dob"
+                                                    onChange={handleChange}
+                                                    value={formData.dob}
+                                                    max={today}
+                                                />
+                                            </label>
+                                        </div>
 
-                                            <div className="uk-margin">
-                                                <button className="uk-button uk-button-primary">
-                                                    Next
-                                                </button>
-                                            </div>
-                                        </>
-                                    ) : (
-                                        ""
-                                    )}
-                                </div>
+                                        <div className="uk-margin">
+                                            <button className="uk-button uk-button-primary">
+                                                Next
+                                            </button>
+                                        </div>
+                                    </>
+                                ) : (
+                                    ""
+                                )}
                             </div>
                         </form>
                     </div>
@@ -208,7 +285,24 @@ export default function ServicePartnerDetails() {
                     ""
                 )}
                 {user?.steps == "step2" ? (
-                    <Academic user={user} onSubmit={handleChildSubmit} />
+                    <>
+                        {user?.reg_type == "Individual" ? (
+                            <Academic
+                                user={user}
+                                onSubmit={handleChildSubmit}
+                            />
+                        ) : (
+                            ""
+                        )}
+                        {user?.reg_type == "Company" ? (
+                            <Branches
+                                user={user}
+                                onSubmit={handleChildSubmit}
+                            />
+                        ) : (
+                            ""
+                        )}
+                    </>
                 ) : (
                     ""
                 )}
@@ -219,7 +313,7 @@ export default function ServicePartnerDetails() {
                     ""
                 )}
                 {user?.steps == "step4" ? (
-                    <Profile onSubmit={handleChildSubmit} />
+                    <Profile user={user} onSubmit={handleChildSubmit} />
                 ) : (
                     ""
                 )}

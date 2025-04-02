@@ -224,12 +224,39 @@ class HomeController extends Controller
             }
         }
 
+        if($request->su_type === 'gst_verification'){
+            if($request->gst_verified == true){
+                $gst_details = json_decode($request->gst_details, true);
+                $data['gst_number'] = $request->gst_number;
+                $data['gst_verified'] = now()->format('d-M-Y');
+                $data['gst_details'] = $gst_details;
+            }
+        }
+
         if($request->su_type === 'academic'){
             $rules['academic_details'] = 'required';
             $rules['experience_years'] = 'required';
             $rules['experience_months'] = 'required';
 
             $data['academic_details'] = json_decode($request->academic_details, true);
+            $data['experience_years'] = $request->experience_years;
+            $data['experience_months'] = $request->experience_months;
+            $data['steps'] = 'step3';
+        }
+
+        if($request->su_type === 'branch'){
+            $rules['team_size'] = 'required';
+            $rules['experience_years'] = 'required';
+            $rules['experience_months'] = 'required';
+            $rules['branch_address'] = 'required';
+            $rules['branch_district'] = 'required';
+            $rules['branch_state'] = 'required';
+            $rules['branch_pincode'] = 'required';
+
+            $data['branch_address'] = $request->branch_address;
+            $data['branch_district'] = $request->branch_district;
+            $data['branch_state'] = $request->branch_state;
+            $data['branch_pincode'] = $request->branch_pincode;
             $data['experience_years'] = $request->experience_years;
             $data['experience_months'] = $request->experience_months;
             $data['steps'] = 'step3';
@@ -244,7 +271,9 @@ class HomeController extends Controller
         if($request->su_type === 'profile'){
             $data['business_title'] = $request->business_title;
             $data['business_description'] = $request->business_description;
+            $data['website'] = $request->website;
             $data['agreed_terms'] = $request->agreed_terms;
+            $data['status'] = 'pending';
             $data['steps'] = 'step5';
 
             if ($request->hasFile('profile_photo')) {

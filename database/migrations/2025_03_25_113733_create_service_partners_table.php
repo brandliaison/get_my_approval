@@ -35,6 +35,9 @@ return new class extends Migration
             $table->string('aadhar_number')->nullable();
             $table->string('aadhar_verified')->nullable();
             $table->text('aadhar_details')->nullable();
+            $table->string('gst_number')->nullable();
+            $table->string('gst_verified')->nullable();
+            $table->text('gst_details')->nullable();
             $table->text('office_address')->nullable();
             $table->text('office_district')->nullable();
             $table->text('office_state')->nullable();
@@ -50,6 +53,12 @@ return new class extends Migration
             // Experience
             $table->string('experience_years')->nullable();
             $table->string('experience_months')->nullable();
+
+            $table->string('team_size')->nullable();
+            $table->string('branch_address')->nullable();
+            $table->string('branch_district')->nullable();
+            $table->string('branch_state')->nullable();
+            $table->string('branch_pincode')->nullable();
 
             // Skills / Services
             $table->text('skills')->nullable(); // JSON format

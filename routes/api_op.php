@@ -25,6 +25,7 @@ use App\Http\Controllers\Operations\PostCommentController;
 use App\Http\Controllers\Operations\ProductCategoryController;
 use App\Http\Controllers\Operations\ProductController;
 use App\Http\Controllers\Operations\RequestCallbackController;
+use App\Http\Controllers\Operations\ServicePartnerController;
 use App\Http\Controllers\Operations\TicketController;
 use App\Http\Controllers\Operations\TicketsCategoryController;
 use App\Http\Middleware\MultiAuthMiddleware;
@@ -107,8 +108,13 @@ Route::prefix('v1/op-admin')->group(function () {
 
         // Request Callback
         Route::apiResource('request-callbacks', RequestCallbackController::class)->except(['store']);
+
+        // Service Partner
+        Route::get('service-partners', [ServicePartnerController::class, 'index']);
+        Route::get('service-partner-details/{id}', [ServicePartnerController::class, 'show']);
     });
 
 
     Route::get('active-service-categories', [ServiceCategoryController::class, 'activeServiceCategories']);
+    Route::get('active-services', [ServiceController::class, 'activeServices']);
 });

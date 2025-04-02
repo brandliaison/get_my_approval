@@ -1,9 +1,11 @@
+import axios from "axios";
 import React, { useState } from "react";
 import UIkit from "uikit";
-import apiClient from "../../services/api";
+import apiClient, { gstToken } from "../../services/api";
 
 export default function AadharVerification({user, onSubmit}) {
-    const [userData, setUserData] = useState(user.user);
+
+    const [userData, setUserData] = useState(user);
     const [formData, setFormData] = useState({
         aadhar_number: "",
     });
@@ -56,7 +58,7 @@ export default function AadharVerification({user, onSubmit}) {
             });
             console.log("OTP Sent Successfully:", response.data);
         } catch (error) {
-            console.error("Error sending OTP:", error.response.data);
+            console.error("Error sending OTP:", error);
             var msg = "Verification Failed.";
             if (error?.response.data.data?.status == "invalid_aadhaar") {
                 msg = "Invalid Aadhar Number.";
@@ -135,7 +137,6 @@ export default function AadharVerification({user, onSubmit}) {
             });
         }
     };
-    console.log(userData);
 
     return (
         <>
@@ -201,69 +202,6 @@ export default function AadharVerification({user, onSubmit}) {
                     ""
                 )}
             </div>
-
-            {user?.aadhar_verified ? (
-                <>
-                    <div className="uk-margin">
-                        <label>
-                            Office Address{" "}
-                            <span className="uk-text-danger">*</span>
-                            <input
-                                type="text"
-                                className="uk-input"
-                                placeholder="Enter Office Address"
-                                name="office_address"
-                                onChange={handleChange}
-                                value={formData.office_address}
-                            />
-                        </label>
-                    </div>
-                    <div className="uk-margin">
-                        <label>
-                            Office District / County
-                            <span className="uk-text-danger">*</span>
-                            <input
-                                type="text"
-                                className="uk-input"
-                                placeholder="Enter Office District / County"
-                                name="office_district"
-                                onChange={handleChange}
-                                value={formData.office_district}
-                            />
-                        </label>
-                    </div>
-                    <div className="uk-margin">
-                        <label>
-                            Office State / Province{" "}
-                            <span className="uk-text-danger">*</span>
-                            <input
-                                type="text"
-                                className="uk-input"
-                                placeholder="Enter Office State / Province"
-                                name="office_state"
-                                onChange={handleChange}
-                                value={formData.office_state}
-                            />
-                        </label>
-                    </div>
-                    <div className="uk-margin">
-                        <label>
-                            Office Pincode / Zipcode{" "}
-                            <span className="uk-text-danger">*</span>
-                            <input
-                                type="text"
-                                className="uk-input"
-                                placeholder="Office Pincode / Zipcode"
-                                name="office_pincode"
-                                onChange={handleChange}
-                                value={formData.office_pincode}
-                            />
-                        </label>
-                    </div>
-                </>
-            ) : (
-                ""
-            )}
         </>
     );
 }

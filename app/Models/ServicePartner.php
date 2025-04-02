@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\OP\Service;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Eloquent\Model;
 use MongoDB\Laravel\Eloquent\SoftDeletes;
@@ -31,6 +32,9 @@ class ServicePartner extends Model
         'aadhar_number',
         'aadhar_verified',
         'aadhar_details',
+        'gst_number',
+        'gst_verified',
+        'gst_details',
         'office_address',
         'office_district',
         'office_state',
@@ -40,13 +44,30 @@ class ServicePartner extends Model
         'academic_details',
         'experience_years',
         'experience_months',
+        'team_size',
+        'branch_address',
+        'branch_district',
+        'branch_state',
+        'branch_pincode',
         'skills',
         'business_title',
         'business_description',
         'profile_photo',
         'photo',
+        'website',
         'agreed_terms',
         'status',
         'steps',
     ];
+
+    public function getSkillsWithServices()
+    {
+        $skills = $this->skills ?? [];
+
+        return collect($skills)->map(function ($skill) {
+            $service = Service::where('_id', $skill['service'])->select('_id', 'name')->first();
+            $skill['service_details'] = $service;
+            return $skill;
+        });
+    }
 }

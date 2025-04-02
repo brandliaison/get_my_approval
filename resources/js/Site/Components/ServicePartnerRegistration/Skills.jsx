@@ -64,7 +64,7 @@ const Skills = ({ onSubmit }) => {
 
     const getServiceCategories = () => {
         apiClient
-            .get(`/v1/op-admin/active-service-categories`, {
+            .get(`/v1/op-admin/active-services`, {
                 headers: {
                     "Content-Type": "application/json",
                 },
