@@ -9,7 +9,7 @@ use App\Http\Controllers\ServicePartner\AuthController;
 use App\Http\Middleware\MultiAuthMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('v1/partner-admin')->group(function () {
+Route::prefix('v1/partner-admin')->name('partner.')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
 
     Route::middleware(MultiAuthMiddleware::class)->group(function () {

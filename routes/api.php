@@ -55,6 +55,7 @@ Route::get('get-channel-partner/{id}', [HomeController::class, 'getChannelPartne
 Route::post('channel-partner-details-save', [HomeController::class, 'channelPartnerDetailsSave']);
 
 Route::get('active-jobs', [CarrerController::class, 'getActiveJobs']);
+Route::post('apply-jobs', [CarrerController::class, 'applyJob']);
 
 // IT Staff APIs
 require('api_it.php');

@@ -29,6 +29,7 @@ class ServicePartnerController extends Controller
         if (!$data) {
             return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
         }
+        $data->makeVisible(['aadhar_details', 'aadhar_number', 'gst_details', 'gst_number']);
         $data->skills = $data->getSkillsWithServices();
 
         return response()->json(['data' => $data, 'message' => 'Data Found'], 200);

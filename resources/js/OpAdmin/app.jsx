@@ -66,6 +66,7 @@ import Job from "./pages/jobs/Jobs";
 import AddJob from "./pages/jobs/AddJob";
 import ViewJob from "./pages/jobs/ViewJob";
 import UpdateJob from "./pages/jobs/UpdateJob";
+import JobApplication from "./pages/jobs/JobApplication";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -142,6 +143,7 @@ export default function App() {
                             <Route path="add-job" element={<AddJob />} />
                             <Route path="view-job/:id" element={<ViewJob />} />
                             <Route path="update-job/:id" element={<UpdateJob />} />
+                            <Route path="job-application" element={<JobApplication />} />
 
                         </Route>
                       </Route>

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Operations;
 
 use App\Http\Controllers\Controller;
 use App\Models\OP\Career;
+use App\Models\OP\JobApplication;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CarrerController extends Controller
 {
@@ -81,8 +83,51 @@ class CarrerController extends Controller
         return response()->json(['message' => 'Career Deleted Successfully'], 200);
     }
 
-    public function getActiveJobs(){
+    public function getActiveJobs()
+    {
         $data = Career::where('is_active', true)->get();
+
+        if (!count($data) > 0) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
+    }
+
+    public function applyJob(Request $request)
+    {
+        $request->validate([
+            'job_id' => 'required|exists:careers,_id',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'mobile' => 'required|string|max:20',
+            'city' => 'required|string|max:100',
+            'cv' => 'required|file|mimes:pdf,doc,docx|max:2048',
+        ]);
+
+        // Upload CV
+        $cvPath = "";
+        if ($request->hasFile('cv')) {
+            $filePath = $request->file('cv')->store('job_cvs', 'public');
+            $cvPath = Storage::url($filePath);
+        }
+
+        $applicant = JobApplication::create([
+            'job_id' => $request->job_id,
+            'name' => $request->name,
+            'email' => $request->email,
+            'mobile' => $request->mobile,
+            'city' => $request->city,
+            'cv' => $cvPath,
+        ]);
+
+        return response()->json(['data' => $applicant, 'message' => 'Application submitted successfully'], 201);
+
+    }
+
+    public function jobApplication()
+    {
+        $data = JobApplication::with('job')->get();
 
         if (!count($data) > 0) {
             return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);

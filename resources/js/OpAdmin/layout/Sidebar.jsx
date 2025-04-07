@@ -452,9 +452,9 @@ export default function Sidebar() {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="/op-admin/manage-channel-partners">
+                                        <Link to="/op-admin/job-application">
                                             <span className="uk-nav-title">
-                                                Channel Partners
+                                                Job Applications
                                             </span>
                                         </Link>
                                     </li>

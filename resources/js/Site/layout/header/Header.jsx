@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Header(header) {
     const alldata = header.header.data;
@@ -8,6 +8,15 @@ export default function Header(header) {
     const handleServiceLink = (e) => {
         if (e == 1) {
             navigation("/service-partner-registraton");
+        }
+        if (e == 2) {
+            navigation("/channel-partner-registraton");
+        }
+    };
+
+    const handleServiceLink1 = (e) => {
+        if (e == 1) {
+            window.location.replace("/service-partner/login");
         }
         if (e == 2) {
             navigation("/channel-partner-registraton");
@@ -55,7 +64,7 @@ export default function Header(header) {
                 <div className="nav-midile uk-padding-small uk-padding-remove-horizontal">
                     <div className="custom-container uk-flex uk-flex-between uk-flex-middle">
                         <div className="one">
-                            <a href="/">
+                            <Link to={'/'}>
                                 <img
                                     src={`http://127.0.0.1:8000${
                                         alldata?.find(
@@ -63,7 +72,7 @@ export default function Header(header) {
                                         )?.value || ""
                                     }`}
                                 />
-                            </a>
+                                </Link>
                         </div>
                         <div className="two">
                             <img
@@ -149,7 +158,7 @@ export default function Header(header) {
                                         <button
                                             className="uk-button uk-button-default uk-border-remove"
                                             type="button"
-                                            tabindex="-1"
+                                            tabIndex="-1"
                                         >
                                             <span></span>
                                             <span uk-icon="icon: chevron-down"></span>
@@ -161,9 +170,32 @@ export default function Header(header) {
                                         uk-icon="lock"
                                         className="main-color"
                                     ></span>
-                                    <h5 className="uk-margin-small uk-margin-remove-bottom uk-text-bold main-color">
-                                        Login
-                                    </h5>
+                                    <div uk-form-custom="target: > * > span:first-child">
+                                        <select
+                                            aria-label="Custom controls"
+                                            onChange={(e) =>
+                                                handleServiceLink1(
+                                                    e.target.value
+                                                )
+                                            }
+                                        >
+                                            <option value="">Login</option>
+                                            <option value="1">
+                                                Service Partner
+                                            </option>
+                                            <option value="2">
+                                                Channel Partner
+                                            </option>
+                                        </select>
+                                        <button
+                                            className="uk-button uk-button-default uk-border-remove"
+                                            type="button"
+                                            tabIndex="-1"
+                                        >
+                                            <span></span>
+                                            <span uk-icon="icon: chevron-down"></span>
+                                        </button>
+                                    </div>
                                 </li>
                                 <li className="uk-padding-small uk-padding-remove-vertical">
                                     <span
@@ -196,7 +228,7 @@ export default function Header(header) {
                                             <button
                                                 className="uk-button uk-button-default uk-border-remove"
                                                 type="button"
-                                                tabindex="-1"
+                                                tabIndex="-1"
                                             >
                                                 <span></span>
                                                 <span uk-icon="icon: chevron-down"></span>

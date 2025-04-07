@@ -33,7 +33,7 @@ use App\Http\Controllers\Operations\TicketsCategoryController;
 use App\Http\Middleware\MultiAuthMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('v1/op-admin')->group(function () {
+Route::prefix('v1/op-admin')->name('operations.')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
 
     Route::middleware(MultiAuthMiddleware::class)->group(function () {
@@ -129,6 +129,7 @@ Route::prefix('v1/op-admin')->group(function () {
         Route::get('/careers/{id}', [CarrerController::class, 'show']);
         Route::put('/careers/{id}', [CarrerController::class, 'update']);
         Route::delete('/careers/{id}', [CarrerController::class, 'destroy']);
+        Route::get('/job-applications', [CarrerController::class, 'jobApplication']);
     });
 
 
