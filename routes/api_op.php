@@ -7,6 +7,8 @@ use App\Http\Controllers\Operations\BlogCategoryController;
 use App\Http\Controllers\Operations\BlogController;
 use App\Http\Controllers\Operations\BrochureCategoryController;
 use App\Http\Controllers\Operations\BrochureController;
+use App\Http\Controllers\Operations\CarrerController;
+use App\Http\Controllers\Operations\ChannelPartnerController;
 use App\Http\Controllers\Operations\DesignationController;
 use App\Http\Controllers\Operations\EnquiryController;
 use App\Http\Controllers\Operations\EntityReviewController;
@@ -112,6 +114,21 @@ Route::prefix('v1/op-admin')->group(function () {
         // Service Partner
         Route::get('service-partners', [ServicePartnerController::class, 'index']);
         Route::get('service-partner-details/{id}', [ServicePartnerController::class, 'show']);
+        Route::get('service-partner-details/{id}/approve', [ServicePartnerController::class, 'approve']);
+        Route::get('service-partner-details/{id}/reject', [ServicePartnerController::class, 'reject']);
+
+        // Channel Partner
+        Route::get('channel-partners', [ChannelPartnerController::class, 'index']);
+        Route::get('channel-partner-details/{id}', [ChannelPartnerController::class, 'show']);
+        Route::get('channel-partner-details/{id}/approve', [ChannelPartnerController::class, 'approve']);
+        Route::get('channel-partner-details/{id}/reject', [ChannelPartnerController::class, 'reject']);
+
+        // Careers
+        Route::get('/careers', [CarrerController::class, 'index']);
+        Route::post('/careers', [CarrerController::class, 'store']);
+        Route::get('/careers/{id}', [CarrerController::class, 'show']);
+        Route::put('/careers/{id}', [CarrerController::class, 'update']);
+        Route::delete('/careers/{id}', [CarrerController::class, 'destroy']);
     });
 
 

@@ -34,7 +34,6 @@ export default function ServicePartnerDetails() {
 
     // Handle file input change
     const handleFileChange = (e) => {
-        console.log(e.target.files[0]);
         setFormData({
             ...formData,
             [e.target.name]: e.target.files[0], // Store the first selected file
@@ -83,7 +82,6 @@ export default function ServicePartnerDetails() {
             });
     };
 
-    console.log(formData);
     const getData = () => {
         apiClient
             .get(
@@ -110,14 +108,10 @@ export default function ServicePartnerDetails() {
         getData();
     }, []);
 
-    const handleUpdateSk = (value) => {
-        setSkills(value.val1);
-        setProfile(value.val2);
-    };
-
     const handleChildSubmit = (data) => {
         getData();
     };
+
     return (
         <div className="uk-flex uk-flex-center uk-padding-large">
             <div style={{ width: "600px" }}>

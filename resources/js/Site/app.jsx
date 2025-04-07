@@ -16,6 +16,10 @@ import apiClient from './frontservices/api';
 import ServicePartnerForm from './pages/Forms/ServicePartnerForm';
 import ServicePartnerOtp from './pages/Forms/ServicePartnerOtp';
 import ServicePartnerDetails from './pages/Forms/ServicePartnerDetails';
+import ChannelPartnerForm from './pages/Forms/ChannelPartnerForm';
+import ChannelPartnerOtp from './pages/Forms/ChannelPartnerOtp';
+import ChannelPartnerDetails from './pages/Forms/ChannelPartnerDetails';
+import Career from './pages/Career';
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -51,6 +55,14 @@ function App() {
         <Route path="/service-verify-otp" element={<ServicePartnerOtp />} />
         <Route path="/service-partner-details" element={<ServicePartnerDetails />} />
 
+        {/* Channel Partner Forms */}
+        <Route path="/channel-partner-registraton" element={<ChannelPartnerForm />} />
+        <Route path="/channel-verify-otp" element={<ChannelPartnerOtp />} />
+        <Route path="/channel-partner-details" element={<ChannelPartnerDetails />} />
+
+        {/* Career */}
+
+        <Route path="/career" element={<Career />} />
       </Routes>
       <Footer footer={layoutdata}/>
     </Router>

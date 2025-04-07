@@ -27,6 +27,11 @@ class MultiAuthMiddleware
             return $next($request);
         }
 
-        return response()->json(['error' => 'Unauthorized111'], 401);
+        if (Auth::guard('partner')->check()) {
+            Auth::shouldUse('partner'); // Set default guard
+            return $next($request);
+        }
+
+        return response()->json(['error' => 'Unauthorized'], 401);
     }
 }

@@ -3,13 +3,16 @@
 namespace App\Models;
 
 use App\Models\OP\Service;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Sanctum\HasApiTokens;
 use MongoDB\Laravel\Eloquent\Model;
 use MongoDB\Laravel\Eloquent\SoftDeletes;
+use Spatie\Permission\Traits\HasRoles;
 
 class ServicePartner extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Authenticatable, HasApiTokens, HasRoles;
 
     protected $fillable = [
         'reg_type',
@@ -70,4 +73,13 @@ class ServicePartner extends Model
             return $skill;
         });
     }
+    protected $hidden = [
+        'aadhar_details',
+        'aadhar_number',
+        'gst_details',
+        'gst_number',
+        'password',
+        'created_at',
+        'updated_at',
+    ];
 }

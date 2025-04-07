@@ -182,7 +182,7 @@ const Profile = ({ user, onSubmit }) => {
                         )}
                         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                             <label>
-                                <input class="uk-checkbox" type="checkbox" />{" "}
+                                <input class="uk-checkbox" type="checkbox" onChange={handleFileChange}/>{" "}
                                 Agree Terms and Conditions
                             </label>
                         </div>

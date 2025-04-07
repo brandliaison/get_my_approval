@@ -42,11 +42,15 @@ return [
         ],
         'itstaff' => [
             'driver' => 'sanctum',
-            'provider' => 'itstaffs', // Custom provider for ItStaff
+            'provider' => 'itstaffs',
         ],
         'opstaff' => [
             'driver' => 'sanctum',
-            'provider' => 'opstaffs', // Custom provider for ItStaff
+            'provider' => 'opstaffs',
+        ],
+        'partner' => [
+            'driver' => 'sanctum',
+            'provider' => 'partners',
         ],
     ],
 
