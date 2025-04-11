@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import apiClient from "../../services/api";
 import UIkit from "uikit";
+import partnerApi from "../../services/partnerApi";
 
 export default function Academic({ user, onSubmit }) {
     const [courses, setCourses] = useState([
@@ -61,7 +61,7 @@ export default function Academic({ user, onSubmit }) {
         data.append("su_type", "academic");
 
         // API Call (Optional)
-        apiClient
+        partnerApi
             .post(`/channel-partner-details-save`, data)
             .then((response) => {
                 UIkit.notification({

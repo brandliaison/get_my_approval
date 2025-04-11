@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import apiClient, { gstToken } from "../../services/api";
 import UIkit from "uikit";
 import { useNavigate } from "react-router-dom";
 import Academic from "../../Components/ServicePartnerRegistration/Academic";
@@ -9,6 +8,7 @@ import axios from "axios";
 import AadharVerification from "../../Components/ServicePartnerRegistration/AadharVerification";
 import GstVerification from "../../Components/ServicePartnerRegistration/GstVerification";
 import Branches from "../../Components/ServicePartnerRegistration/Branches";
+import partnerApi from "../../services/partnerApi";
 
 export default function ServicePartnerDetails() {
     // const navigate = useNavigate();
@@ -58,7 +58,7 @@ export default function ServicePartnerDetails() {
         data.append("su_type", "verification");
 
         // API Call (Optional)
-        apiClient
+        partnerApi
             .post(`/service-partner-details-save`, data, {
                 headers: { "Content-Type": "multipart/form-data" },
             })
@@ -83,7 +83,7 @@ export default function ServicePartnerDetails() {
     };
 
     const getData = () => {
-        apiClient
+        partnerApi
             .get(
                 `/get-service-partner/` +
                     localStorage.getItem("service_partner_reg"),

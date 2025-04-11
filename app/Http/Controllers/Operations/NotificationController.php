@@ -164,4 +164,27 @@ class NotificationController extends Controller
         $notification->delete();
         return response()->json(['message' => 'Notification deleted successfully']);
     }
+
+    public function activeNotifications(){
+        $data = Notification::where('status', 'active')->with('category', 'createdByUser')->get();
+
+        if (!count($data) > 0) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
+    }
+
+    public function notificationsByCategory($slug)
+    {
+
+        $cat = NotificationCategory::where('slug', $slug)->where('status', 'active')->first();
+        $data = Notification::where('notification_category_id', $cat->_id)->where('status', 'active')->get();
+
+        if (!$data) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
+    }
 }

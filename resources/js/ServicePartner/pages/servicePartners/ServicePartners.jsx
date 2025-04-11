@@ -4,13 +4,14 @@ import FormattedDate from "../../components/FormattedDate";
 import FormatText from "../../components/FormatText";
 import { Link } from "react-router-dom";
 import UIkit from "uikit";
+import partnerApi from "../../../Site/services/partnerApi";
 
 export default function ServicePartners() {
     const [data, setData] = useState();
 
     const getData = async () => {
         try {
-            const response = await apiClient.get("/service-partners");
+            const response = await partnerApi.get("/service-partners");
             setData(response.data.data);
         } catch (error) {
             console.log(err);

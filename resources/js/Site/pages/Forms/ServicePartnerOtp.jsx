@@ -1,21 +1,23 @@
-import React, { useState } from "react";
-import apiClient from "../../services/api";
+import React, { useEffect, useState } from "react";
 import UIkit from "uikit";
 import { useNavigate } from "react-router-dom";
+import partnerApi from "../../services/partnerApi";
 
 export default function ServicePartnerOtp() {
-
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [emailOtp, setEmailOtp] = useState();
     const [emailDisabled, setEmailDisabled] = useState(false);
     const [mobileOtp, setMobileOtp] = useState();
     const [mobileDisabled, setMobileDisabled] = useState(false);
+    const [user, setUser] = useState();
+    const [email, setEmail] = useState();
+    const [mobile, setMobile] = useState();
 
     const userData = localStorage.getItem("service_partner_reg");
 
     const resendOtp = (e) => {
         // API Call (Optional)
-        apiClient
+        partnerApi
             .post(`/resend-service-partner-otp`, {
                 id: userData,
                 type: e,
@@ -47,7 +49,7 @@ export default function ServicePartnerOtp() {
         if (e === "mobile") {
             var otp = mobileOtp;
         }
-        apiClient
+        partnerApi
             .post(`/verify-service-partner-otp`, {
                 id: userData,
                 type: e,
@@ -67,8 +69,7 @@ export default function ServicePartnerOtp() {
                     if (e === "mobile") {
                         setMobileDisabled(true);
                     }
-                    if(response?.data?.url == true)
-                    {
+                    if (response?.data?.url == true) {
                         navigate("/service-partner-details");
                     }
                 }
@@ -84,8 +85,81 @@ export default function ServicePartnerOtp() {
             });
     };
 
+    const changeEmailMobile = (e) => {
+        const formData = {
+            su_type: "emailMobileChange",
+            user_id: `${localStorage.getItem("service_partner_reg")}`,
+            email: email,
+            mobile: mobile,
+        };
+        partnerApi
+            .post(`/service-partner-details-save`, formData)
+            .then((response) => {
+                UIkit.notification({
+                    message: response?.data?.message,
+                    status: "success",
+                    timeout: 2000,
+                    pos: "top-center",
+                });
+
+                UIkit.modal("#email_change").hide();
+                UIkit.modal("#mobile_change").hide();
+                getData();
+            })
+            .catch((error) => {
+                const errors = error?.response?.data?.errors;
+
+                if (errors) {
+                    Object.keys(errors).forEach((field) => {
+                        errors[field].forEach((message) => {
+                            UIkit.notification({
+                                message,
+                                status: "danger",
+                                timeout: 2000,
+                                pos: "top-center",
+                            });
+                        });
+                    });
+                } else {
+                    UIkit.notification({
+                        message: "An unknown error occurred.",
+                        status: "danger",
+                        timeout: 2000,
+                        pos: "top-center",
+                    });
+                }
+            });
+    };
+
+    const getData = () => {
+        partnerApi
+            .get(
+                `/get-service-partner/` +
+                    localStorage.getItem("service_partner_reg"),
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            )
+            .then((res) => {
+                setUser(res.data.user);
+                setFormData({
+                    dob: user?.dob,
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    useEffect(() => {
+        getData();
+    }, []);
+    console.log(user);
+
     return (
-        <div className="uk-flex uk-flex-center uk-padding-large">
+        <div className="uk-flex uk-flex-center uk-padding-large" id="pageId">
             <div style={{ width: "600px" }}>
                 <h2>Verify OTP</h2>
                 <div className="uk-margin">
@@ -93,9 +167,16 @@ export default function ServicePartnerOtp() {
                         Email OTP <span className="uk-text-danger">*</span>
                     </label>
                     <br />
+                    <div class="uk-alert-success uk-flex uk-flex-between uk-padding-small">
+                        <span>An OTP Has Been Set at: {user?.email}</span>
+                        <button uk-toggle="target: #email_change" type="button">
+                            <b>Change Email</b>
+                        </button>
+                    </div>
+
                     <div uk-form-custom="target: true">
                         <input
-                            class="uk-input uk-form-width-medium"
+                            className="uk-input uk-form-width-medium"
                             type="text"
                             placeholder="Enter Email OTP"
                             name="email_otp"
@@ -105,14 +186,14 @@ export default function ServicePartnerOtp() {
                         />
                     </div>
                     <button
-                        class="uk-button uk-button-default"
+                        className="uk-button uk-button-default"
                         onClick={() => verifyOtp("email")}
                     >
                         Submit
                     </button>
                     <div>
                         <button
-                            class="uk-text-small"
+                            className="uk-text-small"
                             onClick={() => resendOtp("email")}
                         >
                             Resend OTP
@@ -124,9 +205,15 @@ export default function ServicePartnerOtp() {
                         Mobile OTP <span className="uk-text-danger">*</span>
                     </label>
                     <br />
+                    <div class="uk-alert-success uk-flex uk-flex-between uk-padding-small">
+                        <span>An OTP Has Been Set at: {user?.mobile}</span>
+                        <button uk-toggle="target: #mobile_change" type="button">
+                            <b>Change Mobile</b>
+                        </button>
+                    </div>
                     <div uk-form-custom="target: true">
                         <input
-                            class="uk-input uk-form-width-medium"
+                            className="uk-input uk-form-width-medium"
                             type="text"
                             placeholder="Enter Mobile OTP"
                             name="mobile_otp"
@@ -135,19 +222,57 @@ export default function ServicePartnerOtp() {
                         />
                     </div>
                     <button
-                        class="uk-button uk-button-default"
+                        className="uk-button uk-button-default"
                         onClick={() => verifyOtp("mobile")}
                     >
                         Submit
                     </button>
                     <div>
                         <button
-                            class="uk-text-small"
+                            className="uk-text-small"
                             onClick={() => resendOtp("mobile")}
                         >
                             Resend OTP
                         </button>
                     </div>
+                </div>
+            </div>
+
+            <div id="email_change" uk-modal="true" container="#pageId">
+                <div class="uk-modal-dialog uk-modal-body">
+                    <h2 class="uk-modal-title">Change Email</h2>
+                    <input
+                        type="text"
+                        className="uk-input"
+                        value={email ?? user?.email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <button
+                        class="uk-button uk-button-primary uk-margin-small-top"
+                        type="button"
+                        onClick={changeEmailMobile}
+                    >
+                        Change Email
+                    </button>
+                </div>
+            </div>
+
+            <div id="mobile_change" uk-modal="true" container="#pageId">
+                <div class="uk-modal-dialog uk-modal-body">
+                    <h2 class="uk-modal-title">Change Mobile Number</h2>
+                    <input
+                        type="text"
+                        className="uk-input"
+                        value={mobile ?? user?.mobile}
+                        onChange={(e) => setMobile(e.target.value)}
+                    />
+                    <button
+                        class="uk-button uk-button-primary uk-margin-small-top"
+                        type="button"
+                        onClick={changeEmailMobile}
+                    >
+                        Change Mobile
+                    </button>
                 </div>
             </div>
         </div>

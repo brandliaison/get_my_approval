@@ -3,8 +3,11 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Operations\CarrerController;
 use App\Http\Controllers\Operations\EnquiryController;
+use App\Http\Controllers\Operations\NotificationCategoryController;
+use App\Http\Controllers\Operations\NotificationController;
 use App\Http\Controllers\Operations\RequestCallbackController;
 use App\Http\Controllers\Operations\ServiceCategoryController;
+use App\Http\Controllers\Operations\ServiceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTicketController;
 use Illuminate\Http\Request;
@@ -56,6 +59,18 @@ Route::post('channel-partner-details-save', [HomeController::class, 'channelPart
 
 Route::get('active-jobs', [CarrerController::class, 'getActiveJobs']);
 Route::post('apply-jobs', [CarrerController::class, 'applyJob']);
+
+// active data
+
+Route::get('active-service-categories', [ServiceCategoryController::class, 'activeServiceCategories']);
+Route::get('active-services', [ServiceController::class, 'activeServices']);
+Route::get('active-services-by-category/{slug}', [ServiceController::class, 'servicesByCategory']);
+Route::get('active-service-details/{slug}', [ServiceController::class, 'serviceDetails']);
+
+// Notification
+Route::get('active-notification-categories', [NotificationCategoryController::class, 'activeNotificationCategories']);
+Route::get('active-notifications', [NotificationController::class, 'activeNotifications']);
+Route::get('active-notifications-by-category/{slug}', [NotificationController::class, 'notificationsByCategory']);
 
 // IT Staff APIs
 require('api_it.php');

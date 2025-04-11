@@ -97,39 +97,39 @@ export default function Header(header) {
                 <div className="nav-last uk-box-shadow-medium uk-padding-small uk-padding-remove-horizontal">
                     <div className="custom-container uk-flex uk-flex-between uk-flex-middle">
                         <div className="nav-last-left uk-flex">
-                            <a href="/services" className="uk-link-reset">
+                            <Link to="/services" className="uk-link-reset">
                                 <div className="uk-flex uk-flex-middle uk-margin-large-right">
                                     <img
-                                        src="./images/notifications/solutions.png"
+                                        src="/images/notifications/solutions.png"
                                         className="uk-margin-right"
                                     />
                                     <h5 className="uk-text-bold main-color uk-margin-remove">
                                         Solutions
                                     </h5>
                                 </div>
-                            </a>
-                            <a href="/notification" className="uk-link-reset">
+                            </Link>
+                            <Link to="/notification" className="uk-link-reset">
                                 <div className="uk-flex uk-flex-middle uk-margin-large-right">
                                     <img
-                                        src="./images/notifications/notification.png"
+                                        src="/images/notifications/notification.png"
                                         className="uk-margin-right"
                                     />
                                     <h5 className="uk-text-bold main-color uk-margin-remove">
                                         Notification
                                     </h5>
                                 </div>
-                            </a>
-                            <a href="/tutorial" className="uk-link-reset">
+                            </Link>
+                            <Link to="/tutorial" className="uk-link-reset">
                                 <div className="uk-flex uk-flex-middle uk-margin-large-right">
                                     <img
-                                        src="./images/notifications/tutorials.png"
+                                        src="/images/notifications/tutorials.png"
                                         className="uk-margin-right"
                                     />
                                     <h5 className="uk-text-bold main-color uk-margin-remove">
                                         Tutorials
                                     </h5>
                                 </div>
-                            </a>
+                            </Link>
                         </div>
                         <div className="nav-last-right">
                             <ul>

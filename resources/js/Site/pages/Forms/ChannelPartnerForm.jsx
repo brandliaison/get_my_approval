@@ -10,7 +10,6 @@ export default function ChannelPartnerForm() {
         country: "India",
         org_name: "",
         name: "",
-        name: "",
         reg_type: "",
         email: "",
         mobile: "",

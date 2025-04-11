@@ -20,7 +20,7 @@ class ServiceController extends Controller
         $data = Service::where(function ($query) {
             $query->where('status', 'active')
                 ->orWhere('created_by', Auth::id());
-            })
+        })
             ->with('category')->orderBy('created_at', 'desc')
             ->get();
 
@@ -142,10 +142,35 @@ class ServiceController extends Controller
         return response()->json(['message' => 'Service deleted successfully']);
     }
 
-    public function activeServices(){
+    public function activeServices()
+    {
         $data = Service::where('status', 'active')->get();
 
         if (!count($data) > 0) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
+    }
+
+    public function servicesByCategory($slug)
+    {
+
+        $cat = ServiceCategory::where('slug', $slug)->where('status', 'active')->first();
+        $data = Service::where('service_category_id', $cat->_id)->where('status', 'active')->get();
+
+        if (!$data) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
+    }
+
+    public function serviceDetails($slug)
+    {
+        $data = Service::where('slug', $slug)->where('status', 'active')->first();
+
+        if (!$data) {
             return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
         }
 

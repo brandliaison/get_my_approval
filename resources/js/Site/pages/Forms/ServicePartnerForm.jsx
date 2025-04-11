@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import apiClient from "../../services/api";
 import UIkit from "uikit";
 import { useNavigate } from "react-router-dom";
+import partnerApi from "../../services/partnerApi";
 
 export default function ServicePartnerForm() {
     const navigate = useNavigate();
@@ -9,7 +9,6 @@ export default function ServicePartnerForm() {
         reg_type: "Individual",
         country: "India",
         org_name: "",
-        name: "",
         name: "",
         reg_type: "",
         email: "",
@@ -32,7 +31,7 @@ export default function ServicePartnerForm() {
         e.preventDefault();
 
         // API Call (Optional)
-        apiClient
+        partnerApi
             .post(`/register-service-partner`, formData)
             .then((response) => {
                 console.log("Success:", response.data);

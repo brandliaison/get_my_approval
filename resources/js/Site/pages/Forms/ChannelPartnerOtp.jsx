@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import apiClient from "../../services/api";
 import UIkit from "uikit";
 import { useNavigate } from "react-router-dom";
+import partnerApi from "../../services/partnerApi";
 
 export default function ChannelPartnerOtp() {
 
@@ -15,7 +15,7 @@ export default function ChannelPartnerOtp() {
 
     const resendOtp = (e) => {
         // API Call (Optional)
-        apiClient
+        partnerApi
             .post(`/resend-channel-partner-otp`, {
                 id: userData,
                 type: e,
@@ -47,7 +47,7 @@ export default function ChannelPartnerOtp() {
         if (e === "mobile") {
             var otp = mobileOtp;
         }
-        apiClient
+        partnerApi
             .post(`/verify-channel-partner-otp`, {
                 id: userData,
                 type: e,

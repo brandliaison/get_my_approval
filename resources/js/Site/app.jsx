@@ -20,6 +20,9 @@ import ChannelPartnerForm from './pages/Forms/ChannelPartnerForm';
 import ChannelPartnerOtp from './pages/Forms/ChannelPartnerOtp';
 import ChannelPartnerDetails from './pages/Forms/ChannelPartnerDetails';
 import Career from './pages/Career';
+import ServicesByCategory from './pages/ServicesByCategory';
+import ServiceDetails from './pages/ServiceDetails';
+import NotificationByCategory from './pages/NotificationByCategory';
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -47,7 +50,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/services/:slug" element={<ServiceDetails />} />
+        <Route path="/service-category/:slug" element={<ServicesByCategory />} />
+
         <Route path="/notification" element={<Notification />} />
+        <Route path="/notification-category/:slug" element={<NotificationByCategory />} />
+
         <Route path="/tutorial" element={<Tutorial />} />
 
         {/* Service Partner Forms */}

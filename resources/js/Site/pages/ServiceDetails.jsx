@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "../frontservices/api";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-export default function Services() {
+export default function ServiceDetails() {
+
+    const {slug} = useParams()
     const [serviceCategories, setServiceCategories] = useState();
     const [services, setServices] = useState();
 
@@ -23,7 +25,7 @@ export default function Services() {
 
     const getServices = () => {
         apiClient
-            .get(`/active-services`, {
+            .get(`/active-service-details/${slug}`, {
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -48,6 +50,7 @@ export default function Services() {
     const childCategories = serviceCategories?.filter(
         (cat) => cat.parent_category
     );
+    console.log(services);
 
     return (
         <>
@@ -55,7 +58,7 @@ export default function Services() {
 
             <div className="services-top-banner uk-position-relative">
                 <img
-                    src="./images/servicebanner.png"
+                    src="/images/servicebanner.png"
                     className="uk-width-1-1"
                 />
                 <div className="inner-page-banner">
@@ -146,39 +149,31 @@ export default function Services() {
 
                         <div className="uk-width-1-1 uk-width-3-4@m">
                             <div
-                                className="uk-grid-collapse uk-child-width-1-1@s uk-child-width-1-2@m uk-child-width-1-3@l"
+                                className="uk-grid-collapse uk-child-width-1-1"
                                 uk-grid="true"
                             >
-                                {services?.map((ser) => (
                                     <div className="uk-padding-small">
                                         <div className="uk-card uk-card-default uk-card-body servicecard uk-padding-small">
                                             <div className="uk-flex uk-flex-middle">
                                                 <img
-                                                    src={ser?.image_url}
+                                                    src={services?.image_url}
                                                     height={80}
                                                     width={80}
                                                 />
                                                 <div className="uk-margin-left">
                                                     <h5 className="uk-text-bold uk-margin-remove fourth-color">
-                                                        {ser?.name}
+                                                        {services?.name}
                                                     </h5>
                                                     <p className="fourth-color">
-                                                        {ser?.compliance_header}
+                                                        {services?.compliance_header}
                                                     </p>
                                                 </div>
                                             </div>
                                             <p className="uk-margin-top">
-                                                {ser?.description}
+                                                {services?.description}
                                             </p>
-                                            <div className="uk-margin-top">
-                                                <Link to={ser?.slug} className="border-button">
-                                                    Read More{" "}
-                                                    <i data-lucide="chevrons-right"></i>
-                                                </Link>
-                                            </div>
                                         </div>
                                     </div>
-                                ))}
                             </div>
                         </div>
                     </div>

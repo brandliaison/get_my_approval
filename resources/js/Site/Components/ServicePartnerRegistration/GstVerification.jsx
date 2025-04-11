@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UIkit from "uikit";
-import apiClient, { gstToken } from "../../services/api";
 import axios from "axios";
+import partnerApi from "../../services/partnerApi";
 
 export default function GstVerification({ user, onSubmit }) {
     const [userData, setUserData] = useState(user);
@@ -53,7 +53,7 @@ export default function GstVerification({ user, onSubmit }) {
             gstData.append("gst_verified", true);
             gstData.append("gst_details", JSON.stringify(response.data.data));
             gstData.append("su_type", "gst_verification");
-            apiClient
+            partnerApi
                 .post(`/service-partner-details-save`, gstData)
                 .then((response) => {
                     onSubmit();

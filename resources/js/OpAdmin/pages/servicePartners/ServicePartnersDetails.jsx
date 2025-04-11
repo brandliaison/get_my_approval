@@ -4,6 +4,7 @@ import FormattedDate from "../../components/FormattedDate";
 import FormatText from "../../components/FormatText";
 import { Link, useParams } from "react-router-dom";
 import UIkit from "uikit";
+import partnerApi from "../../services/partnerApi";
 
 export default function ServicePartnersDetails() {
     const { id } = useParams();

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import apiClient from "../../services/api";
 import UIkit from "uikit";
+import partnerApi from "../../services/partnerApi";
 
 export default function Branches({ user, onSubmit }) {
 
@@ -43,7 +43,7 @@ export default function Branches({ user, onSubmit }) {
         data.append("su_type", "branch");
 
         // API Call (Optional)
-        apiClient
+        partnerApi
             .post(`/service-partner-details-save`, data)
             .then((response) => {
                 UIkit.notification({

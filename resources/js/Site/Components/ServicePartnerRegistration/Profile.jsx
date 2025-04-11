@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "../../frontservices/api";
 import UIkit from "uikit";
+import partnerApi from "../../services/partnerApi";
 
 const Profile = ({ user, onSubmit }) => {
     const [formData, setFormData] = useState({
@@ -28,7 +29,7 @@ const Profile = ({ user, onSubmit }) => {
         data.append("su_type", "profile");
 
         // API Call (Optional)
-        apiClient
+        partnerApi
             .post(`/service-partner-details-save`, data, {
                 headers: { "Content-Type": "multipart/form-data" },
             })
@@ -70,9 +71,11 @@ const Profile = ({ user, onSubmit }) => {
     };
 
     const handleChange = (e) => {
+        const { name, type, checked, value } = e.target;
+
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value,
+            [name]: type === "checkbox" ? checked : value,
         });
     };
 
@@ -88,7 +91,7 @@ const Profile = ({ user, onSubmit }) => {
     useEffect(() => {
         getServiceCategories();
     }, []);
-    console.log(user);
+    console.log(formData);
 
     return (
         <div>
@@ -182,7 +185,13 @@ const Profile = ({ user, onSubmit }) => {
                         )}
                         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                             <label>
-                                <input class="uk-checkbox" type="checkbox" onChange={handleFileChange}/>{" "}
+                                <input
+                                    class="uk-checkbox"
+                                    type="checkbox"
+                                    checked={formData.agreed_terms || false}
+                                    name="agreed_terms"
+                                    onChange={handleChange}
+                                />{" "}
                                 Agree Terms and Conditions
                             </label>
                         </div>

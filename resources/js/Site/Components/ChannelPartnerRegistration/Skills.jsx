@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "../../frontservices/api";
 import UIkit from "uikit";
+import partnerApi from "../../services/partnerApi";
 
 const Skills = ({ onSubmit }) => {
 
@@ -36,7 +37,7 @@ const Skills = ({ onSubmit }) => {
         data.append("su_type", "skills");
 
         // API Call (Optional)
-        apiClient
+        partnerApi
             .post(`/channel-partner-details-save`, data, {
                 headers: { "Content-Type": "multipart/form-data" },
             })

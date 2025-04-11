@@ -40,7 +40,7 @@ export default function ServicePartners() {
                             <h3 className="uk-card-title">Service Partners</h3>
 
                             <div>
- 
+
                             </div>
                         </div>
 

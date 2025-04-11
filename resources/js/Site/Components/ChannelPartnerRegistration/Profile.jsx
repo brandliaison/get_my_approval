@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import apiClient from "../../frontservices/api";
 import UIkit from "uikit";
+import partnerApi from "../../services/partnerApi";
 
 const Profile = ({ user, onSubmit }) => {
     const [formData, setFormData] = useState({
@@ -28,7 +28,7 @@ const Profile = ({ user, onSubmit }) => {
         data.append("su_type", "profile");
 
         // API Call (Optional)
-        apiClient
+        partnerApi
             .post(`/channel-partner-details-save`, data, {
                 headers: { "Content-Type": "multipart/form-data" },
             })

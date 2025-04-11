@@ -54,7 +54,6 @@ Route::prefix('v1/op-admin')->name('operations.')->group(function () {
 
         // Notifications
         Route::apiResource('notification-categories', NotificationCategoryController::class);
-        Route::get('active-notification-categories', [NotificationCategoryController::class, 'activeNotificationCategories']);
         Route::apiResource('notifications', NotificationController::class);
 
         // Tutorial Videos
@@ -135,4 +134,9 @@ Route::prefix('v1/op-admin')->name('operations.')->group(function () {
 
     Route::get('active-service-categories', [ServiceCategoryController::class, 'activeServiceCategories']);
     Route::get('active-services', [ServiceController::class, 'activeServices']);
+    Route::get('active-services-by-category/{slug}', [ServiceController::class, 'servicesByCategory']);
+    Route::get('active-service-details/{slug}', [ServiceController::class, 'serviceDetails']);
+
+    // Notification
+    Route::get('active-notification-categories', [NotificationCategoryController::class, 'activeNotificationCategories']);
 });

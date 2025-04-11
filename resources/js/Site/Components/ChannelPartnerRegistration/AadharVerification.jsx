@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import UIkit from "uikit";
-import apiClient, { gstToken } from "../../services/api";
+import partnerApi from "../../services/partnerApi";
 
 export default function AadharVerification({user, onSubmit}) {
 
@@ -109,7 +109,7 @@ export default function AadharVerification({user, onSubmit}) {
                 JSON.stringify(response.data.data)
             );
             aadharData.append("su_type", "aadhar_verification");
-            apiClient
+            partnerApi
                 .post(`/channel-partner-details-save`, aadharData)
                 .then((response) => {
                     onSubmit();

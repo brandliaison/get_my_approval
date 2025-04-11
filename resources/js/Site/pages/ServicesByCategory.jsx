@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "../frontservices/api";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-export default function Services() {
+export default function ServicesByCategory() {
+    const { slug } = useParams();
+
     const [serviceCategories, setServiceCategories] = useState();
     const [services, setServices] = useState();
 
@@ -23,7 +25,7 @@ export default function Services() {
 
     const getServices = () => {
         apiClient
-            .get(`/active-services`, {
+            .get(`/active-services-by-category/${slug}`, {
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -39,7 +41,7 @@ export default function Services() {
     useEffect(() => {
         getServiceCategories();
         getServices();
-    }, []);
+    }, [slug]);
 
     // Separate parent and child categories
     const parentCategories = serviceCategories?.filter(
@@ -48,6 +50,7 @@ export default function Services() {
     const childCategories = serviceCategories?.filter(
         (cat) => cat.parent_category
     );
+    console.log(childCategories);
 
     return (
         <>
@@ -103,7 +106,7 @@ export default function Services() {
                                                             <Link
                                                                 to={
                                                                     "/service-category/" +
-                                                                    val?.slug
+                                                                    child?.slug
                                                                 }
                                                             >
                                                                 -- {child.name}
@@ -149,36 +152,43 @@ export default function Services() {
                                 className="uk-grid-collapse uk-child-width-1-1@s uk-child-width-1-2@m uk-child-width-1-3@l"
                                 uk-grid="true"
                             >
-                                {services?.map((ser) => (
-                                    <div className="uk-padding-small">
-                                        <div className="uk-card uk-card-default uk-card-body servicecard uk-padding-small">
-                                            <div className="uk-flex uk-flex-middle">
-                                                <img
-                                                    src={ser?.image_url}
-                                                    height={80}
-                                                    width={80}
-                                                />
-                                                <div className="uk-margin-left">
-                                                    <h5 className="uk-text-bold uk-margin-remove fourth-color">
-                                                        {ser?.name}
-                                                    </h5>
-                                                    <p className="fourth-color">
-                                                        {ser?.compliance_header}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p className="uk-margin-top">
-                                                {ser?.description}
-                                            </p>
-                                            <div className="uk-margin-top">
-                                                <Link to={ser?.slug} className="border-button">
-                                                    Read More{" "}
-                                                    <i data-lucide="chevrons-right"></i>
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
+                                {services?.length > 0
+                                    ? services?.map((ser) => (
+                                          <div className="uk-padding-small">
+                                              <div className="uk-card uk-card-default uk-card-body servicecard uk-padding-small">
+                                                  <div className="uk-flex uk-flex-middle">
+                                                      <img
+                                                          src={ser?.image_url}
+                                                          height={80}
+                                                          width={80}
+                                                      />
+                                                      <div className="uk-margin-left">
+                                                          <h5 className="uk-text-bold uk-margin-remove fourth-color">
+                                                              {ser?.name}
+                                                          </h5>
+                                                          <p className="fourth-color">
+                                                              {
+                                                                  ser?.compliance_header
+                                                              }
+                                                          </p>
+                                                      </div>
+                                                  </div>
+                                                  <p className="uk-margin-top">
+                                                      {ser?.description}
+                                                  </p>
+                                                  <div className="uk-margin-top">
+                                                      <Link
+                                                          to={"/services/"+ser?.slug}
+                                                          className="border-button"
+                                                      >
+                                                          Read More{" "}
+                                                          <i data-lucide="chevrons-right"></i>
+                                                      </Link>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      ))
+                                    : "Data Not Found"}
                             </div>
                         </div>
                     </div>

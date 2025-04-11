@@ -1,35 +1,39 @@
 import React, { useEffect, useState } from "react";
-import apiClient from "../frontservices/api";
-import { Link } from "react-router-dom";
+import apiClient from "../services/api";
+import { Link, useParams } from "react-router-dom";
+import FormattedDate from "../../OpAdmin/components/FormattedDate";
 
-export default function Services() {
-    const [serviceCategories, setServiceCategories] = useState();
-    const [services, setServices] = useState();
+export default function NotificationByCategory() {
 
-    const getServiceCategories = () => {
+    const {slug} = useParams();
+
+    const [categories, setCategories] = useState();
+    const [data, setData] = useState();
+
+    const getCategories = () => {
         apiClient
-            .get(`/active-service-categories`, {
+            .get(`/active-notifications-by-category`, {
                 headers: {
                     "Content-Type": "application/json",
                 },
             })
             .then((res) => {
-                setServiceCategories(res.data.data);
+                setCategories(res.data.data);
             })
             .catch((err) => {
                 console.log(err);
             });
     };
 
-    const getServices = () => {
+    const getData = () => {
         apiClient
-            .get(`/active-services`, {
+            .get(`/active-notifications-by-category/${slug}`, {
                 headers: {
                     "Content-Type": "application/json",
                 },
             })
             .then((res) => {
-                setServices(res.data.data);
+                setData(res.data.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -37,33 +41,26 @@ export default function Services() {
     };
 
     useEffect(() => {
-        getServiceCategories();
-        getServices();
+        getCategories();
+        getData();
     }, []);
 
     // Separate parent and child categories
-    const parentCategories = serviceCategories?.filter(
-        (cat) => !cat.parent_category
-    );
-    const childCategories = serviceCategories?.filter(
-        (cat) => cat.parent_category
-    );
+    const parentCategories = categories?.filter((cat) => !cat.parent_category);
+    const childCategories = categories?.filter((cat) => cat.parent_category);
 
     return (
         <>
-            {/* <!-- services top banner section --> */}
+            {/* <!-- Notifications top banner section --> */}
 
             <div className="services-top-banner uk-position-relative">
-                <img
-                    src="./images/servicebanner.png"
-                    className="uk-width-1-1"
-                />
+                <img src="/images/servicebanner.png" className="uk-width-1-1" />
                 <div className="inner-page-banner">
-                    <h2>Solutions</h2>
+                    <h2>Notifications</h2>
                 </div>
             </div>
 
-            {/* <!-- services main section --> */}
+            {/* <!-- Notifications main section --> */}
 
             <div className="services-main uk-padding-large uk-padding-remove-horizontal">
                 <div className="custom-container">
@@ -71,7 +68,7 @@ export default function Services() {
                         <div className="uk-width-1-1 uk-width-1-4@m uk-padding-remove">
                             <div className="left-filters uk-padding uk-margin-top">
                                 <h3 className="fontlivvic-bold">
-                                    Solution Categories
+                                    Notification Categories
                                 </h3>
                                 <ul className="uk-list uk-list-collapse fontlivvic">
                                     {parentCategories?.map((val, i) => (
@@ -79,7 +76,7 @@ export default function Services() {
                                             <i data-lucide="chevron-right"></i>{" "}
                                             <Link
                                                 to={
-                                                    "/service-category/" +
+                                                    "/notification-category/" +
                                                     val?.slug
                                                 }
                                             >
@@ -102,7 +99,7 @@ export default function Services() {
                                                         >
                                                             <Link
                                                                 to={
-                                                                    "/service-category/" +
+                                                                    "/notification-category/" +
                                                                     val?.slug
                                                                 }
                                                             >
@@ -119,7 +116,7 @@ export default function Services() {
                                 <h3 className="fontlivvic-bold">Downloads</h3>
                                 <div className="uk-flex uk-flex-between uk-margin-bottom">
                                     <div>
-                                        <img src="./images/icons/pdf-icon.png" />
+                                        <img src="/images/icons/pdf-icon.png" />
                                         <p className="uk-display-inline-block fontlivvic">
                                             Our Brochure
                                         </p>
@@ -131,7 +128,7 @@ export default function Services() {
                                 </div>
                                 <div className="uk-flex uk-flex-between">
                                     <div>
-                                        <img src="./images/icons/pdf-icon.png" />
+                                        <img src="/images/icons/pdf-icon.png" />
                                         <p className="uk-display-inline-block fontlivvic">
                                             Our Brochure
                                         </p>
@@ -145,75 +142,49 @@ export default function Services() {
                         </div>
 
                         <div className="uk-width-1-1 uk-width-3-4@m">
-                            <div
-                                className="uk-grid-collapse uk-child-width-1-1@s uk-child-width-1-2@m uk-child-width-1-3@l"
-                                uk-grid="true"
-                            >
-                                {services?.map((ser) => (
-                                    <div className="uk-padding-small">
-                                        <div className="uk-card uk-card-default uk-card-body servicecard uk-padding-small">
-                                            <div className="uk-flex uk-flex-middle">
-                                                <img
-                                                    src={ser?.image_url}
-                                                    height={80}
-                                                    width={80}
-                                                />
-                                                <div className="uk-margin-left">
-                                                    <h5 className="uk-text-bold uk-margin-remove fourth-color">
-                                                        {ser?.name}
-                                                    </h5>
-                                                    <p className="fourth-color">
-                                                        {ser?.compliance_header}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p className="uk-margin-top">
-                                                {ser?.description}
-                                            </p>
-                                            <div className="uk-margin-top">
-                                                <Link to={ser?.slug} className="border-button">
-                                                    Read More{" "}
-                                                    <i data-lucide="chevrons-right"></i>
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* <!-- query banner --> */}
-
-            <div className="home-query-banner">
-                <div className="custom-container">
-                    <div
-                        className="uk-grid-collapse uk-child-width-1-1@s uk-child-width-1-2@l uk-flex-bottom"
-                        uk-grid
-                    >
-                        <div>
-                            <img src="./images/querybanner.png" />
-                        </div>
-                        <div className="uk-text-center">
-                            <h1 className="color-white uk-text-bold">
-                                Help For Compliance Solution
-                            </h1>
-                            <h2 className="uk-margin-remove color-white uk-text-bold">
-                                Join Us as a Industry Partner
-                            </h2>
-                            <img src="./images/icons/phone.png" />
-                            <h3 className="color-white uk-text-large uk-margin-remove">
-                                CALL US 24/7
-                            </h3>
-                            <h3 className="uk-margin-small-vertical uk-text-large color-white uk-text-bold">
-                                +91-8130615678
-                            </h3>
-                            <button className="border-button uk-margin-large-bottom">
-                                {" "}
-                                Contact Us <i data-lucide="chevrons-right"></i>
-                            </button>
+                            <table className="uk-table uk-table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Notification</th>
+                                        <th>Category</th>
+                                        <th>Last Modified</th>
+                                        <th>View Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data?.length > 0
+                                        ? data?.map((val) => (
+                                              <tr>
+                                                  <td>
+                                                      <h5 className="uk-margin-remove">
+                                                          {val.name}
+                                                      </h5>
+                                                  </td>
+                                                  <td className="uk-flex">
+                                                      <p>{val.category.name}</p>
+                                                  </td>
+                                                  <td>
+                                                      <p>
+                                                          <FormattedDate
+                                                              getDate={
+                                                                  val.created_at
+                                                               }
+                                                          />
+                                                      </p>
+                                                  </td>
+                                                  <td>
+                                                      <Link
+                                                          to={
+                                                              "/notification-details/" +
+                                                              val.slug
+                                                          }
+                                                      >View Details</Link>
+                                                  </td>
+                                              </tr>
+                                          ))
+                                        : "Data Not Found"}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

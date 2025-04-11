@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import apiClient, { gstToken } from "../../services/api";
 import UIkit from "uikit";
-import { useNavigate } from "react-router-dom";
 import Academic from "../../Components/ChannelPartnerRegistration/Academic";
 import Skills from "../../Components/ChannelPartnerRegistration/Skills";
 import Profile from "../../Components/ChannelPartnerRegistration/Profile";
 import AadharVerification from "../../Components/ChannelPartnerRegistration/AadharVerification";
+import partnerApi from "../../services/partnerApi";
 
 export default function ChannelPartnerDetails() {
     // const navigate = useNavigate();
@@ -55,7 +54,7 @@ export default function ChannelPartnerDetails() {
         data.append("su_type", "verification");
 
         // API Call (Optional)
-        apiClient
+        partnerApi
             .post(`/channel-partner-details-save`, data, {
                 headers: { "Content-Type": "multipart/form-data" },
             })
@@ -81,7 +80,7 @@ export default function ChannelPartnerDetails() {
 
     console.log(formData);
     const getData = () => {
-        apiClient
+        partnerApi
             .get(
                 `/get-channel-partner/` +
                     localStorage.getItem("channel_partner_reg"),

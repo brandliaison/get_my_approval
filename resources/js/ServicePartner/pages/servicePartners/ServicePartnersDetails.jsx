@@ -4,6 +4,7 @@ import FormattedDate from "../../components/FormattedDate";
 import FormatText from "../../components/FormatText";
 import { Link, useParams } from "react-router-dom";
 import UIkit from "uikit";
+import partnerApi from "../../../Site/services/partnerApi";
 
 export default function ServicePartnersDetails() {
     const { id } = useParams();
@@ -12,7 +13,7 @@ export default function ServicePartnersDetails() {
 
     const getData = async () => {
         try {
-            const response = await apiClient.get(
+            const response = await partnerApi.get(
                 `/service-partner-details/${id}`
             );
             setData(response.data.data);

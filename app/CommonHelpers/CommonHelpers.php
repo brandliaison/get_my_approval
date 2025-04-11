@@ -65,4 +65,26 @@ class CommonHelpers
             return response()->json(['error' => $response. 'Failed to send OTP'], 500);
         }
     }
+
+    public static function apiToken(){
+        return '67f51681d4a033e1be006d22|cOn6EAPBd9hKgx5CuygnlNwxXks67jUqZPbXuj0U964e2283';
+    }
+
+    public static function partnerApiget($url){
+
+        $token = 'cOn6EAPBd9hKgx5CuygnlNwxXks67jUqZPbXuj0U964e2283';
+
+        $response = Http::withHeaders([
+            'X-Internal-Token' => $token,
+        ])->get('http://127.0.0.1:8001/api/v1/op-admin/' . $url);
+
+        return $response->json();
+    }
+
+    public static function partnerApipost($url){
+        $response = Http::withHeaders([
+            'X-Internal-Token' => 'cOn6EAPBd9hKgx5CuygnlNwxXks67jUqZPbXuj0U964e2283',
+        ])->post('http://127.0.0.1:8001/api/v1/op-admin/'.$url);
+        return $response->json();
+    }
 }
