@@ -58,6 +58,15 @@ import ServiceSection from "./pages/services/servicesection/ServiceSection";
 import AddServiceSection from "./pages/services/servicesection/AddServiceSection";
 import EditServiceSection from "./pages/services/servicesection/EditServiceSection";
 import ViewServiceSection from "./pages/services/servicesection/ViewServiceSection";
+import ServicePartners from "./pages/servicePartners/ServicePartners";
+import ServicePartnersDetails from "./pages/servicePartners/ServicePartnersDetails";
+import ChannelPartners from "./pages/channelPartners/ChannelPartners";
+import ChannelPartnersDetails from "./pages/channelPartners/ChannelPartnersDetails";
+import Job from "./pages/jobs/Jobs";
+import AddJob from "./pages/jobs/AddJob";
+import ViewJob from "./pages/jobs/ViewJob";
+import UpdateJob from "./pages/jobs/UpdateJob";
+import JobApplication from "./pages/jobs/JobApplication";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -123,6 +132,19 @@ export default function App() {
                             <Route path="view-tutorials-categories/:id" element={<ViewTutorialCategories />} />
                             <Route path="new-submitted-posts" element={<NewSubmittedPosts />} />
                             <Route path="submitted-post-view/:id" element={<ViewSubmittedPost />} />
+
+                            <Route path="manage-service-partners" element={<ServicePartners />} />
+                            <Route path="service-partner-details/:id" element={<ServicePartnersDetails />} />
+
+                            <Route path="manage-channel-partners" element={<ChannelPartners />} />
+                            <Route path="channel-partner-details/:id" element={<ChannelPartnersDetails />} />
+
+                            <Route path="jobs" element={<Job />} />
+                            <Route path="add-job" element={<AddJob />} />
+                            <Route path="view-job/:id" element={<ViewJob />} />
+                            <Route path="update-job/:id" element={<UpdateJob />} />
+                            <Route path="job-application" element={<JobApplication />} />
+
                         </Route>
                       </Route>
                   </Routes>

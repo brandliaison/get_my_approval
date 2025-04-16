@@ -51,4 +51,24 @@ class TutorialVideo extends Model
     public function createdByUser(){
         return $this->belongsTo(OpStaff::class, 'created_by', '_id');
     }
+
+    public function notifications()
+    {
+        return $this->belongsToMany(Notification::class);
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
+
+    public function services()
+    {
+        return $this->belongsToMany(Service::class);
+    }
+
+    public function blogs()
+    {
+        return $this->belongsToMany(Blog::class);
+    }
 }

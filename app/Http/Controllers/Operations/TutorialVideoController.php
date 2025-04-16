@@ -90,7 +90,7 @@ class TutorialVideoController extends Controller
      */
     public function show(string $id)
     {
-        $data = TutorialVideo::with('category', 'revisions.reviews')->find($id);
+        $data = TutorialVideo::with('category', 'revisions.reviews', 'notifications', 'products', 'services', 'blogs')->find($id);
         if (!$data) {
             return response()->json(['error' => 'Tutorial Video Not Found'], 404);
         }
@@ -119,7 +119,7 @@ class TutorialVideoController extends Controller
             'name' => 'required|string|max:255',
             'tutorial_video_category_id' => 'required|exists:tutorial_video_categories,_id',
             'video_url' => 'required',
-            'thumbnail_url' => 'nullable|mimes:png,jpg,jpeg',
+            'thumbnail_url' => 'nullable',
             'image_alt' => 'nullable|string|max:255',
             'description' => 'nullable|string',
         ]);
@@ -172,5 +172,38 @@ class TutorialVideoController extends Controller
         }
         $data->delete();
         return response()->json(['message' => 'Tutorial Video deleted successfully']);
+    }
+
+    public function activeTutorials(){
+        $data = TutorialVideo::where('status', 'active')->with('category', 'createdByUser')->get();
+
+        if (!count($data) > 0) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
+    }
+
+    public function tutorialsByCategory($slug)
+    {
+
+        $cat = TutorialVideoCategory::where('slug', $slug)->where('status', 'active')->first();
+        $data = TutorialVideo::with('category')->where('tutorial_video_category_id', $cat->_id)->where('status', 'active')->get();
+
+        if (!$data) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
+    }
+
+    public function tutorialDetails($slug){
+        $data = TutorialVideo::with('notifications', 'products', 'services', 'blogs')->where('slug', $slug)->where('status', 'active')->first();
+
+        if (!$data) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
     }
 }

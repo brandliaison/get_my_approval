@@ -7,6 +7,8 @@ use App\Http\Controllers\Operations\BlogCategoryController;
 use App\Http\Controllers\Operations\BlogController;
 use App\Http\Controllers\Operations\BrochureCategoryController;
 use App\Http\Controllers\Operations\BrochureController;
+use App\Http\Controllers\Operations\CarrerController;
+use App\Http\Controllers\Operations\ChannelPartnerController;
 use App\Http\Controllers\Operations\DesignationController;
 use App\Http\Controllers\Operations\EnquiryController;
 use App\Http\Controllers\Operations\EntityReviewController;
@@ -24,13 +26,15 @@ use App\Http\Controllers\Operations\TutorialVideoController;
 use App\Http\Controllers\Operations\PostCommentController;
 use App\Http\Controllers\Operations\ProductCategoryController;
 use App\Http\Controllers\Operations\ProductController;
+use App\Http\Controllers\Operations\RelationController;
 use App\Http\Controllers\Operations\RequestCallbackController;
+use App\Http\Controllers\Operations\ServicePartnerController;
 use App\Http\Controllers\Operations\TicketController;
 use App\Http\Controllers\Operations\TicketsCategoryController;
 use App\Http\Middleware\MultiAuthMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('v1/op-admin')->group(function () {
+Route::prefix('v1/op-admin')->name('operations.')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
 
     Route::middleware(MultiAuthMiddleware::class)->group(function () {
@@ -46,29 +50,32 @@ Route::prefix('v1/op-admin')->group(function () {
 
         // Services
         Route::apiResource('service-categories', ServiceCategoryController::class);
-        Route::get('active-service-categories', [ServiceCategoryController::class, 'activeServiceCategories']);
         Route::apiResource('services', ServiceController::class);
         Route::apiResource('services-sections', ServiceSectionsController::class);
+        Route::get('active-services', [ServiceController::class, 'activeServices']);
 
         // Notifications
         Route::apiResource('notification-categories', NotificationCategoryController::class);
-        Route::get('active-notification-categories', [NotificationCategoryController::class, 'activeNotificationCategories']);
         Route::apiResource('notifications', NotificationController::class);
+        Route::get('active-notifications', [NotificationController::class, 'activeNotifications']);
 
         // Tutorial Videos
         Route::apiResource('tutorial-videos-categories', TutorialVideoCategoryController::class);
         Route::get('active-tutorial-videos-categories', [TutorialVideoCategoryController::class, 'activeTutorialVideoCategories']);
         Route::apiResource('tutorial-videos', TutorialVideoController::class);
+        Route::get('active-tutorials', [TutorialVideoController::class, 'activeTutorials']);
 
         // Blogs
         Route::apiResource('blog-categories', BlogCategoryController::class);
         Route::get('active-blog-categories', [BlogCategoryController::class, 'activeBlogCategories']);
         Route::apiResource('blogs', BlogController::class);
+        Route::get('active-blog', [BlogController::class, 'activeBlogs']);
 
         // Products
         Route::apiResource('product-categories', ProductCategoryController::class);
         Route::get('active-product-categories', [ProductCategoryController::class, 'activeProductCategories']);
         Route::apiResource('products', ProductController::class);
+        Route::get('active-product', [ProductController::class, 'activeProducts']);
 
         // Posts Comments
         Route::apiResource('post-comments', PostCommentController::class);
@@ -108,5 +115,38 @@ Route::prefix('v1/op-admin')->group(function () {
 
         // Request Callback
         Route::apiResource('request-callbacks', RequestCallbackController::class)->except(['store']);
+
+        // Service Partner
+        Route::get('service-partners', [ServicePartnerController::class, 'index']);
+        Route::get('service-partner-details/{id}', [ServicePartnerController::class, 'show']);
+        Route::get('service-partner-details/{id}/approve', [ServicePartnerController::class, 'approve']);
+        Route::get('service-partner-details/{id}/reject', [ServicePartnerController::class, 'reject']);
+
+        // Channel Partner
+        Route::get('channel-partners', [ChannelPartnerController::class, 'index']);
+        Route::get('channel-partner-details/{id}', [ChannelPartnerController::class, 'show']);
+        Route::get('channel-partner-details/{id}/approve', [ChannelPartnerController::class, 'approve']);
+        Route::get('channel-partner-details/{id}/reject', [ChannelPartnerController::class, 'reject']);
+
+        // Careers
+        Route::get('/careers', [CarrerController::class, 'index']);
+        Route::post('/careers', [CarrerController::class, 'store']);
+        Route::get('/careers/{id}', [CarrerController::class, 'show']);
+        Route::put('/careers/{id}', [CarrerController::class, 'update']);
+        Route::delete('/careers/{id}', [CarrerController::class, 'destroy']);
+        Route::get('/job-applications', [CarrerController::class, 'jobApplication']);
+
+        // Relational Data
+        Route::post('/services/{id}/attach-relations', [RelationController::class, 'attachServiceRelations']);
+        Route::post('/services/{id}/detach-relations', [RelationController::class, 'detachServiceRelations']);
     });
+
+
+    Route::get('active-service-categories', [ServiceCategoryController::class, 'activeServiceCategories']);
+    Route::get('active-services', [ServiceController::class, 'activeServices']);
+    Route::get('active-services-by-category/{slug}', [ServiceController::class, 'servicesByCategory']);
+    Route::get('active-service-details/{slug}', [ServiceController::class, 'serviceDetails']);
+
+    // Notification
+    Route::get('active-notification-categories', [NotificationCategoryController::class, 'activeNotificationCategories']);
 });

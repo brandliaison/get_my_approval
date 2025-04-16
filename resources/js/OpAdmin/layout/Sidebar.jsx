@@ -350,10 +350,111 @@ export default function Sidebar() {
                                             </span>
                                         </Link>
                                     </li>
-                                    <li>
-                                        <Link to="/op-admin/blog-categories">
+                                </ul>
+                            </li>
+
+                            <li
+                                className={`sc-has-submenu ${
+                                    openDropdowns.revision ? "uk-open" : ""
+                                }`}
+                            >
+                                <a
+                                    href="#"
+                                    onClick={() =>
+                                        toggleDropdown("servicePartner")
+                                    }
+                                >
+                                    <div className="uk-flex uk-flex-middle uk-width-1-1">
+                                        <div className="uk-flex uk-flex-middle uk-width-1-1">
+                                            <span className="uk-nav-icon">
+                                                <i className="mdi mdi-account-tie"></i>
+                                            </span>
                                             <span className="uk-nav-title">
-                                                Blog Categories
+                                                Manage Partners
+                                            </span>
+                                        </div>
+                                        <i
+                                            className={`mdi ${
+                                                openDropdowns.servicePartner
+                                                    ? "mdi-chevron-up"
+                                                    : "mdi-chevron-down"
+                                            }`}
+                                        ></i>
+                                    </div>
+                                </a>
+
+                                <ul
+                                    className="sc-sidebar-menu-sub"
+                                    style={{
+                                        display: openDropdowns.servicePartner
+                                            ? "block"
+                                            : "none",
+                                    }}
+                                >
+                                    <li>
+                                        <Link to="/op-admin/manage-service-partners">
+                                            <span className="uk-nav-title">
+                                                Service Partners
+                                            </span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/op-admin/manage-channel-partners">
+                                            <span className="uk-nav-title">
+                                                Channel Partners
+                                            </span>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li
+                                className={`sc-has-submenu ${
+                                    openDropdowns.revision ? "uk-open" : ""
+                                }`}
+                            >
+                                <a
+                                    href="#"
+                                    onClick={() => toggleDropdown("careers")}
+                                >
+                                    <div className="uk-flex uk-flex-middle uk-width-1-1">
+                                        <div className="uk-flex uk-flex-middle uk-width-1-1">
+                                            <span className="uk-nav-icon">
+                                                <i className="mdi mdi-account-file"></i>
+                                            </span>
+                                            <span className="uk-nav-title">
+                                                Manage Jobs
+                                            </span>
+                                        </div>
+                                        <i
+                                            className={`mdi ${
+                                                openDropdowns.careers
+                                                    ? "mdi-chevron-up"
+                                                    : "mdi-chevron-down"
+                                            }`}
+                                        ></i>
+                                    </div>
+                                </a>
+
+                                <ul
+                                    className="sc-sidebar-menu-sub"
+                                    style={{
+                                        display: openDropdowns.careers
+                                            ? "block"
+                                            : "none",
+                                    }}
+                                >
+                                    <li>
+                                        <Link to="/op-admin/jobs">
+                                            <span className="uk-nav-title">
+                                                Jobs
+                                            </span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/op-admin/job-application">
+                                            <span className="uk-nav-title">
+                                                Job Applications
                                             </span>
                                         </Link>
                                     </li>

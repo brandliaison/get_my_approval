@@ -71,7 +71,7 @@ export default function AddProducts() {
         .then(response => {
             console.log("Success:", response.data);
             UIkit.notification({
-                message: "Blog created successfully!",
+                message: "Product created successfully!",
                 status: "success",
                 timeout: 2000,
                 pos: "top-center",
@@ -146,7 +146,6 @@ export default function AddProducts() {
                 </div>
             </div>
         </div>
-
     </>
   )
 }

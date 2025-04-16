@@ -3,9 +3,9 @@ import UIkit from "uikit";
 import React, { useEffect, useState } from "react";
 import apiClient from "../../services/api";
 import { Link, useNavigate } from "react-router-dom";
+import FormattedDate from "../../components/FormattedDate";
 
 export default function Blogs() {
-
     const navigate = useNavigate();
 
     const [blogs, setblogs] = useState();
@@ -34,7 +34,8 @@ export default function Blogs() {
     };
 
     const getblogs = () => {
-        apiClient.get(`/blogs`)
+        apiClient
+            .get(`/blogs`)
             .then((res) => {
                 setblogs(res.data);
             })
@@ -47,7 +48,6 @@ export default function Blogs() {
         getblogs();
     }, []);
 
-
     const handleViewBlog = (id) => {
         navigate(`/op-admin/editblog/${id}`); // Redirect to second page with blog ID in URL
     };
@@ -57,13 +57,11 @@ export default function Blogs() {
             <div id="sc-page-wrapper">
                 <div id="sc-page-content">
                     <div className="uk-flex uk-flex-right">
-                    <Link to="/op-admin/addblog">
-                        <button
-                            className="sc-fab sc-fab-text sc-fab-success solid-button"
-                        >
-                            <i className="mdi mdi-plus"></i>Create
-                        </button>
-                    </Link>
+                        <Link to="/op-admin/addblog">
+                            <button className="sc-fab sc-fab-text sc-fab-success solid-button">
+                                <i className="mdi mdi-plus"></i>Create
+                            </button>
+                        </Link>
                     </div>
 
                     <form
@@ -103,9 +101,8 @@ export default function Blogs() {
                                                 />
                                             </th>
                                             <th>Blog Image</th>
-                                            <th>Blog Discription</th>
                                             <th>Blog Name</th>
-                                            <th>Blog Title</th>
+                                            <th>Category</th>
                                             <th>Status</th>
                                             <th>Approval Status</th>
                                             <th>Date</th>
@@ -125,15 +122,42 @@ export default function Blogs() {
                                                     </td>
                                                     <td>
                                                         <img
-                                                            src={`http://192.168.1.13:8000//${value.image_url}`}
+                                                            src={
+                                                                value.image_url
+                                                            }
                                                             className="sc-avatar uk-preserve-width"
-                                                            alt={value.image_alt}
-                                                            style={{borderRadius: '5px', maxWidth: '150px'}}
+                                                            alt={
+                                                                value.image_alt
+                                                            }
+                                                            style={{
+                                                                borderRadius:
+                                                                    "5px",
+                                                                maxWidth:
+                                                                    "150px",
+                                                            }}
                                                         />
                                                     </td>
-                                                    <td>{value.description.slice(0, 20)}</td>
                                                     <td>{value.name}</td>
-                                                    <td>{value.content}</td>
+                                                    <td>
+                                                        {value.category.name}
+                                                    </td>
+
+                                                    <td className="uk-text-capitalize">
+                                                        {value.status}
+                                                    </td>
+                                                    <td className="uk-text-capitalize">
+                                                        {value.approval_status}
+                                                    </td>
+
+                                                    <td className="uk-text-capitalize">
+                                                        {
+                                                            <FormattedDate
+                                                                getDate={
+                                                                    value.created_at
+                                                                }
+                                                            />
+                                                        }
+                                                    </td>
                                                     <td>
                                                         <div className="uk-flex gap-2">
                                                             <div>
@@ -144,16 +168,27 @@ export default function Blogs() {
                                                                     <i className="mdi mdi-eye"></i>
                                                                 </Link>
                                                             </div>
-                                                            <div onClick={() => handleViewBlog(value._id)}>
+                                                            <div
+                                                                onClick={() =>
+                                                                    handleViewBlog(
+                                                                        value._id
+                                                                    )
+                                                                }
+                                                            >
                                                                 <a
                                                                     className="sc-button sc-button-danger sc-js-button-wave-light"
                                                                     href="#"
                                                                 >
-                                                                    <i className="mdi mdi-file-edit">
-                                                                    </i>
+                                                                    <i className="mdi mdi-file-edit"></i>
                                                                 </a>
                                                             </div>
-                                                            <div onClick={e => deleteblog(value._id)}>
+                                                            <div
+                                                                onClick={(e) =>
+                                                                    deleteblog(
+                                                                        value._id
+                                                                    )
+                                                                }
+                                                            >
                                                                 <a
                                                                     className="sc-button sc-button-secondary sc-js-button-wave-light"
                                                                     href="#"

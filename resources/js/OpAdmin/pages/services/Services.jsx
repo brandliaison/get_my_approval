@@ -110,7 +110,7 @@ export default function Services() {
                                             </th>
                                             <th>Image</th>
                                             <th>Name</th>
-                                            <th>Title</th>
+                                            <th>Category</th>
                                             <th>Status</th>
                                             <th>Approval Status</th>
                                             <th>Date</th>
@@ -130,7 +130,7 @@ export default function Services() {
                                                     </td>
                                                     <td>
                                                         <img
-                                                            src={`http://192.168.1.13:8000//${value.image_url}`}
+                                                            src={value.image_url}
                                                             className="sc-avatar uk-preserve-width"
                                                             alt={
                                                                 value.image_alt
@@ -144,11 +144,7 @@ export default function Services() {
                                                         />
                                                     </td>
                                                     <td>{value.name}</td>
-                                                    <td>
-                                                        {
-                                                            value.compliance_header
-                                                        }
-                                                    </td>
+                                                    <td>{value.category.name}</td>
                                                     <td className="uk-text-capitalize">
                                                         <FormatText text={value.status} />
                                                     </td>

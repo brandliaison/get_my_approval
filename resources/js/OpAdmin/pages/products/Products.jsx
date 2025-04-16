@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../../services/api";
 import UIkit from "uikit";
+import FormattedDate from "../../components/FormattedDate";
 
 export default function Products() {
-
     const navigate = useNavigate();
 
     const [categories, setCategories] = useState();
 
     const getCategories = () => {
-        apiClient.get(`/products`, {
+        apiClient
+            .get(`/products`, {
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -22,7 +23,7 @@ export default function Products() {
                 console.log(err);
             });
     };
-    
+
     const deleteCategory = (id) => {
         apiClient
             .delete(`/products/${id}`)
@@ -34,7 +35,7 @@ export default function Products() {
                     timeout: 1000,
                     pos: "top-center",
                 });
-                getCategories()
+                getCategories();
             })
             .catch((err) => {
                 console.log(err);
@@ -56,19 +57,16 @@ export default function Products() {
         navigate(`/op-admin/editproducts/${id}`); // Redirect to second page with blog ID in URL
     };
 
-
-  return (
-    <>
+    return (
+        <>
             <div id="sc-page-wrapper">
                 <div id="sc-page-content">
                     <div className="uk-flex uk-flex-right">
-                    <Link to="/op-admin/addproducts">
-                        <button
-                            className="sc-fab sc-fab-text sc-fab-success solid-button"
-                        >
-                            <i className="mdi mdi-plus"></i>Create
-                        </button>
-                    </Link>
+                        <Link to="/op-admin/addproducts">
+                            <button className="sc-fab sc-fab-text sc-fab-success solid-button">
+                                <i className="mdi mdi-plus"></i>Create
+                            </button>
+                        </Link>
                     </div>
 
                     <form
@@ -108,65 +106,114 @@ export default function Products() {
                                                 />
                                             </th>
                                             <th>Product Image</th>
-                                            <th>Product Discription</th>
                                             <th>Product Name</th>
-                                            <th>Product Title</th>
-                                            <th>Product Blog</th>
+                                            <th>Category</th>
+                                            <th>Status</th>
+                                            <th>Approval Status</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {categories?.data?.length > 0 ? (
-                                            categories?.data?.map((value, index) => (
-                                                <tr key={index}>
-                                                    <td>
-                                                        <input
-                                                            className="uk-checkbox sc-js-table-checkbox"
-                                                            type="checkbox"
-                                                            data-sc-icheck
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <img
-                                                            src={`http://192.168.1.13:8000//${value.image_url}`}
-                                                            className="sc-avatar uk-preserve-width"
-                                                            alt={value.image_alt}
-                                                            style={{borderRadius: '5px', maxWidth: '150px'}}
-                                                        />
-                                                    </td>
-                                                    <td>{value.description}</td>
-                                                    <td>{value.name}</td>
-                                                    <td>{value.content}</td>
-                                                    <td>
-                                                        <div className="uk-flex gap-2">
-                                                            <div>
-                                                                <Link
-                                                                    to={`/op-admin/view-product/${value._id}`}
-                                                                    className="sc-button sc-button-primary sc-js-button-wave-light"
+                                            categories?.data?.map(
+                                                (value, index) => (
+                                                    <tr key={index}>
+                                                        <td>
+                                                            <input
+                                                                className="uk-checkbox sc-js-table-checkbox"
+                                                                type="checkbox"
+                                                                data-sc-icheck
+                                                            />
+                                                        </td>
+                                                        <td>
+                                                            <img
+                                                                src={
+                                                                    value.image_url
+                                                                }
+                                                                className="sc-avatar uk-preserve-width"
+                                                                alt={
+                                                                    value.image_alt
+                                                                }
+                                                                style={{
+                                                                    borderRadius:
+                                                                        "5px",
+                                                                    maxWidth:
+                                                                        "150px",
+                                                                }}
+                                                            />
+                                                        </td>
+                                                        <td>{value.name}</td>
+                                                        <td>
+                                                            {
+                                                                value?.category
+                                                                    ?.name
+                                                            }
+                                                        </td>
+
+                                                        <td className="uk-text-capitalize">
+                                                            {value.status}
+                                                        </td>
+                                                        <td className="uk-text-capitalize">
+                                                            {
+                                                                value.approval_status
+                                                            }
+                                                        </td>
+
+                                                        <td className="uk-text-capitalize">
+                                                            {
+                                                                <FormattedDate
+                                                                    getDate={
+                                                                        value.created_at
+                                                                    }
+                                                                />
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            <div className="uk-flex gap-2">
+                                                                <div>
+                                                                    <Link
+                                                                        to={`/op-admin/view-product/${value._id}`}
+                                                                        className="sc-button sc-button-primary sc-js-button-wave-light"
+                                                                    >
+                                                                        <i className="mdi mdi-eye"></i>
+                                                                    </Link>
+                                                                </div>
+                                                                <div
+                                                                    onClick={() =>
+                                                                        handleViewService(
+                                                                            value._id
+                                                                        )
+                                                                    }
                                                                 >
-                                                                    <i className="mdi mdi-eye"></i>
-                                                                </Link>
-                                                            </div>
-                                                            <div onClick={() => handleViewService(value._id)}>
-                                                                <a
-                                                                    className="sc-button sc-button-danger sc-js-button-wave-light"
-                                                                    href="#"
+                                                                    <a
+                                                                        className="sc-button sc-button-danger sc-js-button-wave-light"
+                                                                        href="#"
+                                                                    >
+                                                                        <i className="mdi mdi-file-edit"></i>
+                                                                    </a>
+                                                                </div>
+                                                                <div
+                                                                    onClick={(
+                                                                        e
+                                                                    ) =>
+                                                                        deleteCategory(
+                                                                            value._id
+                                                                        )
+                                                                    }
                                                                 >
-                                                                    <i className="mdi mdi-file-edit">
-                                                                    </i>
-                                                                </a>
+                                                                    <a
+                                                                        className="sc-button sc-button-secondary sc-js-button-wave-light"
+                                                                        href="#"
+                                                                    >
+                                                                        <i className="mdi mdi-trash-can-outline"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
-                                                            <div onClick={e => deleteCategory(value._id)}>
-                                                                <a
-                                                                    className="sc-button sc-button-secondary sc-js-button-wave-light"
-                                                                    href="#"
-                                                                >
-                                                                    <i className="mdi mdi-trash-can-outline"></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            )
                                         ) : (
                                             <tr>
                                                 <td>
@@ -181,6 +228,6 @@ export default function Products() {
                     </div>
                 </div>
             </div>
-    </>
-  )
+        </>
+    );
 }

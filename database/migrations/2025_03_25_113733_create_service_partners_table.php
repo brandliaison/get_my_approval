@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('service_partners', function (Blueprint $table) {
             $table->id();
+            $table->string('reg_type');
             $table->enum('country', ['India', 'Other']);
+            $table->string('org_name')->nullable();
             $table->string('name');
+            $table->string('designation')->nullable();
             $table->string('email')->unique();
             $table->string('email_otp')->nullable();
             $table->timestamp('email_verified_at')->nullable();
@@ -32,6 +35,9 @@ return new class extends Migration
             $table->string('aadhar_number')->nullable();
             $table->string('aadhar_verified')->nullable();
             $table->text('aadhar_details')->nullable();
+            $table->string('gst_number')->nullable();
+            $table->string('gst_verified')->nullable();
+            $table->text('gst_details')->nullable();
             $table->text('office_address')->nullable();
             $table->text('office_district')->nullable();
             $table->text('office_state')->nullable();
@@ -48,8 +54,18 @@ return new class extends Migration
             $table->string('experience_years')->nullable();
             $table->string('experience_months')->nullable();
 
+            $table->string('team_size')->nullable();
+            $table->string('branch_address')->nullable();
+            $table->string('branch_district')->nullable();
+            $table->string('branch_state')->nullable();
+            $table->string('branch_pincode')->nullable();
+
             // Skills / Services
             $table->text('skills')->nullable(); // JSON format
+
+            // Business
+            $table->string('business_title')->nullable();
+            $table->string('business_description')->nullable();
 
             // Uploads
             $table->string('profile_photo')->nullable();
@@ -60,6 +76,7 @@ return new class extends Migration
 
             // Status
             $table->string('status')->default('pending');
+            $table->string('steps')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

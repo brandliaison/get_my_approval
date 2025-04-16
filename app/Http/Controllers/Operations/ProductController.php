@@ -18,7 +18,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = Product::where(function ($query) {
+        $data = Product::with('category')->where(function ($query) {
             $query->where('status', 'active')
                 ->orWhere('created_by', Auth::id());
         })->with('category')->get();
@@ -61,6 +61,7 @@ class ProductController extends Controller
 
         $validated['slug'] = isset($request->slug) ? Str::slug($request->slug) : Str::slug($request->name);
         $validated['status'] = 'inactive';
+        $validated['approval_status'] = 'submitted';
         $validated['created_by'] = Auth::user()->_id;
 
         $data = Product::create($validated);
@@ -83,7 +84,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        $data = Product::with('category', 'revisions.reviews')->find($id);
+        $data = Product::with('category', 'revisions.reviews', 'services', 'tutorials', 'blogs', 'notifications')->find($id);
         if (!$data) {
             return response()->json(['error' => 'Product Not Found'], 404);
         }
@@ -100,17 +101,23 @@ class ProductController extends Controller
         $data =  Product::with('category')->find($id);
         $oldData = clone $data;
 
-        $validated = $request->validate([
+        $rules = [
             'name' => 'required|string|max:255',
             'product_category_id' => 'required|exists:product_categories,_id',
-            'image_url' => 'nullable|mimes:png,jpg,jpeg',
             'image_alt' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'content' => 'nullable|string',
             'technical_name' => 'nullable|string',
             'compliance_header' => 'nullable|string',
             'open_comment' => 'nullable|string',
-        ]);
+        ];
+
+        if ($request->hasFile('image_url')) {
+            $rules = [
+                'image_url' => 'nullable|mimes:png,jpg,jpeg',
+            ];
+        }
+        $validated = $request->validate($rules);
 
         // if ($category->status !== 'active') {
         //     return response()->json(['error' => 'Product Category Not Found'], 404);
@@ -155,5 +162,40 @@ class ProductController extends Controller
         }
         $data->delete();
         return response()->json(['message' => 'Product deleted successfully']);
+    }
+
+    public function activeProducts()
+    {
+        $data = Product::where('status', 'active')->with('category', 'createdByUser')->get();
+
+        if (!count($data) > 0) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
+    }
+
+    public function productsByCategory($slug)
+    {
+
+        $cat = ProductCategory::where('slug', $slug)->where('status', 'active')->first();
+        $data = Product::with('category')->where('product_category_id', $cat->_id)->where('status', 'active')->get();
+
+        if (!$data) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
+    }
+
+    public function productDetails($slug)
+    {
+        $data = Product::with('services', 'tutorials', 'blogs', 'notifications')->where('slug', $slug)->where('status', 'active')->first();
+
+        if (!$data) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
     }
 }
