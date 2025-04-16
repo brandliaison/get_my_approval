@@ -14,7 +14,7 @@ export default function Footer() {
                     >
                         <div className="footer-about">
                             <img
-                                src="./images/logos/footerlogo.png"
+                                src="/images/logos/footerlogo.png"
                                 className="uk-margin-bottom"
                             />
                             <p>
@@ -42,9 +42,7 @@ export default function Footer() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to={"/career"}>
-                                        Career
-                                    </Link>
+                                    <Link to={"/career"}>Career</Link>
                                 </li>
                             </ul>
                         </div>
@@ -63,7 +61,7 @@ export default function Footer() {
                                     <a href="#">Downloads</a>
                                 </li>
                                 <li>
-                                    <a href="#">Blogs</a>
+                                    <Link to={"/blogs"}>Blogs</Link>
                                 </li>
                                 <li>
                                     <a href="#">Media Coverage</a>

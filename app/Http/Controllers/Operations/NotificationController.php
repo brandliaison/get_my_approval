@@ -89,7 +89,7 @@ class NotificationController extends Controller
      */
     public function show(string $id)
     {
-        $notification = Notification::with('category', 'revisions.reviews')->find($id);
+        $notification = Notification::with('category', 'revisions.reviews', 'products', 'services', 'tutorials', 'blogs')->find($id);
         if (!$notification) {
             return response()->json(['error' => 'Notification Not Found'], 404);
         }
@@ -179,7 +179,17 @@ class NotificationController extends Controller
     {
 
         $cat = NotificationCategory::where('slug', $slug)->where('status', 'active')->first();
-        $data = Notification::where('notification_category_id', $cat->_id)->where('status', 'active')->get();
+        $data = Notification::with('category')->where('notification_category_id', $cat->_id)->where('status', 'active')->get();
+
+        if (!$data) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
+    }
+
+    public function notificationDetails($slug){
+        $data = Notification::with('products', 'services', 'tutorials', 'blogs')->where('slug', $slug)->where('status', 'active')->first();
 
         if (!$data) {
             return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);

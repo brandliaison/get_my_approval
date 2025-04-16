@@ -97,7 +97,7 @@ export default function Notification() {
                                                             <Link
                                                                 to={
                                                                     "/notification-category/" +
-                                                                    val?.slug
+                                                                    child?.slug
                                                                 }
                                                             >
                                                                 -- {child.name}
@@ -172,7 +172,7 @@ export default function Notification() {
                                                   <td>
                                                       <Link
                                                           to={
-                                                              "/notification-details/" +
+                                                              "/notification/" +
                                                               val.slug
                                                           }
                                                       >View Details</Link>

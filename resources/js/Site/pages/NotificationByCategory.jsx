@@ -12,7 +12,7 @@ export default function NotificationByCategory() {
 
     const getCategories = () => {
         apiClient
-            .get(`/active-notifications-by-category`, {
+            .get(`/active-notification-categories`, {
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -43,7 +43,9 @@ export default function NotificationByCategory() {
     useEffect(() => {
         getCategories();
         getData();
-    }, []);
+    }, [slug]);
+
+    console.log(data);
 
     // Separate parent and child categories
     const parentCategories = categories?.filter((cat) => !cat.parent_category);
@@ -100,7 +102,7 @@ export default function NotificationByCategory() {
                                                             <Link
                                                                 to={
                                                                     "/notification-category/" +
-                                                                    val?.slug
+                                                                    child?.slug
                                                                 }
                                                             >
                                                                 -- {child.name}
@@ -175,7 +177,7 @@ export default function NotificationByCategory() {
                                                   <td>
                                                       <Link
                                                           to={
-                                                              "/notification-details/" +
+                                                              "/notification/" +
                                                               val.slug
                                                           }
                                                       >View Details</Link>

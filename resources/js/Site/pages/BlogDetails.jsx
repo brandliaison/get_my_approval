@@ -1,36 +1,39 @@
 import React, { useEffect, useState } from "react";
-import apiClient from "../frontservices/api";
+import apiClient from "../services/api";
 import { Link, useParams } from "react-router-dom";
+import FormattedDate from "../../OpAdmin/components/FormattedDate";
 
-export default function ServiceDetails() {
+export default function BlogDetails() {
     const { slug } = useParams();
-    const [serviceCategories, setServiceCategories] = useState();
-    const [services, setServices] = useState();
 
-    const getServiceCategories = () => {
+    const [categories, setCategories] = useState();
+    const [data, setData] = useState();
+    const [videoData, setVideoData] = useState({});
+
+    const getCategories = () => {
         apiClient
-            .get(`/active-service-categories`, {
+            .get(`/active-blog-categories`, {
                 headers: {
                     "Content-Type": "application/json",
                 },
             })
             .then((res) => {
-                setServiceCategories(res.data.data);
+                setCategories(res.data.data);
             })
             .catch((err) => {
                 console.log(err);
             });
     };
 
-    const getServices = () => {
+    const getData = () => {
         apiClient
-            .get(`/active-service-details/${slug}`, {
+            .get(`/active-blog-details/${slug}`, {
                 headers: {
                     "Content-Type": "application/json",
                 },
             })
             .then((res) => {
-                setServices(res.data.data);
+                setData(res.data.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -38,38 +41,34 @@ export default function ServiceDetails() {
     };
 
     useEffect(() => {
-        getServiceCategories();
-        getServices();
+        getCategories();
+        getData();
     }, []);
 
     // Separate parent and child categories
-    const parentCategories = serviceCategories?.filter(
-        (cat) => !cat.parent_category
-    );
-    const childCategories = serviceCategories?.filter(
-        (cat) => cat.parent_category
-    );
+    const parentCategories = categories?.filter((cat) => !cat.parent_category);
+    const childCategories = categories?.filter((cat) => cat.parent_category);
 
     return (
         <>
-            {/* <!-- services top banner section --> */}
+            {/* <!-- turorial top banner section --> */}
 
             <div className="services-top-banner uk-position-relative">
                 <img src="/images/servicebanner.png" className="uk-width-1-1" />
                 <div className="inner-page-banner">
-                    <h2>Solutions</h2>
+                    <h2>Blog</h2>
                 </div>
             </div>
 
-            {/* <!-- services main section --> */}
+            {/* <!-- turorial main section --> */}
 
             <div className="services-main uk-padding-large uk-padding-remove-horizontal">
                 <div className="custom-container">
-                    <div className="uk-grid" uk-grid='true'>
+                    <div className="uk-grid" uk-grid>
                         <div className="uk-width-1-1 uk-width-1-4@m uk-padding-remove">
                             <div className="left-filters uk-padding uk-margin-top">
                                 <h3 className="fontlivvic-bold">
-                                    Solution Categories
+                                    Blog Categories
                                 </h3>
                                 <ul className="uk-list uk-list-collapse fontlivvic">
                                     {parentCategories?.map((val, i) => (
@@ -77,7 +76,7 @@ export default function ServiceDetails() {
                                             <i data-lucide="chevron-right"></i>{" "}
                                             <Link
                                                 to={
-                                                    "/service-category/" +
+                                                    "/blog-category/" +
                                                     val?.slug
                                                 }
                                             >
@@ -100,7 +99,7 @@ export default function ServiceDetails() {
                                                         >
                                                             <Link
                                                                 to={
-                                                                    "/service-category/" +
+                                                                    "/blog-category/" +
                                                                     child?.slug
                                                                 }
                                                             >
@@ -129,7 +128,7 @@ export default function ServiceDetails() {
                                 </div>
                                 <div className="uk-flex uk-flex-between">
                                     <div>
-                                        <img src="  /images/icons/pdf-icon.png" />
+                                        <img src="/images/icons/pdf-icon.png" />
                                         <p className="uk-display-inline-block fontlivvic">
                                             Our Brochure
                                         </p>
@@ -143,31 +142,14 @@ export default function ServiceDetails() {
                         </div>
 
                         <div className="uk-width-1-1 uk-width-3-4@m">
-                            <div className="uk-grid-collapse uk-child-width-1-1">
-                                <div className="uk-padding-small">
-                                    <div className="uk-card uk-card-default uk-card-body servicecard uk-padding-small">
-                                        <div className="uk-flex uk-flex-middle">
-                                            <img
-                                                src={services?.image_url}
-                                                height={80}
-                                                width={80}
-                                            />
-                                            <div className="uk-margin-left">
-                                                <h5 className="uk-text-bold uk-margin-remove fourth-color">
-                                                    {services?.name}
-                                                </h5>
-                                                <p className="fourth-color">
-                                                    {
-                                                        services?.compliance_header
-                                                    }
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <p className="uk-margin-top">
-                                            {services?.description}
-                                        </p>
-                                    </div>
-                                </div>
+                            <h1>{data?.name}</h1>
+
+                            <div className="uk-width-1-2">
+                                <img src={data?.image_url} />
+                            </div>
+
+                            <div className="uk-margin-top">
+                                {data?.description}
                             </div>
 
                             <div className="uk-grid-collapse uk-child-width-1-1">
@@ -176,24 +158,24 @@ export default function ServiceDetails() {
                                         <div className="uk-padding-small">
                                             <div className="uk-card uk-card-default uk-card-body uk-padding-small">
                                                 <h5 className="uk-text-bold uk-margin-remove fourth-color">
-                                                    Related Blogs
+                                                    Related Tutorials
                                                 </h5>
 
                                                 <div className="uk-grid-collapse uk-child-width-1-1 uk-margin-top">
-                                                    {services?.blogs?.map(
+                                                    {data?.tutorials?.map(
                                                         (val) => (
                                                             <div key={val?._id}>
                                                                 <div className="uk-flex gap-6 uk-margin-bottom">
                                                                     <div>
                                                                         <Link
                                                                             to={
-                                                                                "/blog/" +
+                                                                                "/tutorial/" +
                                                                                 val?.slug
                                                                             }
                                                                         >
                                                                             <img
                                                                                 src={
-                                                                                    val?.image_url
+                                                                                    val?.thumbnail_url
                                                                                 }
                                                                                 style={{
                                                                                     maxHeight:
@@ -208,7 +190,7 @@ export default function ServiceDetails() {
                                                                         {" "}
                                                                         <Link
                                                                             to={
-                                                                                "/blog/" +
+                                                                                "/tutorial/" +
                                                                                 val?.slug
                                                                             }
                                                                         >
@@ -239,7 +221,7 @@ export default function ServiceDetails() {
                                                     className="uk-grid-collapse uk-child-width-1-1 uk-margin-top"
                                                     uk-grid="true"
                                                 >
-                                                    {services?.products?.map(
+                                                    {data?.products?.map(
                                                         (val) => (
                                                             <div key={val?._id}>
                                                                 <div className="uk-flex gap-6 uk-margin-bottom">
@@ -295,14 +277,73 @@ export default function ServiceDetails() {
                                         <div className="uk-padding-small">
                                             <div className="uk-card uk-card-default uk-card-body uk-padding-small">
                                                 <h5 className="uk-text-bold uk-margin-remove fourth-color">
-                                                    Related Notifications
+                                                    Related Services
                                                 </h5>
 
                                                 <div
                                                     className="uk-grid-collapse uk-child-width-1-1 uk-margin-top"
                                                     uk-grid="true"
                                                 >
-                                                    {services?.notifications?.map(
+                                                    {data?.services?.map(
+                                                        (val) => (
+                                                            <div key={val?._id}>
+                                                                <div className="uk-flex gap-6 uk-margin-bottom">
+                                                                    <div>
+                                                                        <Link
+                                                                            to={
+                                                                                "/services/" +
+                                                                                val?.slug
+                                                                            }
+                                                                        >
+                                                                            <img
+                                                                                src={
+                                                                                    val?.image_url
+                                                                                }
+                                                                                style={{
+                                                                                    maxHeight:
+                                                                                        "100px",
+                                                                                    maxWidth:
+                                                                                        "100px",
+                                                                                }}
+                                                                            />
+                                                                        </Link>
+                                                                    </div>
+                                                                    <div>
+                                                                        {" "}
+                                                                        <Link
+                                                                            to={
+                                                                                "/services/" +
+                                                                                val?.slug
+                                                                            }
+                                                                        >
+                                                                            <h5 className="uk-text-bold uk-margin-remove">
+                                                                                {
+                                                                                    val?.name
+                                                                                }
+                                                                            </h5>
+                                                                        </Link>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="uk-width-1-2">
+                                        <div className="uk-padding-small">
+                                            <div className="uk-card uk-card-default uk-card-body uk-padding-small">
+                                                <h5 className="uk-text-bold uk-margin-remove fourth-color">
+                                                    Medatory Notifications
+                                                </h5>
+
+                                                <div
+                                                    className="uk-grid-collapse uk-child-width-1-1 uk-margin-top"
+                                                    uk-grid="true"
+                                                >
+                                                    {data?.notifications?.map(
                                                         (val) => (
                                                             <div key={val?._id}>
                                                                 <div className="uk-flex gap-6 uk-margin-bottom uk-flex-between">
@@ -330,65 +371,6 @@ export default function ServiceDetails() {
                                                                         >
                                                                             View
                                                                             Details
-                                                                        </Link>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        )
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="uk-width-1-2">
-                                        <div className="uk-padding-small">
-                                            <div className="uk-card uk-card-default uk-card-body uk-padding-small">
-                                                <h5 className="uk-text-bold uk-margin-remove fourth-color">
-                                                    Medatory Tutorials
-                                                </h5>
-
-                                                <div
-                                                    className="uk-grid-collapse uk-child-width-1-1 uk-margin-top"
-                                                    uk-grid="true"
-                                                >
-                                                    {services?.tutorials?.map(
-                                                        (val) => (
-                                                            <div key={val?._id}>
-                                                                <div className="uk-flex gap-6 uk-margin-bottom">
-                                                                    <div>
-                                                                        <Link
-                                                                            to={
-                                                                                "/tutorial/" +
-                                                                                val?.slug
-                                                                            }
-                                                                        >
-                                                                            <img
-                                                                                src={
-                                                                                    val?.thumbnail_url
-                                                                                }
-                                                                                style={{
-                                                                                    maxHeight:
-                                                                                        "100px",
-                                                                                    maxWidth:
-                                                                                        "100px",
-                                                                                }}
-                                                                            />
-                                                                        </Link>
-                                                                    </div>
-                                                                    <div>
-                                                                        {" "}
-                                                                        <Link
-                                                                            to={
-                                                                                "/tutorial/" +
-                                                                                val?.slug
-                                                                            }
-                                                                        >
-                                                                            <h5 className="uk-text-bold uk-margin-remove">
-                                                                                {
-                                                                                    val?.name
-                                                                                }
-                                                                            </h5>
                                                                         </Link>
                                                                     </div>
                                                                 </div>

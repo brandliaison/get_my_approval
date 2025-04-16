@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../../services/api";
 import UIkit from "uikit";
+import FormattedDate from "../../components/FormattedDate";
 
 export default function Products() {
     const navigate = useNavigate();
@@ -105,10 +106,12 @@ export default function Products() {
                                                 />
                                             </th>
                                             <th>Product Image</th>
-                                            <th>Product Discription</th>
                                             <th>Product Name</th>
-                                            <th>Product Title</th>
-                                            <th>Product Blog</th>
+                                            <th>Category</th>
+                                            <th>Status</th>
+                                            <th>Approval Status</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -125,7 +128,9 @@ export default function Products() {
                                                         </td>
                                                         <td>
                                                             <img
-                                                                src={`http://192.168.1.13:8000//${value.image_url}`}
+                                                                src={
+                                                                    value.image_url
+                                                                }
                                                                 className="sc-avatar uk-preserve-width"
                                                                 alt={
                                                                     value.image_alt
@@ -138,11 +143,32 @@ export default function Products() {
                                                                 }}
                                                             />
                                                         </td>
-                                                        <td>
-                                                            {value.description}
-                                                        </td>
                                                         <td>{value.name}</td>
-                                                        <td>{value.content}</td>
+                                                        <td>
+                                                            {
+                                                                value?.category
+                                                                    ?.name
+                                                            }
+                                                        </td>
+
+                                                        <td className="uk-text-capitalize">
+                                                            {value.status}
+                                                        </td>
+                                                        <td className="uk-text-capitalize">
+                                                            {
+                                                                value.approval_status
+                                                            }
+                                                        </td>
+
+                                                        <td className="uk-text-capitalize">
+                                                            {
+                                                                <FormattedDate
+                                                                    getDate={
+                                                                        value.created_at
+                                                                    }
+                                                                />
+                                                            }
+                                                        </td>
                                                         <td>
                                                             <div className="uk-flex gap-2">
                                                                 <div>

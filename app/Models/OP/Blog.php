@@ -47,7 +47,28 @@ class Blog extends Model
     {
         return $this->hasMany(EntityRevision::class, 'entity_id', '_id')->where('entity_type', 'Blog');
     }
-    public function createdByUser(){
+    public function createdByUser()
+    {
         return $this->belongsTo(OpStaff::class, 'created_by', '_id');
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
+
+    public function services()
+    {
+        return $this->belongsToMany(Service::class);
+    }
+
+    public function tutorials()
+    {
+        return $this->belongsToMany(TutorialVideo::class);
+    }
+
+    public function notifications()
+    {
+        return $this->belongsToMany(Notification::class);
     }
 }

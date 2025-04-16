@@ -84,7 +84,7 @@ class BlogController extends Controller
      */
     public function show(string $id)
     {
-        $data = Blog::with('category', 'revisions.reviews')->find($id);
+        $data = Blog::with('category', 'revisions.reviews', 'products', 'services', 'tutorials', 'notifications')->find($id);
         if (!$data) {
             return response()->json(['error' => 'Blog Not Found'], 404);
         }
@@ -156,5 +156,40 @@ class BlogController extends Controller
         }
         $data->delete();
         return response()->json(['message' => 'Blog deleted successfully']);
+    }
+
+    public function activeBlogs()
+    {
+        $data = Blog::where('status', 'active')->with('category', 'createdByUser')->get();
+
+        if (!count($data) > 0) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
+    }
+
+    public function blogsByCategory($slug)
+    {
+
+        $cat = BlogCategory::where('slug', $slug)->where('status', 'active')->first();
+        $data = Blog::with('category')->where('blog_category_id', $cat->_id)->where('status', 'active')->get();
+
+        if (!$data) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
+    }
+
+    public function blogDetails($slug)
+    {
+        $data = Blog::with('products', 'services', 'tutorials', 'notifications')->where('slug', $slug)->where('status', 'active')->first();
+
+        if (!$data) {
+            return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
+        }
+
+        return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
     }
 }

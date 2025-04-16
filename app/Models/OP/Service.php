@@ -67,7 +67,28 @@ class Service extends Model
     {
         return self::where('_id', $id)->update(['approval_status' => 'approved', 'status' => 'active', 'final_approver' => Auth::id(), 'final_approved_date' => Carbon::now()->toDateTimeString()]);
     }
-    public function createdByUser(){
+    public function createdByUser()
+    {
         return $this->belongsTo(OpStaff::class, 'created_by', '_id');
+    }
+
+    public function notifications()
+    {
+        return $this->belongsToMany(Notification::class);
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
+
+    public function tutorials()
+    {
+        return $this->belongsToMany(TutorialVideo::class);
+    }
+
+    public function blogs()
+    {
+        return $this->belongsToMany(Blog::class);
     }
 }

@@ -3,9 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../../services/api";
 import axios from "axios";
 import UIkit from "uikit";
+import FormattedDate from "../../components/FormattedDate";
+import FormatText from "../../components/FormatText";
 
 export default function Tutorials() {
-
     const navigate = useNavigate();
 
     const [tutorials, settutorials] = useState();
@@ -36,7 +37,8 @@ export default function Tutorials() {
     };
 
     const gettutorial = () => {
-        apiClient.get(`/tutorial-videos`)
+        apiClient
+            .get(`/tutorial-videos`)
             .then((res) => {
                 settutorials(res.data.data);
             })
@@ -59,9 +61,7 @@ export default function Tutorials() {
                 <div id="sc-page-content">
                     <div className="uk-flex uk-flex-right">
                         <Link to="/op-admin/addtutorials">
-                            <button
-                                className="sc-fab sc-fab-text sc-fab-success solid-button"
-                            >
+                            <button className="sc-fab sc-fab-text sc-fab-success solid-button">
                                 <i className="mdi mdi-plus"></i>Create
                             </button>
                         </Link>
@@ -83,15 +83,17 @@ export default function Tutorials() {
                                                 />
                                             </th>
                                             <th>Thumbnail</th>
-                                            <th>Tutorial Discription</th>
                                             <th>Tutorial Name</th>
-                                            <th>Tutorial Content</th>
-                                            <th>Edit Tutorial</th>
+                                            <th>Category</th>
+                                            <th>Status</th>
+                                            <th>Approval Status</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {tutorials?.length > 0 ? (
-                                                tutorials?.map((value, index) => (
+                                            tutorials?.map((value, index) => (
                                                 <tr key={index}>
                                                     <td className="td">
                                                         <input
@@ -101,14 +103,48 @@ export default function Tutorials() {
                                                         />
                                                     </td>
                                                     <td>
-                                                        <img src={`http://192.168.1.13:8000//${value.thumbnail_url}`} className="sc-avatar uk-preserve-width"
+                                                        <img
+                                                            src={
+                                                                value.thumbnail_url
+                                                            }
+                                                            className="sc-avatar uk-preserve-width"
                                                             alt="pagac.twila"
-                                                            style={{maxWidth: '10vw', borderRadius: 0}}
-                                                            uk-toggle="target: #tutorialvideo" onClick={e => setvideourl(value.video_url)}/>
+                                                            style={{
+                                                                maxWidth:
+                                                                    "10vw",
+                                                                borderRadius: 0,
+                                                            }}
+                                                            uk-toggle="target: #tutorialvideo"
+                                                            onClick={(e) =>
+                                                                setvideourl(
+                                                                    value.video_url
+                                                                )
+                                                            }
+                                                        />
                                                     </td>
-                                                    <td>{value.description}</td>
                                                     <td>{value.name}</td>
-                                                    <td>{value.content}</td>
+                                                    <td>
+                                                        {value.category.name}
+                                                    </td>
+                                                    <td className="uk-text-capitalize">
+                                                        <FormatText
+                                                            text={value.status}
+                                                        />
+                                                    </td>
+                                                    <td className="uk-text-capitalize">
+                                                        <FormatText
+                                                            text={
+                                                                value.approval_status
+                                                            }
+                                                        />
+                                                    </td>
+                                                    <td className="uk-text-capitalize">
+                                                        <FormattedDate
+                                                            getDate={
+                                                                value.created_at
+                                                            }
+                                                        />
+                                                    </td>
                                                     <td>
                                                         <div className="uk-flex gap-2">
                                                             <div>
@@ -130,9 +166,7 @@ export default function Tutorials() {
                                                                     className="sc-button sc-button-secondary sc-js-button-wave-light"
                                                                     href="#"
                                                                 >
-                                                                    <i className="mdi mdi-file-edit">
-                                                                        
-                                                                    </i>
+                                                                    <i className="mdi mdi-file-edit"></i>
                                                                 </a>
                                                             </div>
                                                             <div
@@ -152,14 +186,14 @@ export default function Tutorials() {
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                ))
-                                             ) : (
-                                                    <tr>
-                                                        <td>
-                                                            <p>No blogs available.</p>
-                                                        </td>
-                                                    </tr>
-                                                )}
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td>
+                                                    <p>No blogs available.</p>
+                                                </td>
+                                            </tr>
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
@@ -171,7 +205,7 @@ export default function Tutorials() {
             {/* <!-- Modal --> */}
             <div id="tutorialvideo" uk-modal="true">
                 <div className="uk-modal-dialog uk-modal-body uk-margin-auto-vertical uk-padding-remove">
-                    <iframe src={videourl} width='100%' height='400px'></iframe>
+                    <iframe src={videourl} width="100%" height="400px"></iframe>
                 </div>
             </div>
         </>

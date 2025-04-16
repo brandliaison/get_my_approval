@@ -78,7 +78,7 @@ class ServiceController extends Controller
     // Get a single service
     public function show($id)
     {
-        $service = Service::with('category', 'revisions.reviews')->find($id);
+        $service = Service::with('category', 'revisions.reviews', 'notifications', 'tutorials', 'products', 'blogs')->find($id);
         if (!$service) {
             return response()->json(['error' => 'Service Not Found'], 404);
         }
@@ -168,12 +168,17 @@ class ServiceController extends Controller
 
     public function serviceDetails($slug)
     {
-        $data = Service::where('slug', $slug)->where('status', 'active')->first();
+        $data = Service::with('notifications', 'tutorials', 'products', 'blogs')->where('slug', $slug)->where('status', 'active')->first();
 
         if (!$data) {
             return response()->json(['data' => [], 'message' => 'Data Not Found'], 200);
         }
 
         return response()->json(['data' => $data, 'message' => 'Data Found'], 200);
+    }
+
+    public function serviceNotificationJoin(Request $request)
+    {
+        return $request->all();
     }
 }

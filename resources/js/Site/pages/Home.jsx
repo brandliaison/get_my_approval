@@ -248,7 +248,7 @@ export default function Home() {
                           </div>
                           <div className="uk-padding-small">
                               <h2 className="uk-text-bold fourth-color">What is Lorem Ipsum?</h2>
-                              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                           </div>
                       </div>
                   </div>
@@ -342,7 +342,7 @@ export default function Home() {
               <h2 className="uk-margin-small-bottom uk-margin-small-top uk-text-2xlarge uk-text-bold fourth-color font-size1">Blogs</h2>
               <h3 className="third-color uk-text-bold uk-margin-medium-bottom uk-margin-small-top font-size2">News & Articles</h3>
               <div className="uk-grid uk-grid-medium uk-child-width-1-1@s uk-child-width-1-2@m uk-child-width-1-3@l" uk-child>
-                  
+
                   <div className="uk-padding-small uk-padding-remove-top">
                       <div className="tutorial-main uk-card uk-card-default">
                           <div className="uk-position-relative">

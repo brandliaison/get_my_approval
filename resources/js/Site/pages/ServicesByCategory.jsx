@@ -58,7 +58,7 @@ export default function ServicesByCategory() {
 
             <div className="services-top-banner uk-position-relative">
                 <img
-                    src="./images/servicebanner.png"
+                    src="/images/servicebanner.png"
                     className="uk-width-1-1"
                 />
                 <div className="inner-page-banner">
@@ -122,7 +122,7 @@ export default function ServicesByCategory() {
                                 <h3 className="fontlivvic-bold">Downloads</h3>
                                 <div className="uk-flex uk-flex-between uk-margin-bottom">
                                     <div>
-                                        <img src="./images/icons/pdf-icon.png" />
+                                        <img src="/images/icons/pdf-icon.png" />
                                         <p className="uk-display-inline-block fontlivvic">
                                             Our Brochure
                                         </p>
@@ -134,7 +134,7 @@ export default function ServicesByCategory() {
                                 </div>
                                 <div className="uk-flex uk-flex-between">
                                     <div>
-                                        <img src="./images/icons/pdf-icon.png" />
+                                        <img src="/images/icons/pdf-icon.png" />
                                         <p className="uk-display-inline-block fontlivvic">
                                             Our Brochure
                                         </p>

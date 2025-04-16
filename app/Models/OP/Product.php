@@ -49,4 +49,24 @@ class Product extends Model
     public function createdByUser(){
         return $this->belongsTo(OpStaff::class, 'created_by', '_id');
     }
+
+    public function notifications()
+    {
+        return $this->belongsToMany(Notification::class);
+    }
+
+    public function services()
+    {
+        return $this->belongsToMany(Service::class);
+    }
+
+    public function tutorials()
+    {
+        return $this->belongsToMany(TutorialVideo::class);
+    }
+
+    public function blogs()
+    {
+        return $this->belongsToMany(Blog::class);
+    }
 }

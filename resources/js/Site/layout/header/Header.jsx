@@ -130,6 +130,17 @@ export default function Header(header) {
                                     </h5>
                                 </div>
                             </Link>
+                            <Link to="/products" className="uk-link-reset">
+                                <div className="uk-flex uk-flex-middle uk-margin-large-right">
+                                    <img
+                                        src="/images/notifications/order.png"
+                                        className="uk-margin-right"
+                                    />
+                                    <h5 className="uk-text-bold main-color uk-margin-remove">
+                                        Products
+                                    </h5>
+                                </div>
+                            </Link>
                         </div>
                         <div className="nav-last-right">
                             <ul>
