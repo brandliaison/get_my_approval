@@ -46,8 +46,7 @@ class HomeController extends Controller
             'pincode' => 'required|string|max:10',
         ];
 
-        if($request->reg_type === 'Company')
-        {
+        if ($request->reg_type === 'Company') {
             $rules += ['org_name' => 'required'];
             $rules += ['designation' => 'required'];
         }
@@ -215,8 +214,8 @@ class HomeController extends Controller
             }
         }
 
-        if($request->su_type === 'aadhar_verification'){
-            if($request->aadhar_verified == true){
+        if ($request->su_type === 'aadhar_verification') {
+            if ($request->aadhar_verified == true) {
                 $aadhar_details = json_decode($request->aadhar_details, true);
                 $data['aadhar_number'] = $request->aadhar_number;
                 $data['aadhar_verified'] = now()->format('d-M-Y');
@@ -225,8 +224,8 @@ class HomeController extends Controller
             }
         }
 
-        if($request->su_type === 'gst_verification'){
-            if($request->gst_verified == true){
+        if ($request->su_type === 'gst_verification') {
+            if ($request->gst_verified == true) {
                 $gst_details = json_decode($request->gst_details, true);
                 $data['gst_number'] = $request->gst_number;
                 $data['gst_verified'] = now()->format('d-M-Y');
@@ -234,7 +233,7 @@ class HomeController extends Controller
             }
         }
 
-        if($request->su_type === 'academic'){
+        if ($request->su_type === 'academic') {
             $rules['academic_details'] = 'required';
             $rules['experience_years'] = 'required';
             $rules['experience_months'] = 'required';
@@ -245,7 +244,7 @@ class HomeController extends Controller
             $data['steps'] = 'step3';
         }
 
-        if($request->su_type === 'branch'){
+        if ($request->su_type === 'branch') {
             $rules['team_size'] = 'required';
             $rules['experience_years'] = 'required';
             $rules['experience_months'] = 'required';
@@ -263,13 +262,18 @@ class HomeController extends Controller
             $data['steps'] = 'step3';
         }
 
-        if($request->su_type === 'skills'){
+        if ($request->su_type === 'skills') {
             $rules['skills'] = 'required';
             $data['skills'] = json_decode($request->skills, true);
             $data['steps'] = 'step4';
         }
 
-        if($request->su_type === 'profile'){
+        if ($request->su_type === 'emailMobileChange') {
+            $data['email'] = $request->email;
+            $data['mobile'] = $request->mobile;
+        }
+
+        if ($request->su_type === 'profile') {
             $data['business_title'] = $request->business_title;
             $data['business_description'] = $request->business_description;
             $data['website'] = $request->website;
@@ -309,7 +313,7 @@ class HomeController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Data Saved',
-                'data'=> ServicePartner::find($request->user_id),
+                'data' => ServicePartner::find($request->user_id),
             ], 201);
         }
     }
@@ -489,8 +493,8 @@ class HomeController extends Controller
             }
         }
 
-        if($request->su_type === 'aadhar_verification'){
-            if($request->aadhar_verified == true){
+        if ($request->su_type === 'aadhar_verification') {
+            if ($request->aadhar_verified == true) {
                 $aadhar_details = json_decode($request->aadhar_details, true);
                 $data['aadhar_number'] = $request->aadhar_number;
                 $data['aadhar_verified'] = now()->format('d-M-Y');
@@ -499,7 +503,7 @@ class HomeController extends Controller
             }
         }
 
-        if($request->su_type === 'academic'){
+        if ($request->su_type === 'academic') {
             $rules['academic_details'] = 'required';
             $rules['experience_years'] = 'required';
             $rules['experience_months'] = 'required';
@@ -510,7 +514,7 @@ class HomeController extends Controller
             $data['steps'] = 'step3';
         }
 
-        if($request->su_type === 'branch'){
+        if ($request->su_type === 'branch') {
             $rules['team_size'] = 'required';
             $rules['experience_years'] = 'required';
             $rules['experience_months'] = 'required';
@@ -528,13 +532,13 @@ class HomeController extends Controller
             $data['steps'] = 'step3';
         }
 
-        if($request->su_type === 'skills'){
+        if ($request->su_type === 'skills') {
             $rules['skills'] = 'required';
             $data['skills'] = json_decode($request->skills, true);
             $data['steps'] = 'step4';
         }
 
-        if($request->su_type === 'profile'){
+        if ($request->su_type === 'profile') {
             $data['business_title'] = $request->business_title;
             $data['business_description'] = $request->business_description;
             $data['website'] = $request->website;
@@ -551,6 +555,11 @@ class HomeController extends Controller
                 $filePath = $request->file('photo')->store('channel_partner_kyc', 'public');
                 $data['photo'] = Storage::url($filePath);
             }
+        }
+
+        if ($request->su_type === 'emailMobileChange') {
+            $data['email'] = $request->email;
+            $data['mobile'] = $request->mobile;
         }
 
         if (!$user) {
@@ -574,7 +583,7 @@ class HomeController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Data Saved',
-                'data'=> ChannelPartner::find($request->user_id),
+                'data' => ChannelPartner::find($request->user_id),
             ], 201);
         }
     }

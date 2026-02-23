@@ -22,9 +22,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/user')->controller(UserController::class)->group(function () {
     Route::post('/register', 'register');
+    Route::get('/get-member/{id}', 'getMember');
     Route::post('/login', 'login');
-    Route::post('/verify-phone', [UserController::class, 'verifyPhone']);
-    Route::post('/verify-email', [UserController::class, 'verifyEmail']);
+    Route::post('verify-member-otp', [UserController::class, 'verifyMemberOtp']);
+    Route::post('/resend-otp', [UserController::class, 'resendOtp']);
+    Route::post('/member-details-save', [UserController::class, 'memberDetailsSave']);
 
     Route::post('/forgot-password', [UserController::class, 'forgotPassword']);
     Route::post('/verify-reset-otp', [UserController::class, 'verifyResetOtp']);

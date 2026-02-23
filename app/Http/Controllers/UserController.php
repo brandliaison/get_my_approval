@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\CommonHelpers\CommonHelpers;
+use App\Mail\EmailOTP;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Jsonable;
@@ -44,9 +46,13 @@ class UserController extends Controller
             'status' => 'pending', // Set status as 'pending' until verified
         ]);
 
+        // Send OTP via Email using Mailable class
+        // Mail::to($user->email)->send(new EmailOTP($emailOtp));
+        // CommonHelpers::sendOtp($request->phone, $phoneOtp);
+
         return response()->json([
             'message' => 'User registered successfully. Please verify your email & phone.',
-            'user' => $user
+            'user' => $user->_id
         ], 201);
     }
 
@@ -67,70 +73,53 @@ class UserController extends Controller
         }
     }
 
-    public function verifyPhone(Request $request)
+    public function verifyMemberOtp(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'phone' => 'required|string|exists:users,phone',
-            'otp' => 'required|digits:6',
-        ]);
+        $user = User::find($request->id);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data not found',
+            ], 201);
         }
 
-        $user = User::where('phone', $request->phone)->first();
-
-        if (!$user || $user->phone_otp !== (int) $request->otp) {
-            return response()->json(['error' => 'Invalid OTP'], 400);
+        $data = [];
+        $url = false;
+        if ($request->type == 'email') {
+            if ($user->email_otp !== (int) $request->otp) {
+                return response()->json([
+                    'status' => 'danger',
+                    'message' => 'OTP Not Valid!',
+                ], 200);
+            } else {
+                $data['email_verified_at'] = now()->timestamp;
+                $data['email_otp'] = null;
+            }
         }
-
-        // Mark phone as verified
-        $user->update([
-            'phone_verified_at' => Carbon::now(),
-            'phone_otp' => null // Clear OTP after successful verification
-        ]);
-        if($user->email_verified_at !== null){
-            $user->update([
-                'status' => 'active',
-            ]);
+        if ($request->type == 'phone') {
+            if ($user->phone_otp !== (int) $request->otp) {
+                return response()->json([
+                    'status' => 'danger',
+                    'message' => 'OTP Not Valid!',
+                ], 200);
+            } else {
+                $data['phone_verified_at'] = now()->timestamp;
+                $data['phone_otp'] = null;
+                $data['status'] = 'active';
+            }
         }
+        $user = $user->update($data);
 
-        return response()->json(['message' => 'Phone number verified successfully.']);
-    }
-
-    /**
-     * Verify Email OTP
-     */
-    public function verifyEmail(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|exists:users,email',
-            'otp' => 'required|digits:6',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+        $userNew = User::find($request->id);
+        if (isset($userNew->email_verified_at) && $userNew->phone_verified_at) {
+            $url = true;
         }
-
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || $user->email_otp !== (int) $request->otp) {
-            return response()->json(['error' => 'Invalid OTP'], 400);
-        }
-
-        // Mark email as verified
-        $user->update([
-            'email_verified_at' => Carbon::now(),
-            'email_otp' => null // Clear OTP after successful verification
-        ]);
-
-        if($user->phone_verified_at !== null){
-            $user->update([
-                'status' => 'active',
-            ]);
-        }
-
-        return response()->json(['message' => 'Email verified successfully.']);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Otp Has Been Verified!',
+            'url' => $url,
+        ], 201);
     }
 
     public function forgotPassword(Request $request)
@@ -255,4 +244,104 @@ class UserController extends Controller
             'user' => User::find(Auth::id())
         ], 201);
     }
+
+    public function getMember($id){
+        $user = User::find($id);
+        return response()->json([
+            'user' => $user
+        ], 201);
+    }
+
+    public function resendOtp(Request $request)
+    {
+        $user = User::find($request->id);
+
+        $email_otp = random_int(111111, 999999);
+        $mobile_otp = random_int(111111, 999999);
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data not found',
+            ], 201);
+        }
+
+        $data = [];
+        if ($request->type == 'email') {
+            $data['email_otp'] = $email_otp;
+            Mail::to($user->email)->send(new EmailOTP($email_otp));
+        }
+        if ($request->type == 'phone') {
+            $data['phone_otp'] = $mobile_otp;
+            // CommonHelpers::sendOtp($user->phone, $mobile_otp);
+        }
+
+        $user = $user->update($data);
+        return response()->json([
+            'status' => true,
+            'message' => 'Otp Has Been Sent!',
+        ], 201);
+    }
+
+    public function memberDetailsSave(Request $request)
+    {
+        $user = User::find($request->user_id);
+        $rules = [];
+        $data = [];
+
+        $email_otp = random_int(111111, 999999);
+        $mobile_otp = random_int(111111, 999999);
+
+        if ($request->su_type === 'emailMobileChange') {
+            $rules['email'] = 'email|uniques:user,email';
+            $rules['phone'] = 'unique:users,phone';
+
+            if (isset($request->email)) {
+                $data['email'] = $request->email;
+                $data['email_otp'] = $email_otp;
+            }
+            if (isset($request->phone)) {
+                $data['phone'] = $request->phone;
+                $data['mobile_otp'] = $mobile_otp;
+            }
+        }
+
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data not found',
+            ], 201);
+        }
+
+        // Validate the request
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $user = $user->update($data);
+        if ($user) {
+
+            if ($request->su_type === 'emailMobileChange') {
+                if (isset($request->email)) {
+                    Mail::to($request->email)->send(new EmailOTP($email_otp));
+                }
+                if (isset($request->phone)) {
+                    CommonHelpers::sendOtp($request->phone, $mobile_otp);
+                }
+            }
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data Saved',
+                'data'=> User::find($request->user_id),
+            ], 201);
+        }
+    }
+
 }

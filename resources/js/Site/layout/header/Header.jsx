@@ -12,6 +12,9 @@ export default function Header(header) {
         if (e == 2) {
             navigation("/channel-partner-registraton");
         }
+        if (e == 3) {
+            navigation("/member-registraton");
+        }
     };
 
     const handleServiceLink1 = (e) => {
@@ -164,6 +167,9 @@ export default function Header(header) {
                                             </option>
                                             <option value="2">
                                                 Channel Partner
+                                            </option>
+                                            <option value="3">
+                                                Member
                                             </option>
                                         </select>
                                         <button

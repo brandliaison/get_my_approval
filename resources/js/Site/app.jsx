@@ -32,6 +32,8 @@ import BlogByCategory from "./pages/BlogByCategory";
 import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
 import ProductByCategory from "./pages/ProductByCategory";
+import MemberRegistration from "./pages/Member/MemberRegistration";
+import MemberOtp from "./pages/Member/MemberOtp";
 
 // Load UIkit icons (optional)
 UIkit.use(Icons);
@@ -134,6 +136,10 @@ function App() {
                 {/* Career */}
 
                 <Route path="/career" element={<Career />} />
+
+                {/* Members */}
+                <Route path="/member-registraton"  element={<MemberRegistration />} />
+                <Route path="/member-otp"  element={<MemberOtp />} />
             </Routes>
             <Footer footer={layoutdata} />
         </Router>
